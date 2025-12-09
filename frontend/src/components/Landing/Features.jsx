@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { BorderTrailCard1 } from '../BorderTrailCard1';
 
 const Features = () => {
   const cardInfo = [
@@ -17,23 +18,28 @@ const Features = () => {
       title: "See True Profitability",
       desc: "Simple, integrated financial tracking (Income vs. Expense). Filter by month or category to see where you are making or losing money. No accounting degree required."
     }
-  ]
+  ];
 
   return (
     <div>
-      <div className='grid grid-cols-3 gap-6'>
+        <h1 className='text-2xl font-roboto mb-6 '>Features</h1>
+      <div className="grid grid-cols-3 gap-6">
         {cardInfo.map(card => (
-          <div
+          <BorderTrailCard1
             key={card.id}
-            className='bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300'
+            className="bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300"
           >
-            <h2 className='font-poppins text-xl font-medium mb-4'>{card.title}</h2>
-            <p className='font-inter text-sm text-zinc-700'>{card.desc}</p>
-          </div>
+            <h2 className="font-poppins text-xl font-medium mb-2">
+              {card.title}
+            </h2>
+            <p className="font-inter text-sm text-zinc-700">
+              {card.desc}
+            </p>
+          </BorderTrailCard1>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;

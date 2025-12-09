@@ -1,6 +1,54 @@
 import React from 'react'
 import {motion} from 'motion/react';
 
+
+import { TextLoop } from '../ui/text-loop';
+
+export function TextLoopCustomVariantsTransition() {
+  return (
+    <span className="inline-flex whitespace-pre-wrap">
+      acess for{" "}
+      <TextLoop
+        className="overflow-y-clip"
+        transition={{
+          type: "spring",
+          stiffness: 900,
+          damping: 80,
+          mass: 10,
+        }}
+        variants={{
+          initial: {
+            y: 20,
+            rotateX: 90,
+            opacity: 0,
+            filter: "blur(4px)",
+          },
+          animate: {
+            y: 0,
+            rotateX: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+          },
+          exit: {
+            y: -20,
+            rotateX: -90,
+            opacity: 0,
+            filter: "blur(4px)",
+          },
+        }}
+      >
+        <span>Workers</span>
+        <span>Admin</span>
+        <span>Vet</span>
+      </TextLoop>
+    </span>
+  );
+}
+
+
+
+
+
 const Hero = () => {
   
   const imageInfiniteScrollData = [
@@ -45,6 +93,8 @@ const Hero = () => {
       alt: "Procter & Gamble Logo",
     },
   ];
+
+  
   return (
     <div>
       <div className='flex items-center justify-center flex-col mt-18'>
@@ -53,16 +103,13 @@ const Hero = () => {
         animate={{ opacity: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.3, ease: "easeIn", delay: 0.2 }}
       className='font-poppins text-4xl max-w-4xl text-center font-medium leading-tight text-zinc-900'>Manage Animals. Stop Errors. <br /> Keep Control..</motion.h1>
-      <motion.p 
-      initial={{ opacity: 0, filter: "blur(10px)" }}
-        animate={{ opacity: 1, filter: "blur(0px)" }}
-        transition={{ duration: 0.3, ease: "easeIn", delay: 0.3 }}
-      className='max-w-lg text-center font-inter mt-8 text-zinc-700'>Track health, feed, and finances across your farm with specific access for Workers, Vets, and Admin.</motion.p>
+      <p
+      className='max-w-sm text-center font-inter mt-8 text-zinc-700'>Track health, feed, and finances across your farm with specific <TextLoopCustomVariantsTransition /></p>
       <motion.button 
       initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
         transition={{ duration: 0.3, ease: "easeIn", delay: 0.4 }}
-      className='rounded-full bg-green-600 px-4 py-2 text-white mt-8 hover:bg-green-700 cursor-pointer transition duration-300 shadow-xl'>Get 14 days Free Access</motion.button>
+      className='rounded-full bg-green-600 px-4 py-2 text-white mt-8 hover:bg-green-700 cursor-pointer transition duration-300 shadow-xl'>Get Started</motion.button>
     </div>
     <div className="w-full mt-16 px-4 flex flex-col items-center justify-center">
           <h1 className="font-poppins text-sm font-medium text-neutral-900 tracking-tight">
