@@ -42,7 +42,7 @@ export function BentoItem() {
   return (
     <div className="grid grid-cols-2 p-10 md:grid-cols-3 gap-4">
       <AnimatedBackground
-        className="rounded-lg bg-zinc-100 dark:bg-zinc-800"
+        className="rounded-lg bg-zinc-200 dark:bg-zinc-800"
         transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
         enableHover
       >
