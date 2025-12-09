@@ -1,8 +1,13 @@
 import React from 'react'
+import { Route, Routes } from "react-router-dom";
+import Landing from './page/Landing'
 
 const App = () => {
+  
   return (
-    <div>App</div>
+    <Routes>
+      <Route path="/" element={<Landing />} />
+    </Routes>
   )
 }
 
