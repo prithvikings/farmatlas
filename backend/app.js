@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import {ENV} from './config/env.js';
+import authRouter from './routes/auth.routes.js';
 
 
 const app = express();
@@ -16,9 +17,7 @@ app.use(cors({
 }));
 
 
-app.get('/', (req, res) => {
-    res.send('Hello from the backend!');
-});
+app.use("/api/auth",authRouter);
 
 
 export default app;
