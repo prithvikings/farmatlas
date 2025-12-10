@@ -4,13 +4,36 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
-
+import { Eye, EyeOff } from "lucide-react";
 
 const Signin = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [Error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(false);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // On success, redirect or show success message
+      console.log("User signed in:", { email, password });
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white to-green-200/50">
-      <Link to="/" className="text-zinc-700 hover:text-zinc-900 transition duration-300 absolute z-100 top-20 left-30 font-inter text-sm flex items-center"><ChevronLeft className="size-4 mr-2" /> Back to Home</Link>
+      <Link
+        to="/"
+        className="text-zinc-700 hover:text-zinc-900 transition duration-300 absolute z-100 top-20 left-30 font-inter text-sm flex items-center"
+      >
+        <ChevronLeft className="size-4 mr-2" /> Back to Home
+      </Link>
       <h1 className="text-3xl font-medium font-inter mb-8">FarmAtlas</h1>
 
       {/* Auth card area */}
@@ -30,7 +53,7 @@ const Signin = () => {
           variant="outline"
           className="w-full py-2 font-inter bg-zinc-300 text-zinc-800 cursor-pointer transition duration-300 gap-4"
         >
-         <FcGoogle size={20} /> Sign in with Google
+          <FcGoogle size={20} /> Sign in with Google
         </Button>
 
         {/* Divider */}
@@ -39,26 +62,47 @@ const Signin = () => {
         {/* Email + Password */}
         <div className="w-full space-y-4">
           <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
-            className="w-full h-12 font-inter text-zinc-700 transition duration-300" 
+            className="w-full h-12 font-inter text-zinc-700 transition duration-300"
           />
-          <Input
-            placeholder="Password"
-            type="password"
-            className="w-full h-12 font-inter text-zinc-700 border-zinc-300 focus:border-none outline-0 transition duration-300" 
-          />
-{ Error && <div className="bg-red-200 px-4 py-2 border-2 border-red-500 text-red-500 shadow-xl my-8">Something went wrong. Please try again.</div> }
+          <div className="relative">
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              type={showPassword ? "text" : "password"}
+              className="w-full h-12 font-inter text-zinc-700 pr-12"
+            />
 
-          <Button 
-          variant={"kala"}
-          className="w-full h-10 font-inter text-white cursor-pointer transition duration-300">
-            
-            Sign in
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-900 cursor-pointer transition duration-500"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+
+          {Error && (
+            <div className="bg-red-200 px-4 py-2 border-2 border-red-500 text-red-500 shadow-xl my-8">
+              Something went wrong. Please try again.
+            </div>
+          )}
+
+          <Button
+            onClick={handleSignin}
+            disabled={loading}
+            variant={"kala"}
+            className="w-full h-10 font-inter text-white cursor-pointer transition duration-300"
+          >
+            {loading ? "Signing In..." : "Sign In"}
           </Button>
 
-          <p className="text-sm font-roboto text-center text-zinc-700 cursor-pointer hover:text-zinc-900 transition duration-300">
+          <Link to="/forgot-password" className="text-sm font-roboto flex justify-center text-zinc-700 cursor-pointer hover:text-zinc-900 transition duration-300">
             Forgot password?
-          </p>
+          </Link>
         </div>
       </div>
     </div>

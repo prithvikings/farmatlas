@@ -94,7 +94,7 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
                         Support <Headset size={16}/>
                     </Link>
                     <Link 
-                    to="/get-started"
+                    to="/signin"
                     className='rounded-full bg-green-500 px-6 py-2 text-white cursor-pointer hover:bg-green-700 transition duration-300 shadow-xl'>Get Start</Link>
                     <Togglebtn />
                 </div>

@@ -4,10 +4,32 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [Error, setError] = useState(false);
   const [role, setRole] = useState("Admin");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(false);
+    try {
+      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // On success, redirect or show success message
+      console.log("User signed up:", { name, email, password, role });
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="relative min-h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white to-green-200/50">
@@ -25,7 +47,7 @@ const Signup = () => {
           <h2 className="text-lg font-poppins text-zinc-900">Welcome back</h2>
           <p className="text-zinc-600 text-md font-roboto">
             Already have a account?{" "}
-            <Link to="/get-started" className="font-medium text-zinc-900">
+            <Link to="/signin" className="font-medium text-zinc-900">
               Sign In
             </Link>
           </p>
@@ -45,18 +67,34 @@ const Signup = () => {
         {/* Email + Password */}
         <div className="w-full space-y-4">
           <Input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Name"
             className="w-full h-12 font-inter text-zinc-700 transition duration-300"
           />
           <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email address"
             className="w-full h-12 font-inter text-zinc-700 transition duration-300"
           />
-          <Input
-            placeholder="Password"
-            type="password"
-            className="w-full h-12 font-inter text-zinc-700 border-zinc-300 focus:border-none outline-0 transition duration-300"
-          />
+          <div className="relative">
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              type={showPassword ? "text" : "password"}
+              className="w-full h-12 font-inter text-zinc-700 pr-12"
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-900 cursor-pointer transition duration-500"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
           <div className="gap-4 flex">
             {["Admin", "Worker", "Vet"].map((r) => (
               <Button
@@ -81,10 +119,12 @@ const Signup = () => {
           )}
 
           <Button
+            onClick={handleSignup}
+            disabled={loading}
             variant={"kala"}
             className="w-full h-10 font-inter text-white cursor-pointer transition duration-300"
           >
-            Sign up
+            {loading ? "Signing Up..." : "Sign Up"}
           </Button>
         </div>
       </div>
