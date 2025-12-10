@@ -1,6 +1,15 @@
+// models/animal.model.js
+
 import mongoose from "mongoose";
 
 const animalSchema = new mongoose.Schema({
+
+  farmId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Farm",
+    required: true,
+  },
+
   tagNumber: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   species: { type: String, required: true },
@@ -13,14 +22,13 @@ const animalSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["ACTIVE", "SOLD", "DEAD", "SICK", "TRANSFERRED", "MISSING"],
-    default: "ACTIVE"
+    default: "ACTIVE",
   },
 
   location: { type: String },
   photoUrl: { type: String },
+
 }, { timestamps: true });
 
-
-const Animal = mongoose.model('Animal', animalSchema);
-
+const Animal = mongoose.model("Animal", animalSchema);
 export default Animal;
