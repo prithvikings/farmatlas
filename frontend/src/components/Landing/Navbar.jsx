@@ -41,7 +41,7 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
         <div className='flex justify-center items-center gap-8 text-md font-poppins'>
             <p 
                 onClick={() => scrollToSection(featuresRef)} 
-                className='cursor-pointer text-sm text-zinc-700 hover:text-zinc-900 transition duration-300'
+                className='cursor-pointer text-sm text-zinc-700  hover:text-zinc-900 transition duration-300'
             >
                 Features
             </p>
@@ -79,7 +79,7 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
                 
                 <div className='flex justify-center items-center gap-6'>
 
-                    <Link to='/' className='text-2xl font-roboto font-medium'>Farm
+                    <Link to='/' className='text-2xl font-roboto font-medium dark:text-white'>Farm
                         <span className='text-green-700'>Atlas</span>
                     </Link>
                     
@@ -93,7 +93,9 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
                     >
                         Support <Headset size={16}/>
                     </Link>
-                    <button className='rounded-full bg-green-500 px-6 py-2 text-white cursor-pointer hover:bg-green-700 transition duration-300 shadow-xl'>Get Start</button>
+                    <Link 
+                    to="/get-started"
+                    className='rounded-full bg-green-500 px-6 py-2 text-white cursor-pointer hover:bg-green-700 transition duration-300 shadow-xl'>Get Start</Link>
                     <Togglebtn />
                 </div>
             </div>

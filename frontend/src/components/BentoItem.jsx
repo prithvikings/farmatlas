@@ -42,20 +42,20 @@ export function BentoItem() {
   return (
     <div className="grid grid-cols-2 p-10 md:grid-cols-3 gap-4">
       <AnimatedBackground
-        className="rounded-lg bg-zinc-200 dark:bg-zinc-800"
+        className="rounded-lg bg-zinc-200 dark:bg-zinc-900"
         transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
         enableHover
       >
         {ITEMS.map((item) => (
           <div
             key={item.id}
-            className={`bento-item bg-zinc-300 px-4 py-6 rounded-lg ${item.className}`}
+            className={`bento-item bg-zinc-300 dark:bg-zinc-800 px-4 py-6 rounded-lg ${item.className}`}
             data-id={`card-${item.id}`}
           >
             <h3 className="font-poppins text-lg font-medium text-zinc-800 dark:text-zinc-50">
               {item.title}
             </h3>
-            <p className="font-inter text-sm mt-4 text-zinc-700 dark:text-zinc-400">
+            <p className="font-inter text-sm mt-4 text-zinc-700 dark:text-zinc-300">
               {item.description}
             </p>
           </div>

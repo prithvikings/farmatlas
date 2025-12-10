@@ -27,12 +27,12 @@ const Features = () => {
         {cardInfo.map(card => (
           <BorderTrailCard1
             key={card.id}
-            className="bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300"
+            className="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300"
           >
             <h2 className="font-poppins text-xl font-medium mb-2">
               {card.title}
             </h2>
-            <p className="font-inter text-sm text-zinc-700">
+            <p className="font-inter text-sm text-zinc-700 dark:text-zinc-300">
               {card.desc}
             </p>
           </BorderTrailCard1>
