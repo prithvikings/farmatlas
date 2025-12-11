@@ -24,11 +24,12 @@ const userSchema = new mongoose.Schema({
   },
 
   role: {
-    type: String,
-    enum: ["ADMIN", "WORKER", "VET"],
-    required: true,
-    default: "ADMIN",
-  },
+  type: String,
+  enum: ["ADMIN", "WORKER", "VET"],
+  default: "WORKER",
+  required: true
+},
+
 
   farmId: {
     type: mongoose.Schema.Types.ObjectId,

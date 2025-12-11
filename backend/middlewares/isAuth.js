@@ -1,32 +1,25 @@
-// middleware/isAuth.js
-
 import jwt from "jsonwebtoken";
-import { ENV } from "../config/env.js";
 
 export const isAuth = (req, res, next) => {
   try {
-    // Token from cookie or Authorization header
     const token =
       req.cookies.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized: No token provided" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const decoded = jwt.verify(token, ENV.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Validate required fields for multi-farm
-    if (!decoded.userId || !decoded.role || !decoded.farmId) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized: Invalid token payload" });
-    }
+    // Save multi-tenant metadata for every request
+    req.user = {
+      userId: decoded.userId,
+      role: decoded.role,
+      farmId: decoded.farmId,
+    };
 
-    req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };

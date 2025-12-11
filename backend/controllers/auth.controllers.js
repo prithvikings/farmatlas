@@ -2,11 +2,10 @@
 
 import bcrypt from "bcrypt";
 import { User, Farm } from "../models/index.js";
-import genToken from "../utils/token.js";
+import { genToken } from "../utils/token.js";
 import { sendOtpMail } from "../utils/index.js";
 
-
-export const signUp = async (req, res) => {
+export const signUp = async (req, res, next) => {
   try {
     let { name, email, password, farmName } = req.body;
 
@@ -14,32 +13,42 @@ export const signUp = async (req, res) => {
     email = email.trim().toLowerCase();
     farmName = farmName.trim().toLowerCase();
 
-    // Check if email already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists." });
+    // Validate fields
+    if (!name || !email || !password || !farmName) {
+      return res.status(400).json({ message: "All fields are required." });
     }
 
-    // Check password length
-    if (!password || password.length < 6) {
+    if (password.length < 6) {
       return res.status(400).json({
         message: "Password must be at least 6 characters long.",
       });
     }
 
-    // Check farm name uniqueness
+    if (farmName.length < 3) {
+      return res.status(400).json({
+        message: "Farm name must be at least 3 characters long.",
+      });
+    }
+
+    // Check if email exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists." });
+    }
+
+    // Check if farm exists
     const existingFarm = await Farm.findOne({ farmName });
     if (existingFarm) {
       return res.status(400).json({ message: "Farm name already taken." });
     }
 
-    // Create Farm FIRST (no owner yet)
+    // Create farm without owner first
     const farm = await Farm.create({ farmName });
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create Admin user and attach farmId
+    // Create Admin
     const admin = await User.create({
       name,
       email,
@@ -48,26 +57,25 @@ export const signUp = async (req, res) => {
       farmId: farm._id,
     });
 
-    // Set farm owner
+    // Assign owner
     farm.owner = admin._id;
     await farm.save();
 
-    // Generate JWT with full multi-tenant payload
+    // Generate token (CORRECT PAYLOAD)
     const token = genToken({
-      userId: admin._id,
+      userId: admin._id.toString(),
       role: admin.role,
-      farmId: farm._id,
+      farmId: farm._id.toString(),
     });
 
-    // Send token in cookie
+    // Cookie
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "strict",
-      secure: false, // set true in production
+      secure: false,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    // Send safe admin payload
     return res.status(201).json({
       message: "Admin account created successfully",
       user: {
@@ -79,13 +87,9 @@ export const signUp = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Signup error",
-      error: error.message,
-    });
+    next(error); // Let global error handler shape response
   }
 };
-
 
 export const signIn = async (req, res) => {
   try {
@@ -108,9 +112,9 @@ export const signIn = async (req, res) => {
 
     // Generate JWT with multi-tenant payload
     const token = genToken({
-      userId: user._id,
+      userId: user._id.toString(),
       role: user.role,
-      farmId: user.farmId,
+      farmId: user.farmId.toString(),
     });
 
     // Set cookie
@@ -132,7 +136,6 @@ export const signIn = async (req, res) => {
         farmId: user.farmId,
       },
     });
-
   } catch (error) {
     console.error("signIn error:", error);
     return res.status(500).json({
