@@ -326,3 +326,13 @@
 html {
   scroll-behavior: smooth;
 }
+
+html {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+
+.navbar-blur {
+  will-change: backdrop-filter, transform;
+}

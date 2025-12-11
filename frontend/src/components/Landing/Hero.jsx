@@ -102,17 +102,17 @@ const Hero = () => {
       initial={{ opacity: 0, filter: "blur(2px)" }}
         animate={{ opacity: 1, filter: "blur(0px)" }}
         transition={{ duration: 0.3, ease: "easeIn", delay: 0.2 }}
-      className='font-poppins text-4xl max-w-4xl text-center font-medium leading-tight text-zinc-900'>Manage Animals. Stop Errors. <br /> Keep Control..</motion.h1>
+      className='font-poppins text-4xl max-w-4xl text-center font-medium leading-tight text-zinc-900 dark:text-zinc-200'>Manage Animals. Stop Errors. <br /> Keep Control..</motion.h1>
       <p
-      className='max-w-sm text-center font-inter mt-8 text-zinc-700'>Track health, feed, and finances across your farm with specific <TextLoopCustomVariantsTransition /></p>
+      className='max-w-sm text-center font-inter mt-8 text-zinc-700 dark:text-zinc-400'>Track health, feed, and finances across your farm with specific <TextLoopCustomVariantsTransition /></p>
       <motion.button 
       initial={{opacity: 0, y: 20}}
         animate={{opacity: 1, y: 0}}
         transition={{ duration: 0.3, ease: "easeIn", delay: 0.4 }}
-      className='rounded-full bg-green-600 px-4 py-2 text-white mt-8 hover:bg-green-700 cursor-pointer transition duration-300 shadow-xl'>Get Started</motion.button>
+      className='rounded-full bg-[#F97316] hover:bg-[#EA580C] px-4 py-2 text-white mt-8  cursor-pointer transition duration-300 shadow-xl'>Get Started</motion.button>
     </div>
     <div className="w-full mt-16 px-4 flex flex-col items-center justify-center">
-          <h1 className="font-poppins text-sm font-medium text-neutral-900 tracking-tight">
+          <h1 className="font-poppins text-sm font-medium text-neutral-900 dark:text-neutral-400 tracking-tight">
             Trusted By
           </h1>
 
@@ -128,7 +128,7 @@ const Hero = () => {
                     key={id + "-img-" + index}
                     src={src}
                     alt={alt}
-                    className="size-20 mx-8 object-contain opacity-80 hover:opacity-100 transition grayscale hover:grayscale-0"
+                    className="size-20 mx-8 object-contain opacity-80 hover:opacity-100 transition grayscale hover:grayscale-0 dark:grayscale-0 dark:hover:grayscale-100"
                   />
                 ))}
             </div>

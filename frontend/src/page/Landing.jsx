@@ -51,7 +51,7 @@ const faqsRef = useRef(null);
       {/* Section 1 */}
       <div
         className="w-full min-h-screen relative 
-        bg-gradient-to-b from-zinc-100 to-white "
+        bg-gradient-to-b from-zinc-100 to-white dark:from-zinc-900 dark:to-black"
       >
         <div className="mx-auto max-w-6xl">
           <Navbar featuresRef={featuresRef} pricingRef={pricingRef} faqsRef={faqsRef} />

@@ -107,7 +107,7 @@ const Support = () => {
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
 									placeholder="Search for 'Animal Status' or 'Low Stock Alert'..."
-									className="h-12 dark:bg-zinc-800 outline-none focus:ring-1 focus:ring-green-600 transition duration-300 w-full font-poppins px-4 bg-zinc-100 text-sm rounded-lg border border-zinc-300 dark:border-zinc-700 pr-10"
+									className="h-12 dark:bg-zinc-800 outline-none focus:ring-1 focus:ring-[#EA580C] transition duration-300 w-full font-poppins px-4 bg-zinc-100 text-sm rounded-lg border border-zinc-300 dark:border-zinc-700 pr-10"
 								/>
 								{searchTerm && (
 									<X
@@ -119,7 +119,7 @@ const Support = () => {
 							<Button
 								variant={"btntheme"}
 								onClick={handleSearchClick} // Retain search button functionality (optional)
-								className="h-12 px-6 cursor-pointer font-poppins bg-green-600 hover:bg-green-700 text-white rounded-lg"
+								className="h-12 px-6 cursor-pointer font-poppins bg-[#F97316] hover:bg-[#EA580C] text-white rounded-lg"
 							>
 								Search
 							</Button>
@@ -165,7 +165,7 @@ const Support = () => {
 							If our knowledge base didn't solve it, connect <br /> directly with a technical specialist.
 						</p>
 
-						<Button variant={"btntheme"} className="mt-6 px-8 py-3 font-poppins bg-green-600 hover:bg-green-700 text-white rounded-lg">
+						<Button variant={"btntheme"} className="mt-6 px-8 py-3 font-poppins bg-[#F97316] hover:bg-[#EA580C] text-white rounded-lg">
 							Submit a Support Ticket (1-Hour Response)
 						</Button>
 					</div>
@@ -185,7 +185,7 @@ const SupportCard = ({ icon, title, description, onClick }) => {
     onClick={onClick}
 			className="p-6 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-sm shadow-2xs  hover:shadow-lg transition cursor-pointer hover:-translate-y-1 duration-300"
 		>
-			<div className="mb-4 text-green-600 dark:text-green-400">{icon}</div>
+			<div className="mb-4 text-[#F97316] dark:text-[#EA580C] ">{icon}</div>
 			<h3 className="font-semibold text-xl text-zinc-800 dark:text-white font-poppins">{title}</h3>
 			<p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 font-inter">{description}</p>
 		</div>

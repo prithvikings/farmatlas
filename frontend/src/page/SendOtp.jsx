@@ -49,25 +49,25 @@ const SendOtp = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white to-green-200/50">
+    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white to-[#F97316]/10 dark:from-zinc-900 dark:to-zinc-800">
 
       {/* Back link */}
       <Link
         to="/signin"
-        className="text-zinc-700 hover:text-zinc-900 transition duration-300 absolute z-100 top-20 left-30 font-inter text-sm flex items-center"
+        className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-400 transition duration-300 absolute z-100 top-20 left-30 font-inter text-sm flex items-center"
       >
         <ChevronLeft className="size-4 mr-2" /> Back to Signin
       </Link>
 
       {/* Branding */}
-      <h1 className="text-3xl font-medium font-inter mb-8">FarmAtlas</h1>
+      <h1 className="text-3xl font-medium font-inter mb-8 text-zinc-900 dark:text-zinc-100">FarmAtlas</h1>
 
       {/* Card */}
       <div className="flex flex-col items-center w-full max-w-md gap-6">
 
         <div className="text-center space-y-1">
-          <h2 className="text-lg font-poppins text-zinc-900">Verify your OTP</h2>
-          <p className="text-zinc-600 text-md font-roboto">
+          <h2 className="text-lg font-poppins text-zinc-900 dark:text-zinc-100">Verify your OTP</h2>
+          <p className="text-zinc-600 text-md font-roboto dark:text-zinc-400">
             Enter the 6-digit code sent to your phone.
           </p>
         </div>
@@ -98,14 +98,14 @@ const SendOtp = () => {
           onClick={handleVerify}
           disabled={loading}
           variant="kala"
-          className="w-full h-10 font-inter text-white cursor-pointer"
+          className="w-full h-10 font-inter text-white cursor-pointer transition duration-300"
         >
           {loading ? "Verifying..." : "Verify OTP"}
         </Button>
 
         {/* Resend */}
         <button
-          className="text-sm font-roboto text-zinc-700 hover:text-zinc-900 transition cursor-pointer"
+          className="text-sm font-roboto text-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-400 hover:text-zinc-900 transition cursor-pointer"
           onClick={() => console.log("Resend OTP")}
         >
           Resend OTP

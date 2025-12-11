@@ -41,24 +41,24 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white to-green-200/50">
+    <div className="relative min-h-screen flex flex-col justify-center items-center px-4 bg-gradient-to-b from-white to-[#F97316]/10 dark:from-zinc-900 dark:to-zinc-800">
       
        <Link
               to="/signin"
-              className="text-zinc-700 hover:text-zinc-900 transition duration-300 absolute z-100 top-20 left-30 font-inter text-sm flex items-center"
+              className="text-zinc-700 hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-400 transition duration-300 absolute z-100 top-20 left-30 font-inter text-sm flex items-center"
             >
               <ChevronLeft className="size-4 mr-2" /> Back to Signin
             </Link>
 
       {/* Branding */}
-      <h1 className="text-3xl font-medium font-inter mb-8">FarmAtlas</h1>
+      <h1 className="text-3xl font-medium font-inter mb-8 text-zinc-900 dark:text-zinc-100">FarmAtlas</h1>
 
       {/* Card Container */}
       <div className="flex flex-col items-center w-full max-w-md gap-6">
 
         <div className="text-center space-y-1">
-          <h2 className="text-lg font-poppins text-zinc-900">Reset Password</h2>
-          <p className="text-zinc-600 text-md font-roboto">
+          <h2 className="text-lg font-poppins text-zinc-900 dark:text-zinc-100">Reset Password</h2>
+          <p className="text-zinc-600 text-md font-roboto dark:text-zinc-400">
             Enter your new password below.
           </p>
         </div>
@@ -72,12 +72,12 @@ const ResetPassword = () => {
               placeholder="New password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full h-12 font-inter text-zinc-700"
+              className="w-full h-12 font-inter text-zinc-700 dark:text-zinc-200"
             />
             <button
               type="button"
               onClick={() => setShowPass(!showPass)}
-              className="absolute right-3 top-3 text-zinc-600"
+              className="absolute right-3 top-3 text-zinc-600 dark:text-zinc-400"
             >
               {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
@@ -90,12 +90,12 @@ const ResetPassword = () => {
               placeholder="Confirm password"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
-              className="w-full h-12 font-inter text-zinc-700"
+              className="w-full h-12 font-inter text-zinc-700 dark:text-zinc-200"
             />
             <button
               type="button"
               onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute right-3 top-3 text-zinc-600"
+              className="absolute right-3 top-3 text-zinc-600 dark:text-zinc-400"
             >
               {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
@@ -120,7 +120,7 @@ const ResetPassword = () => {
 
           <Link
             to="/signin"
-            className="text-sm font-roboto flex justify-center text-zinc-700 hover:text-zinc-900 transition"
+            className="text-sm font-roboto flex justify-center text-zinc-700 dark:text-zinc-300 dark:hover:text-zinc-400 hover:text-zinc-900 transition"
           >
             Back to sign in
           </Link>
