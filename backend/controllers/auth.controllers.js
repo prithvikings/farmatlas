@@ -6,7 +6,6 @@ import Farm from "../models/farm.models.js";
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import Farm from "../models/farm.model.js";
-import { genToken } from "../utils/genToken.js";
 
 export const signUp = async (req, res) => {
   try {
