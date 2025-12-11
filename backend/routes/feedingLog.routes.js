@@ -1,20 +1,16 @@
+//feedingLog.routes.js
 import express from "express";
-import FeedingLog from "../models/feedingLog.model.js";
-import Animal from "../models/animal.model.js";
-
-import { isAuth } from "../middleware/isAuth.js";
-import { requireRole } from "../middleware/requireRole.js";
-import { checkFarmOwnership } from "../middleware/checkFarmOwnership.js";
-
+import { FeedingLog, Animal } from "../models/index.js";
+import { isAuth, requireRole, checkFarmOwnership, validate } from "../middlewares/index.js";
 import {
   createFeedingLog,
   getFeedingLogsByAnimal,
   getSingleFeedingLog,
   deleteFeedingLog,
   updateFeedingLog
-} from "../controllers/feedingLog.controller.js";
-import { validate } from "../middleware/validate.js";
-import { createFeedingLogSchema } from "../schemas/feedingLog.schemas.js";
+} from "../controllers/index.js";
+import { createFeedingLogSchema } from "../validation/index.js";
+
 
 const router = express.Router();
 

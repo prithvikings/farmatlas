@@ -1,4 +1,6 @@
-import InventoryItem from "../models/inventoryItem.model.js";
+//inventoryItem.controllers.js
+import { InventoryItem } from "../models/index.js";
+
 
 export const createInventoryItem = async (req, res) => {
   try {

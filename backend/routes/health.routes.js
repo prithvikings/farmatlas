@@ -1,19 +1,17 @@
 // routes/health.routes.js
 import express from "express";
-import { isAuth } from "../middleware/isAuth.js";
-import { requireRole } from "../middleware/requireRole.js";
-import { checkFarmOwnership } from "../middleware/checkFarmOwnership.js";
-import HealthRecord from "../models/healthRecord.model.js";
+import { isAuth, requireRole, checkFarmOwnership, validate } from "../middlewares/index.js";
+import { HealthRecord } from "../models/index.js";
 import {
   addHealthRecord,
   getHealthRecordsByAnimal,
   getHealthRecordById,
   updateHealthRecord,
   deleteHealthRecord,
-  getRecentHealthIssues, // optional helper
-} from "../controllers/health.controller.js";
-import { validate } from "../middleware/validate.js";
-import { createHealthRecordSchema } from "../schemas/healthRecord.schemas.js";
+  getRecentHealthIssues,
+} from "../controllers/index.js";
+import { createHealthRecordSchema } from "../validation/index.js";
+
 
 const router = express.Router();
 

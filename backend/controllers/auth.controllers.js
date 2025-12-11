@@ -1,11 +1,10 @@
-import User from "../models/user.models.js";
-import bcrypt, { hash } from "bcrypt";
+//auth.controllers.js
+
+import bcrypt from "bcrypt";
+import { User, Farm } from "../models/index.js";
 import genToken from "../utils/token.js";
-import { sendOtpMail } from "../utils/mail.js";
-import Farm from "../models/farm.models.js";
-import bcrypt from "bcryptjs";
-import User from "../models/user.model.js";
-import Farm from "../models/farm.model.js";
+import { sendOtpMail } from "../utils/index.js";
+
 
 export const signUp = async (req, res) => {
   try {

@@ -1,6 +1,5 @@
 // controllers/health.controller.js
-import HealthRecord from "../models/healthRecord.model.js";
-import Animal from "../models/animal.model.js";
+import { HealthRecord, Animal } from "../models/index.js";
 
 /**
  * Create a health record.

@@ -1,7 +1,10 @@
-import express from "express"
-import { googleAuth, resetPassword, sendOtp, signIn, signOut, signUp, verifyOtp } from "../controllers/auth.controllers.js"
-import { validate } from "../middlewares/validate.middleware.js"
-import { signUpSchema,signInSchema } from "../validations/auth.validations.js"
+//routes/auth.routes.js
+import express from "express";
+import { signUp, signIn, signOut, sendOtp, verifyOtp, resetPassword, googleAuth } 
+  from "../controllers/index.js";
+import { validate } from "../middlewares/index.js";
+import { signUpSchema, signInSchema } from "../validation/index.js";
+
 const authRouter=express.Router()
 
 authRouter.post("/signup",validate(signUpSchema),signUp)

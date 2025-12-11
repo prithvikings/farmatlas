@@ -1,5 +1,7 @@
-import bcrypt from "bcryptjs";
-import User from "../models/user.model.js";
+//adminUser.controllers.js
+
+import bcrypt from "bcrypt";
+import { User } from "../models/index.js";
 
 export const createUserByAdmin = async (req, res) => {
   try {

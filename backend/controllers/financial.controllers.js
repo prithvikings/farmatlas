@@ -1,6 +1,7 @@
 // controllers/financial.controller.js
-import FinancialTransaction from "../models/financialTransaction.model.js";
+import { FinancialTransaction } from "../models/index.js";
 import mongoose from "mongoose";
+
 
 /**
  * Create a transaction (ADMIN only).

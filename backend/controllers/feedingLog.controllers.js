@@ -1,5 +1,6 @@
-import FeedingLog from "../models/feedingLog.model.js";
-import Animal from "../models/animal.model.js";
+//feedingLog.controllers.js
+import { FeedingLog, Animal } from "../models/index.js";
+
 
 export const createFeedingLog = async (req, res) => {
   try {

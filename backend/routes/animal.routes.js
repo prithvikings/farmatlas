@@ -1,17 +1,16 @@
+//routes/animal.routes.js
 import express from "express";
-import Animal from "../models/animal.model.js";
-import { isAuth } from "../middleware/isAuth.js";
-import { requireRole } from "../middleware/requireRole.js";
-import { checkFarmOwnership } from "../middleware/checkFarmOwnership.js";
+import { Animal } from "../models/index.js";
+import { isAuth, requireRole, checkFarmOwnership, validate } from "../middlewares/index.js";
 import {
   createAnimal,
   getAnimals,
   getAnimalById,
   updateAnimal,
   deleteAnimal,
-} from "../controllers/animal.controllers.js";
-import { validate } from "../middleware/validate.js";
-import { createAnimalSchema } from "../schemas/animal.schemas.js";
+} from "../controllers/index.js";
+import { createAnimalSchema } from "../validation/index.js";
+
 
 const Animalrouter = express.Router();
 

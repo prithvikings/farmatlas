@@ -1,5 +1,5 @@
-import InventoryUsage from "../models/inventoryUsage.model.js";
-import InventoryItem from "../models/inventoryItem.model.js";
+//inventoryUsage.controllers.js
+import { InventoryUsage, InventoryItem } from "../models/index.js";
 
 export const logInventoryUsage = async (req, res) => {
   try {

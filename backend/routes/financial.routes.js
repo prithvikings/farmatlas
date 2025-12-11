@@ -1,9 +1,7 @@
 // routes/financial.routes.js
 import express from "express";
-import { isAuth } from "../middleware/isAuth.js";
-import { requireRole } from "../middleware/requireRole.js";
-import { checkFarmOwnership } from "../middleware/checkFarmOwnership.js";
-import FinancialTransaction from "../models/financialTransaction.model.js";
+import { isAuth, requireRole, checkFarmOwnership, validate } from "../middlewares/index.js";
+import { FinancialTransaction } from "../models/index.js";
 import {
   createTransaction,
   getTransactions,
@@ -12,9 +10,9 @@ import {
   deleteTransaction,
   getSummaryForPeriod,
   getMonthlyTotals,
-} from "../controllers/financial.controller.js";
-import { validate } from "../middleware/validate.js";
-import { createTransactionSchema } from "../validation/financial.validation.js";
+} from "../controllers/index.js";
+import { createTransactionSchema } from "../validation/index.js";
+
 
 const router = express.Router();
 

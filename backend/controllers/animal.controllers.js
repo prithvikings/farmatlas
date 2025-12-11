@@ -1,4 +1,6 @@
-import Animal from "../models/animal.model.js";
+//animal.controllers.js
+import { Animal } from "../models/index.js";
+
 
 export const createAnimal = async (req, res) => {
   try {

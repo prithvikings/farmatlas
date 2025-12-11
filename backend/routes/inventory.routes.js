@@ -1,10 +1,7 @@
+//routes/inventory.routes.js
 import express from "express";
-import { isAuth } from "../middleware/isAuth.js";
-import { requireRole } from "../middleware/requireRole.js";
-import { checkFarmOwnership } from "../middleware/checkFarmOwnership.js";
-
-import InventoryItem from "../models/inventoryItem.model.js";
-import InventoryUsage from "../models/inventoryUsage.model.js";
+import { isAuth, requireRole, checkFarmOwnership, validate } from "../middlewares/index.js";
+import { InventoryItem, InventoryUsage } from "../models/index.js";
 
 import {
   createInventoryItem,
@@ -12,19 +9,20 @@ import {
   getSingleInventoryItem,
   updateInventoryItem,
   deleteInventoryItem,
-} from "../controllers/inventoryItem.controller.js";
+} from "../controllers/index.js";
 
 import {
   logInventoryUsage,
   getUsageLogsByItem,
   deleteUsageLog,
   getSingleUsageLog,
-} from "../controllers/inventoryUsage.controller.js";
-import { validate } from "../middleware/validate.js";
+} from "../controllers/index.js";
+
 import {
   createInventoryItemSchema,
   createInventoryUsageSchema,
-} from "../validation/inventory.schema.js";
+} from "../validation/index.js";
+
 
 const router = express.Router();
 

@@ -1,9 +1,9 @@
+//routes/user.routes.js
 import express from "express";
-import { isAuth } from "../middleware/isAuth.js";
-import { requireRole } from "../middleware/requireRole.js";
-import { createUserByAdmin } from "../controllers/adminUser.controller.js";
-import { validate } from "../middleware/validate.js";
-import { createUserByAdminSchema } from "../schemas/user.schemas.js";
+import { isAuth, requireRole, validate } from "../middlewares/index.js";
+import { createUserByAdmin } from "../controllers/index.js";
+import { createUserByAdminSchema } from "../validation/index.js";
+
 
 const router = express.Router();
 

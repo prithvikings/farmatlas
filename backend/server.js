@@ -1,26 +1,27 @@
+// server.js
 import app from "./app.js";
-import {connectDB} from "./config/db.js";
-import { ENV } from "./config/env.js";
+import { connectDB } from "./config/db.js";
 import { connectRedis } from "./config/redis.js";
+import { ENV } from "./config/env.js";
 
 const PORT = ENV.PORT || 5000;
 
+const startServer = async () => {
+  try {
+    await Promise.all([
+      connectDB(),
+      connectRedis()
+    ]);
 
-const startServer =async()=>{
-    try{
-        await Promise.all([
-            connectDB(),
-            connectRedis()
-        ])
-        console.log("All services connected successfully");
-        app.listen(PORT,()=>{
-            console.log(`Server is running in ${ENV.NODE_ENV} mode on port ${PORT}`);
-        });
-    }
-    catch(error){
-        console.error("Failed to start server:", error);
-        process.exit(1);
-    }
-}
+    console.log("✅ Database and Redis connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT} in ${ENV.NODE_ENV} mode`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
 
 startServer();
