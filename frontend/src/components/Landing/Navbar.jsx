@@ -97,7 +97,7 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
           </Link>
           <Link
             to="/signin"
-            className="rounded-full bg-[#F97316] hover:bg-[#EA580C] px-6 py-2 text-white cursor-pointer  transition duration-300 shadow-xl"
+            className="rounded-full bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] px-6 py-2 text-white cursor-pointer  transition duration-300 shadow-xl"
           >
             Get Start
           </Link>

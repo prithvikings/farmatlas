@@ -1,49 +1,49 @@
-import { AnimatedBackground } from './ui/animated-background';
+import { AnimatedBackground } from "./ui/animated-background";
 
 export function BentoItem() {
   const ITEMS = [
     {
       id: 1,
-      title: 'Individual Animal Profiles',
+      title: "Individual Animal Profiles",
       description:
-        'Log every animal with a unique ID, species, and status (Sick, Sold, Active). Access the full history of any animal in one click.',
-      className: ''
+        "Log every animal with a unique ID, species, and status (Sick, Sold, Active). Access the full history of any animal in one click.",
+      className: "selection:bg-[#EA580C] selection:text-zinc-100",
     },
     {
       id: 2,
-      title: 'Real-Time Health Records',
+      title: "Real-Time Health Records",
       description:
-        'Vets and Admins instantly log treatments, vaccinations, and notes. Get proactive alerts on current health issues.',
-      className: ''
+        "Vets and Admins instantly log treatments, vaccinations, and notes. Get proactive alerts on current health issues.",
+      className: "selection:bg-[#EA580C] selection:text-zinc-100",
     },
     {
       id: 3,
-      title: 'Simple Worker Feed Logging',
+      title: "Simple Worker Feed Logging",
       description:
-        'Your field workers quickly log the exact feed type and quantity. End feeding guesswork and ensure compliance.',
-      className: ''
+        "Your field workers quickly log the exact feed type and quantity. End feeding guesswork and ensure compliance.",
+      className: "selection:bg-[#EA580C] selection:text-zinc-100",
     },
     {
       id: 4,
-      title: 'Secure Financial Oversight',
+      title: "Secure Financial Oversight",
       description:
         "Track income, expenses, and net profitability (Admin-only access). Know your farm's true financial health without sharing sensitive data.",
-      className: 'col-span-2'
+      className: "col-span-2 selection:bg-[#EA580C] selection:text-zinc-100",
     },
     {
       id: 5,
-      title: 'Low-Stock Inventory Alerts',
+      title: "Low-Stock Inventory Alerts",
       description:
-        'Track feed, medicine, and supply stock. Workers log usage; the Admin dashboard flags items below your defined threshold.',
-      className: ''
-    }
+        "Track feed, medicine, and supply stock. Workers log usage; the Admin dashboard flags items below your defined threshold.",
+      className: "selection:bg-[#EA580C] selection:text-zinc-100",
+    },
   ];
 
   return (
     <div className="grid grid-cols-2 p-10 md:grid-cols-3 gap-4">
       <AnimatedBackground
         className="rounded-lg bg-zinc-200 dark:bg-zinc-900"
-        transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
         enableHover
       >
         {ITEMS.map((item) => (
