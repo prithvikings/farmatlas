@@ -17,6 +17,7 @@ import {
   healthRoutes,
   inventoryRoutes,
   userRoutes,
+  adminRoutes,
 } from "./routes/index.js";
 
 const app = express();
@@ -45,6 +46,8 @@ app.use("/api/financial", financialRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
+
 
 // ----------------------
 // Health Check Endpoint

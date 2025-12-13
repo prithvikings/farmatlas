@@ -1,6 +1,6 @@
 //feedingLog.routes.js
 import express from "express";
-import { FeedingLog, Animal } from "../models/index.js";
+import { FeedingLog} from "../models/index.js";
 import { isAuth, requireRole, checkFarmOwnership, validate } from "../middlewares/index.js";
 import {
   createFeedingLog,

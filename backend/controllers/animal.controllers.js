@@ -4,26 +4,12 @@ import { Animal } from "../models/index.js";
 
 export const createAnimal = async (req, res) => {
   try {
-    const {
-      tagNumber,
-      name,
-      species,
-      breed,
-      gender,
-      dateOfBirth,
-      acquisitionDate,
-      status,
-      location,
-      photoUrl,
-    } = req.body;
+    const { tagNumber, name, species, gender } = req.body;
+    const farmId = req.user.farmId;
 
-    const farmId = req.user.farmId; // critical
-
-    // Check tagNumber conflict inside SAME farm
-    const existingAnimal = await Animal.findOne({ tagNumber, farmId });
-    if (existingAnimal) {
+    if (!tagNumber || !name || !species || !gender) {
       return res.status(400).json({
-        message: "An animal with this tag number already exists in your farm.",
+        message: "Missing required fields",
       });
     }
 
@@ -31,13 +17,7 @@ export const createAnimal = async (req, res) => {
       tagNumber,
       name,
       species,
-      breed,
       gender,
-      dateOfBirth,
-      acquisitionDate,
-      status,
-      location,
-      photoUrl,
       farmId,
     });
 
@@ -45,10 +25,23 @@ export const createAnimal = async (req, res) => {
       message: "Animal created successfully",
       animal,
     });
-  } catch (error) {
-    return res.status(500).json({ message: "Error creating animal", error });
+  }catch (error) {
+  console.error("CREATE ANIMAL ERROR:", error);
+
+  if (error.code === 11000) {
+    return res.status(400).json({
+      message: "Animal tag already exists in this farm",
+    });
   }
+
+  return res.status(500).json({
+    message: "Failed to create animal",
+    error: error.message,
+  });
+}
+
 };
+
 
 
 export const getAnimals = async (req, res) => {
@@ -78,8 +71,8 @@ export const updateAnimal = async (req, res) => {
   try {
     const updates = req.body;
 
-    const updatedAnimal = await Animal.findByIdAndUpdate(
-      req.params.id,
+    const updatedAnimal = await Animal.findOneAndUpdate(
+      { _id: req.params.id, farmId: req.user.farmId },
       updates,
       { new: true }
     );
@@ -89,7 +82,9 @@ export const updateAnimal = async (req, res) => {
       updatedAnimal,
     });
   } catch (error) {
-    return res.status(500).json({ message: "Error updating animal", error });
+    return res.status(500).json({
+      message: "Error updating animal",
+    });
   }
 };
 

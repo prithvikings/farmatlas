@@ -1,7 +1,7 @@
 //routes/user.routes.js
 import express from "express";
 import { isAuth, requireRole, validate } from "../middlewares/index.js";
-import { createUserByAdmin } from "../controllers/index.js";
+import { createUserByAdmin,getUsersByFarm } from "../controllers/index.js";
 import { createUserByAdminSchema } from "../validation/index.js";
 
 
@@ -14,6 +14,13 @@ router.post(
   requireRole("ADMIN"),
   validate(createUserByAdminSchema),
   createUserByAdmin
+);
+
+router.get(
+  "/",
+  isAuth,
+  requireRole("ADMIN"),
+  getUsersByFarm
 );
 
 export default router;
