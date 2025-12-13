@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createInventoryItemSchema = z.object({
   body: z.object({
     name: z.string().min(1),
-    category: z.enum(["Feed", "Medicine", "Other"]),
+    category: z.enum(["FEED", "MEDICINE", "OTHER"]),
     quantity: z.number().min(0),
     unit: z.string().min(1),
     lowStockThreshold: z.number().min(0),

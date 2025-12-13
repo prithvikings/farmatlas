@@ -24,11 +24,13 @@ export const addHealthRecord = async (req, res) => {
       return res.status(403).json({ message: "Forbidden: Animal belongs to another farm." });
     }
 
+    const safeDate = date ? new Date(date) : new Date();
+
     const record = await HealthRecord.create({
       farmId,
       animalId,
       createdBy,
-      date,
+      date: safeDate,
       type,
       notes,
       medication,
@@ -59,7 +61,11 @@ export const getHealthRecordsByAnimal = async (req, res) => {
       return res.status(403).json({ message: "Forbidden: Animal belongs to another farm." });
     }
 
-    const records = await HealthRecord.find({ animalId, farmId }).sort({ date: -1, createdAt: -1 });
+    const records = await HealthRecord.find({ animalId, farmId })
+  .populate("createdBy", "name role")
+  .populate("animalId", "tagNumber name status")
+  .sort({ date: -1, createdAt: -1 });
+
     return res.status(200).json(records);
   } catch (error) {
     console.error("getHealthRecordsByAnimal error:", error);
@@ -138,5 +144,25 @@ export const getRecentHealthIssues = async (req, res) => {
   } catch (error) {
     console.error("getRecentHealthIssues error:", error);
     return res.status(500).json({ message: "Error fetching recent issues.", error: error.message });
+  }
+};
+
+
+export const getAllHealthRecordsForFarm = async (req, res) => {
+  try {
+    const farmId = req.user.farmId;
+
+    const records = await HealthRecord.find({ farmId })
+      .populate("animalId", "tagNumber name status")
+      .populate("createdBy", "name role")
+      .sort({ date: -1, createdAt: -1 });
+
+    return res.status(200).json(records);
+  } catch (error) {
+    console.error("getAllHealthRecordsForFarm error:", error);
+    return res.status(500).json({
+      message: "Failed to fetch health records",
+      error: error.message,
+    });
   }
 };

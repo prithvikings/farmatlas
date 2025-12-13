@@ -9,6 +9,7 @@ import {
   updateHealthRecord,
   deleteHealthRecord,
   getRecentHealthIssues,
+  getAllHealthRecordsForFarm,
 } from "../controllers/index.js";
 import { createHealthRecordSchema } from "../validation/index.js";
 
@@ -67,4 +68,14 @@ router.get(
   getRecentHealthIssues
 );
 
+
+router.get(
+  "/",
+  isAuth,
+  requireRole("ADMIN", "VET"),
+  getAllHealthRecordsForFarm
+);
+
+
 export default router;
+

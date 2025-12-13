@@ -19,6 +19,12 @@ import PublicRoute from "./components/PublicRoute";
 import Animals from "./components/Animals";
 import AdminUsers from "./page/AdminUsers";
 import FeedingLogs from "./components/FeedingLogs";
+import FeedingOverview from "./components/FeedingOverview";
+import HealthOverview from "./components/HealthOverview";
+import AnimalHealthTimeline from "./components/AnimalHealthTimeline";
+import AnimalHealth from "./components/animals/AnimalHealth";
+import Inventory from "./components/inventory/Inventory";
+import InventoryUsage from "./components/inventory/InventoryUsage";
 
 const App = () => {
   return (
@@ -119,11 +125,56 @@ const App = () => {
 <Route
   path="/admin/animals/:animalId/feeding"
   element={
-    <RoleRoute role="ADMIN">
+    <RoleRoute role={["ADMIN", "WORKER"]}>
       <FeedingLogs />
     </RoleRoute>
   }
 />
+<Route
+  path="/admin/feeding"
+  element={
+    <RoleRoute role="ADMIN">
+      <FeedingOverview />
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/admin/health"
+  element={
+    <RoleRoute role={["ADMIN", "VET"]}>
+      <HealthOverview />
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/admin/animals/:animalId/health"
+  element={
+    <RoleRoute role={["ADMIN", "VET", "WORKER"]}>
+      <AnimalHealth />
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/admin/inventory"
+  element={
+    <RoleRoute role={["ADMIN", "WORKER", "VET"]}>
+      <Inventory />
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/admin/inventory/:itemId/usage"
+  element={
+    <RoleRoute role={["ADMIN", "WORKER", "VET"]}>
+      <InventoryUsage />
+    </RoleRoute>
+  }
+/>
+
 
     </Routes>
   );

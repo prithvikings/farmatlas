@@ -22,6 +22,10 @@ const feedingLogSchema = new mongoose.Schema({
   required: true,
 }
 ,
+inventoryItemId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "InventoryItem",
+},
 
   notes: { type: String },
 

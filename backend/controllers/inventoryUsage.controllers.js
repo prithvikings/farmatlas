@@ -19,9 +19,15 @@ export const logInventoryUsage = async (req, res) => {
     }
 
     // Update quantity
-    item.quantity -= quantityUsed;
-    if (item.quantity < 0) item.quantity = 0;
-    await item.save();
+    if (item.quantity < quantityUsed) {
+  return res.status(400).json({
+    message: "Not enough stock available.",
+  });
+}
+
+item.quantity -= quantityUsed;
+await item.save();
+
 
     const usage = await InventoryUsage.create({
       itemId,
@@ -56,7 +62,9 @@ export const getUsageLogsByItem = async (req, res) => {
 
     const logs = await InventoryUsage.find({ itemId, farmId })
       .sort({ createdAt: -1 })
-      .populate("usedBy", "name role");
+      .populate("usedBy", "name role")
+.populate("itemId", "name unit category");
+
 
     return res.status(200).json(logs);
 

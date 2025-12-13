@@ -7,7 +7,8 @@ import {
   getFeedingLogsByAnimal,
   getSingleFeedingLog,
   deleteFeedingLog,
-  updateFeedingLog
+  updateFeedingLog,
+  getAllFeedingLogsForFarm,
 } from "../controllers/index.js";
 import { createFeedingLogSchema } from "../validation/index.js";
 
@@ -58,4 +59,11 @@ router.delete(
   deleteFeedingLog
 );
 
+
+router.get(
+  "/",
+  isAuth,
+  requireRole("ADMIN"),
+  getAllFeedingLogsForFarm
+);
 export default router;
