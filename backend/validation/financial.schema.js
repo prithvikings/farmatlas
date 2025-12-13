@@ -6,6 +6,13 @@ export const createTransactionSchema = z.object({
     amount: z.number().positive(),
     date: z.string().or(z.date()).optional(),
     description: z.string().optional(),
-    category: z.string().optional(),
+    category: z.enum([
+  "FEED",
+  "MEDICINE",
+  "EQUIPMENT",
+  "SALES",
+  "OTHER",
+]).optional(),
+
   }),
 });

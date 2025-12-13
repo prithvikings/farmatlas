@@ -21,15 +21,22 @@ export const createTransaction = async (req, res) => {
       return res.status(400).json({ message: "Invalid type. Must be INCOME or EXPENSE." });
     }
 
+    const txDate = date ? new Date(date) : new Date();
+if (txDate < new Date("2015-01-01")) {
+  return res.status(400).json({ message: "Date too old" });
+}
+
+
     const tx = await FinancialTransaction.create({
-      farmId,
-      type,
-      amount,
-      date: date ? new Date(date) : Date.now(),
-      description,
-      category,
-      createdBy,
-    });
+  farmId,
+  type: type.toUpperCase(),        // ✅ normalize
+  amount: Number(amount),          // ✅ ensure number
+  category: category.toUpperCase(),// ✅ normalize
+  date: txDate,
+  description,
+  createdBy,
+});
+
 
     return res.status(201).json({ message: "Transaction created.", transaction: tx });
   } catch (error) {
@@ -60,7 +67,8 @@ export const getTransactions = async (req, res) => {
       sortDir = "desc",
     } = req.query;
 
-    const q = { farmId: mongoose.Types.ObjectId(farmId) };
+    const q = { farmId };
+
 
     if (type) q.type = type.toUpperCase();
     if (category) q.category = category;
@@ -73,6 +81,7 @@ export const getTransactions = async (req, res) => {
     const skip = (Math.max(1, Number(page)) - 1) * Number(limit);
     const [items, total] = await Promise.all([
       FinancialTransaction.find(q)
+        .populate("createdBy", "name role")
         .sort({ [sortBy]: sortDir === "asc" ? 1 : -1 })
         .skip(skip)
         .limit(Number(limit)),
@@ -148,14 +157,27 @@ export const deleteTransaction = async (req, res) => {
  */
 export const getSummaryForPeriod = async (req, res) => {
   try {
-    const farmId = mongoose.Types.ObjectId(req.user.farmId);
+   const farmId = new mongoose.Types.ObjectId(req.user.farmId);
+ // ✅ FIXED
     const { startDate, endDate } = req.query;
 
-    const start = startDate ? new Date(startDate) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const start = startDate
+      ? new Date(startDate)
+      : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
     const end = endDate ? new Date(endDate) : new Date();
 
     const agg = await FinancialTransaction.aggregate([
-      { $match: { farmId, date: { $gte: start, $lte: end } } },
+      { 
+  $match: { 
+    farmId,
+    date: { 
+      $gte: start, 
+      $lte: end 
+    } 
+  } 
+}
+,
       {
         $group: {
           _id: "$type",
@@ -166,19 +188,25 @@ export const getSummaryForPeriod = async (req, res) => {
 
     let totalIncome = 0;
     let totalExpense = 0;
-    (agg || []).forEach((g) => {
+
+    agg.forEach((g) => {
       if (g._id === "INCOME") totalIncome = g.total;
       if (g._id === "EXPENSE") totalExpense = g.total;
     });
 
-    const net = totalIncome - totalExpense;
-
-    return res.status(200).json({ totalIncome, totalExpense, net, start, end });
+    res.status(200).json({
+      totalIncome,
+      totalExpense,
+      net: totalIncome - totalExpense,
+      start,
+      end,
+    });
   } catch (error) {
     console.error("getSummaryForPeriod error:", error);
-    return res.status(500).json({ message: "Error fetching summary.", error: error.message });
+    res.status(500).json({ message: "Error fetching summary" });
   }
 };
+
 
 /**
  * getMonthlyTotals
@@ -187,24 +215,34 @@ export const getSummaryForPeriod = async (req, res) => {
  */
 export const getMonthlyTotals = async (req, res) => {
   try {
-    const farmId = mongoose.Types.ObjectId(req.user.farmId);
+    const farmId = new mongoose.Types.ObjectId(req.user.farmId);
+ // ✅ FIXED
     const months = Math.max(1, Number(req.query.months || 6));
 
-    // compute start month (first day of month)
     const now = new Date();
     const start = new Date(now.getFullYear(), now.getMonth() - (months - 1), 1);
-    const end = new Date(now.getFullYear(), now.getMonth() + 1, 1); // exclusive upper bound
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
     const agg = await FinancialTransaction.aggregate([
-      { $match: { farmId, date: { $gte: start, $lt: end } } },
       {
-        $project: {
-          year: { $year: "$date" },
-          month: { $month: "$date" },
-          type: "$type",
-          amount: "$amount",
+        $match: {
+          farmId,
+          date: { $gte: start, $lt: end },
         },
       },
+      {
+  $project: {
+    year: {
+      $year: { date: "$date", timezone: "Asia/Kolkata" }
+    },
+    month: {
+      $month: { date: "$date", timezone: "Asia/Kolkata" }
+    },
+    type: "$type",
+    amount: "$amount",
+  },
+}
+,
       {
         $group: {
           _id: { year: "$year", month: "$month", type: "$type" },
@@ -213,27 +251,44 @@ export const getMonthlyTotals = async (req, res) => {
       },
     ]);
 
-    // Build map year-month -> {income, expense}
     const map = {};
+
     agg.forEach((g) => {
-      const key = `${g._id.year}-${String(g._id.month).padStart(2, "0")}`;
-      if (!map[key]) map[key] = { year: g._id.year, month: g._id.month, income: 0, expense: 0 };
+      const key = `${g._id.year}-${g._id.month}`;
+      if (!map[key]) {
+        map[key] = {
+          year: g._id.year,
+          month: g._id.month,
+          income: 0,
+          expense: 0,
+        };
+      }
       if (g._id.type === "INCOME") map[key].income = g.total;
       if (g._id.type === "EXPENSE") map[key].expense = g.total;
     });
 
-    // Build array for each month from start -> now
     const results = [];
     for (let i = 0; i < months; i++) {
       const d = new Date(start.getFullYear(), start.getMonth() + i, 1);
-      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
-      const entry = map[key] || { year: d.getFullYear(), month: d.getMonth() + 1, income: 0, expense: 0 };
-      results.push({ ...entry, net: (entry.income || 0) - (entry.expense || 0) });
+      const key = `${d.getFullYear()}-${d.getMonth() + 1}`;
+      const entry =
+        map[key] || {
+          year: d.getFullYear(),
+          month: d.getMonth() + 1,
+          income: 0,
+          expense: 0,
+        };
+
+      results.push({
+        ...entry,
+        net: entry.income - entry.expense,
+      });
     }
 
-    return res.status(200).json({ months: results });
+    res.status(200).json({ months: results });
   } catch (error) {
     console.error("getMonthlyTotals error:", error);
-    return res.status(500).json({ message: "Error fetching monthly totals.", error: error.message });
+    res.status(500).json({ message: "Error fetching monthly totals" });
   }
 };
+

@@ -1,57 +1,76 @@
+import mongoose from "mongoose";
 import Animal from "../models/animal.models.js";
 import HealthRecord from "../models/healthRecord.models.js";
 import FinancialTransaction from "../models/financialTransaction.models.js";
 
 export const getAdminDashboardStats = async (req, res) => {
   try {
-    const { farmId } = req.user;
+    const farmId = new mongoose.Types.ObjectId(req.user.farmId);
 
-    // Animals
-    const totalAnimals = await Animal.countDocuments({ farmId });
-    const activeAnimals = await Animal.countDocuments({
-      farmId,
-      status: "ACTIVE",
-    });
+    // ------------------------
+    // Animals stats
+    // ------------------------
+    const [totalAnimals, activeAnimals] = await Promise.all([
+      Animal.countDocuments({ farmId }),
+      Animal.countDocuments({ farmId, status: "ACTIVE" }),
+    ]);
 
-    // Animals with recent health issues
+    // ------------------------
+    // Health issues (last 90 days, ANY type)
+    // ------------------------
+    const since = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+
     const animalsWithHealthIssues = await HealthRecord.distinct("animalId", {
       farmId,
-    });
+      createdAt: { $gte: since }, // 👈 IMPORTANT
+    }).then((arr) => arr.length);
 
-    // Financials (current month)
-    const startOfMonth = new Date();
-    startOfMonth.setDate(1);
-    startOfMonth.setHours(0, 0, 0, 0);
+    // ------------------------
+    // Finance (this month)
+    // ------------------------
+    const start = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const end = new Date();
 
-    const financials = await FinancialTransaction.aggregate([
+    const agg = await FinancialTransaction.aggregate([
       {
         $match: {
           farmId,
-          date: { $gte: startOfMonth },
+          date: { $gte: start, $lte: end },
         },
       },
       {
         $group: {
-          _id: "$transactionType",
+          _id: "$type",
           total: { $sum: "$amount" },
         },
       },
     ]);
 
-    const income =
-      financials.find((f) => f._id === "income")?.total || 0;
-    const expense =
-      financials.find((f) => f._id === "expense")?.total || 0;
+    let income = 0;
+    let expense = 0;
 
-    res.json({
+    agg.forEach((g) => {
+      if (g._id === "INCOME") income = g.total;
+      if (g._id === "EXPENSE") expense = g.total;
+    });
+
+    // ------------------------
+    // RESPONSE (single, stable contract)
+    // ------------------------
+    res.status(200).json({
       totalAnimals,
       activeAnimals,
-      animalsWithHealthIssues: animalsWithHealthIssues.length,
-      income,
-      expense,
-      net: income - expense,
+      animalsWithHealthIssues,
+      finance: {
+        income,
+        expense,
+        net: income - expense,
+        start,
+        end,
+      },
     });
   } catch (error) {
+    console.error("Admin dashboard error:", error);
     res.status(500).json({
       message: "Failed to load dashboard stats",
       error: error.message,

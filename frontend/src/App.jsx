@@ -21,10 +21,12 @@ import AdminUsers from "./page/AdminUsers";
 import FeedingLogs from "./components/FeedingLogs";
 import FeedingOverview from "./components/FeedingOverview";
 import HealthOverview from "./components/HealthOverview";
+import FinancialOverview from "./components/FinancialOverview";
 import AnimalHealthTimeline from "./components/AnimalHealthTimeline";
 import AnimalHealth from "./components/animals/AnimalHealth";
 import Inventory from "./components/inventory/Inventory";
 import InventoryUsage from "./components/inventory/InventoryUsage";
+import Financials from "./components/Financial";
 
 const App = () => {
   return (
@@ -175,7 +177,27 @@ const App = () => {
   }
 />
 
+<Route
+  path="/admin/financials"
+  element={
+    <RoleRoute role={["ADMIN"]}>
+      <FinancialOverview />
+    </RoleRoute>
+  }
+/>
 
+<Route
+  path="/admin/financials/transactions"
+  element={
+    <RoleRoute role={["ADMIN"]}>
+      <Financials />
+    </RoleRoute>
+  }
+/>
+
+<Route path="/logout" element={<div>Logging out...</div>} />
+
+<Route path="*" element={<div>404 Not Found</div>} />
     </Routes>
   );
 };

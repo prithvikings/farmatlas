@@ -48,7 +48,10 @@ const AdminLayout = ({ children }) => {
                 <Database size={18} /> Inventory
               </Link>
               <Link to="/admin/financials" className="flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-zinc-900 p-2 rounded px-4 py-2 transition duration-300 ease-in-out">
-                <DollarSign size={18} /> Financials
+                <DollarSign size={18} /> Financials overview
+              </Link>
+              <Link to="/admin/financials/transactions" className="flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-zinc-900 p-2 rounded px-4 py-2 transition duration-300 ease-in-out">
+                <DollarSign size={18} /> Transactions
               </Link>
             </nav>
 
