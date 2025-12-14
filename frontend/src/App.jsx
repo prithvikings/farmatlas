@@ -1,6 +1,7 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
+/* ---------------- PUBLIC ---------------- */
 import Landing from "./page/Landing";
 import Support from "./page/Support";
 import SupportBlog from "./components/Landing/SupportBlog";
@@ -10,232 +11,135 @@ import ForgotEmail from "./page/ForgotEmail";
 import SendOtp from "./page/SendOtp";
 import ResetPassword from "./page/Resetpassword";
 
+/* ---------------- DASHBOARDS ---------------- */
 import AdminDashboard from "./page/AdminDashboard";
 import WorkerDashboard from "./page/WorkerDashboard";
 import VetDashboard from "./page/VetDashboard";
 
+/* ---------------- LAYOUT ---------------- */
+import DashboardLayout from "./layout/DashboardLayout";
+
+/* ---------------- GUARDS ---------------- */
 import RoleRoute from "./components/RoleRoute";
 import PublicRoute from "./components/PublicRoute";
+
+/* ---------------- ADMIN ---------------- */
 import Animals from "./components/Animals";
 import AdminUsers from "./page/AdminUsers";
-import FeedingLogs from "./components/FeedingLogs";
-import FeedingOverview from "./components/FeedingOverview";
-import HealthOverview from "./components/HealthOverview";
 import FinancialOverview from "./components/FinancialOverview";
-import AnimalHealthTimeline from "./components/AnimalHealthTimeline";
-import AnimalHealth from "./components/animals/AnimalHealth";
+import Financials from "./components/Financial";
 import Inventory from "./components/inventory/Inventory";
 import InventoryUsage from "./components/inventory/InventoryUsage";
-import Financials from "./components/Financial";
+
+/* ---------------- SHARED ---------------- */
+import FeedingOverview from "./components/FeedingOverview";
+import FeedingLogs from "./components/FeedingLogs";
+import HealthOverview from "./components/HealthOverview";
+import AnimalHealth from "./components/animals/AnimalHealth";
+
+/* ---------------- WORKER ---------------- */
+import WorkerAnimals from "./page/WorkerAnimals";
 
 const App = () => {
   return (
     <Routes>
-      {/* Public routes */}
+      {/* ===================================================== */}
+      {/* ===================== PUBLIC ======================== */}
+      {/* ===================================================== */}
       <Route path="/" element={<Landing />} />
       <Route path="/support" element={<Support />} />
       <Route path="/support/:supportname" element={<SupportBlog />} />
-      <Route
-        path="/signin"
-        element={
-          <PublicRoute>
-            <Signin />
-          </PublicRoute>
-        }
-      />
 
-      <Route
-        path="/signup"
-        element={
-          <PublicRoute>
-            <Signup />
-          </PublicRoute>
-        }
-      />
+      <Route path="/signin" element={<PublicRoute><Signin /></PublicRoute>} />
+      <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+      <Route path="/forgot-password" element={<PublicRoute><ForgotEmail /></PublicRoute>} />
+      <Route path="/send-otp" element={<PublicRoute><SendOtp /></PublicRoute>} />
+      <Route path="/reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
 
-      <Route
-        path="/forgot-password"
-        element={
-          <PublicRoute>
-            <ForgotEmail />
-          </PublicRoute>
-        }
-      />
-
-      <Route
-        path="/reset-password"
-        element={
-          <PublicRoute>
-            <ResetPassword />
-          </PublicRoute>
-        }
-      />
-
-      <Route
-        path="/send-otp"
-        element={
-          <PublicRoute>
-            <SendOtp />
-          </PublicRoute>
-        }
-      />
-
-      {/* Protected role-based routes */}
+      {/* ===================================================== */}
+      {/* ===================== ADMIN ========================= */}
+      {/* ===================================================== */}
       <Route
         path="/admin"
         element={
           <RoleRoute role="ADMIN">
-            <AdminDashboard />
+            <DashboardLayout />
           </RoleRoute>
         }
-      />
+      >
+        <Route index element={<AdminDashboard />} />
+        <Route path="animals" element={<Animals />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="feeding" element={<FeedingOverview />} />
+        <Route path="health" element={<HealthOverview />} />
+        <Route path="inventory" element={<Inventory />} />
+        <Route path="inventory/:itemId/usage" element={<InventoryUsage />} />
+        <Route path="financials" element={<FinancialOverview />} />
+        <Route path="financials/transactions" element={<Financials />} />
+      </Route>
 
+      {/* ===================================================== */}
+      {/* ===================== WORKER ======================== */}
+      {/* ===================================================== */}
       <Route
-  path="/worker"
-  element={
-    <RoleRoute role="WORKER">
-      <WorkerDashboard />
-    </RoleRoute>
-  }
-/>
+        path="/worker"
+        element={
+          <RoleRoute role="WORKER">
+            <DashboardLayout />
+          </RoleRoute>
+        }
+      >
+        <Route index element={<WorkerDashboard />} />
+        <Route path="health" element={<HealthOverview />} />
+        <Route path="animals" element={<WorkerAnimals />} />
+        <Route path="feeding" element={<FeedingOverview />} />
+        <Route path="inventory" element={<Inventory />} />
+      </Route>
 
-
+      {/* ===================================================== */}
+      {/* ===================== VET =========================== */}
+      {/* ===================================================== */}
       <Route
         path="/vet"
         element={
           <RoleRoute role="VET">
-            <VetDashboard />
+            <DashboardLayout />
           </RoleRoute>
         }
-      />
+      >
+        <Route index element={<VetDashboard />} />
+        <Route path="health" element={<HealthOverview />} />
+      </Route>
 
+      {/* ===================================================== */}
+      {/* ===================== SHARED ======================== */}
+      {/* ===================================================== */}
       <Route
-        path="/admin/animals"
+        path="/animals/:animalId/feeding"
         element={
-          <RoleRoute role="ADMIN">
-            <Animals />
+          <RoleRoute role={["ADMIN", "WORKER"]}>
+            <DashboardLayout />
           </RoleRoute>
         }
-      />
+      >
+        <Route index element={<FeedingLogs />} />
+      </Route>
+
       <Route
-  path="/admin/users"
-  element={
-    <RoleRoute role="ADMIN">
-      <AdminUsers />
-    </RoleRoute>
-  }
-/>
+        path="/animals/:animalId/health"
+        element={
+          <RoleRoute role={["ADMIN", "VET"]}>
+            <DashboardLayout />
+          </RoleRoute>
+        }
+      >
+        <Route index element={<AnimalHealth />} />
+      </Route>
 
-<Route
-  path="/worker"
-  element={
-    <RoleRoute role="WORKER">
-      <WorkerDashboard />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/worker/health"
-  element={
-    <RoleRoute role={["WORKER", "ADMIN", "VET"]}>
-      <HealthOverview />   {/* SAME component */}
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/worker/feeding"
-  element={
-    <RoleRoute role={["WORKER", "ADMIN"]}>
-      <FeedingOverview />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/worker/inventory"
-  element={
-    <RoleRoute role={["WORKER", "ADMIN"]}>
-      <Inventory />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/animals/:animalId/feeding"
-  element={
-    <RoleRoute role={["ADMIN", "WORKER"]}>
-      <FeedingLogs />
-    </RoleRoute>
-  }
-/>
-<Route
-  path="/admin/feeding"
-  element={
-    <RoleRoute role="ADMIN">
-      <FeedingOverview />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/health"
-  element={
-    <RoleRoute role={["ADMIN", "VET"]}>
-      <HealthOverview />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/animals/:animalId/health"
-  element={
-    <RoleRoute role={["ADMIN", "VET", "WORKER"]}>
-      <AnimalHealth />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/inventory"
-  element={
-    <RoleRoute role={["ADMIN", "WORKER", "VET"]}>
-      <Inventory />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/inventory/:itemId/usage"
-  element={
-    <RoleRoute role={["ADMIN", "WORKER", "VET"]}>
-      <InventoryUsage />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/financials"
-  element={
-    <RoleRoute role={["ADMIN"]}>
-      <FinancialOverview />
-    </RoleRoute>
-  }
-/>
-
-<Route
-  path="/admin/financials/transactions"
-  element={
-    <RoleRoute role={["ADMIN"]}>
-      <Financials />
-    </RoleRoute>
-  }
-/>
-
-<Route path="/logout" element={<div>Logging out...</div>} />
-
-<Route path="*" element={<div>404 Not Found</div>} />
+      {/* ===================================================== */}
+      {/* ===================== FALLBACK ====================== */}
+      {/* ===================================================== */}
+      <Route path="*" element={<div>404 Not Found</div>} />
     </Routes>
   );
 };

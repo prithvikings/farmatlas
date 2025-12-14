@@ -26,6 +26,10 @@ const WorkerSidebar = () => {
                 <Grid size={18} /> Dashboard
               </Link>
 
+              <Link to="/worker/animals" className="flex items-center gap-3 p-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-700">
+                <Box size={18} /> Animals
+              </Link>
+
               <Link to="/worker/health" className="flex items-center gap-3 p-2 rounded hover:bg-zinc-100 dark:hover:bg-zinc-700">
                 <Clipboard size={18} /> Health
               </Link>
@@ -40,7 +44,7 @@ const WorkerSidebar = () => {
             </nav>
 
             <div className="mt-6 pt-4 border-t">
-              <button onClick={handleLogout} className="flex gap-2 text-sm">
+              <button onClick={handleLogout} className="flex gap-2 text-sm cursor-pointer">
                 <LogOut size={16} /> Logout
               </button>
             </div>

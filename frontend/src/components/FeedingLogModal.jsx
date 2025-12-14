@@ -3,11 +3,13 @@ import api from "../lib/axios";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
-const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
+const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
   const [feedItems, setFeedItems] = useState([]);
+  const [animals, setAnimals] = useState([]);
   const [error, setError] = useState(null);
 
   const [form, setForm] = useState({
+    animalId: "",
     inventoryItemId: "",
     foodType: "",
     quantity: "",
@@ -16,22 +18,30 @@ const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
     notes: "",
   });
 
+  // ---------------- LOAD DATA ----------------
   useEffect(() => {
-  if (!open) return;
+    if (!open) return;
 
-  api.get("/inventory/item")
-    .then((res) => {
-      const feeds = res.data.filter(
-        (item) =>
-          item.category === "FEED" && item.quantity > 0
-      );
-      setFeedItems(feeds);
-    })
-    .catch(() => {
-      setError("Failed to load feed inventory");
-    });
-}, [open]);
+    const loadData = async () => {
+      try {
+        const [inventoryRes, animalsRes] = await Promise.all([
+          api.get("/inventory/item"),
+          api.get("/animals"),
+        ]);
 
+        const feeds = inventoryRes.data.filter(
+          (item) => item.category === "FEED" && item.quantity > 0
+        );
+
+        setFeedItems(feeds);
+        setAnimals(animalsRes.data);
+      } catch (err) {
+        setError("Failed to load feeding data");
+      }
+    };
+
+    loadData();
+  }, [open]);
 
   if (!open) return null;
 
@@ -39,8 +49,14 @@ const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
     (i) => i._id === form.inventoryItemId
   );
 
+  // ---------------- SUBMIT ----------------
   const handleSubmit = async () => {
     setError(null);
+
+    if (!form.animalId) {
+      setError("Please select an animal");
+      return;
+    }
 
     if (!form.inventoryItemId) {
       setError("Please select a feed item");
@@ -52,14 +68,19 @@ const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
       return;
     }
 
-    if (Number(form.quantity) > selectedFeed.quantity) {
+    if (selectedFeed && Number(form.quantity) > selectedFeed.quantity) {
       setError("Quantity exceeds available stock");
+      return;
+    }
+
+    if (!form.dateTime) {
+      setError("Please select date and time");
       return;
     }
 
     try {
       await api.post("/feeding", {
-        animalId,
+        animalId: form.animalId,
         inventoryItemId: form.inventoryItemId,
         foodType: form.foodType,
         quantity: Number(form.quantity),
@@ -77,8 +98,9 @@ const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
     }
   };
 
+  // ---------------- UI ----------------
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
         <h2 className="text-lg font-medium mb-4">
           Add Feeding Log
@@ -90,14 +112,29 @@ const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
           </div>
         )}
 
-        {/* No feed available warning */}
-{feedItems.length === 0 && (
-  <div className="text-sm text-red-600 mb-3">
-    No feed available in inventory.
-  </div>
-)}
+        {feedItems.length === 0 && (
+          <div className="text-sm text-red-600 mb-3">
+            No feed available in inventory.
+          </div>
+        )}
 
         <div className="space-y-3">
+          {/* Animal Selector */}
+          <select
+            className="w-full border rounded p-2 text-sm"
+            value={form.animalId}
+            onChange={(e) =>
+              setForm({ ...form, animalId: e.target.value })
+            }
+          >
+            <option value="">Select Animal</option>
+            {animals.map((a) => (
+              <option key={a._id} value={a._id}>
+                {a.name} ({a.tagNumber})
+              </option>
+            ))}
+          </select>
+
           {/* Feed Selector */}
           <select
             className="w-full border rounded p-2 text-sm"
@@ -160,11 +197,11 @@ const FeedingLogModal = ({ open, setOpen, animalId, onSuccess }) => {
             Cancel
           </Button>
           <Button
-  onClick={handleSubmit}
-  disabled={feedItems.length === 0}
->
-  Create
-</Button>
+            onClick={handleSubmit}
+            disabled={feedItems.length === 0}
+          >
+            Create
+          </Button>
         </div>
       </div>
     </div>

@@ -6,3 +6,4 @@ export { default as healthRoutes } from "./health.routes.js";
 export { default as inventoryRoutes } from "./inventory.routes.js";
 export { default as userRoutes } from "./user.routes.js";
 export { default as adminRoutes } from "./admin.routes.js";
+export { default as workerRoutes } from "./worker.routes.js";

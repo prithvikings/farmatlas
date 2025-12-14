@@ -1,97 +1,314 @@
 import { useEffect, useState } from "react";
-import WorkerLayout from "./WorkerLayout";
 import api from "../lib/axios";
-import { LargeCard } from "../components/dashboard/AdminCards";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+} from "recharts";
+
+const COLORS = ["#22C55E", "#F97316", "#EF4444"];
 
 const WorkerDashboard = () => {
-  const [healthCount, setHealthCount] = useState(0);
-  const [recentFeeding, setRecentFeeding] = useState([]);
-  const [lowStock, setLowStock] = useState([]);
+  const navigate = useNavigate();
+
+  const [data, setData] = useState({
+    animalsCount: 0,
+    healthAlerts: 0,
+    lowStockItems: [],
+    recentFeedings: [],
+    feedingTrend: [],
+    inventorySummary: [],
+    tasks: [], // ✅ CRITICAL
+  });
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [healthRes, feedingRes, inventoryRes] = await Promise.all([
-          api.get("/health/issues/summary"),
-          api.get("/feeding?limit=5"),
-          api.get("/inventory/item"),
-        ]);
-
-        setHealthCount(healthRes.data.count);
-        setRecentFeeding(feedingRes.data.items);
-
-        const low = inventoryRes.data.filter(
-          (i) => i.quantity <= i.lowStockThreshold
-        );
-        setLowStock(low);
-      } catch (err) {
-        console.error("Worker dashboard load failed", err);
-      }
-    };
-
-    fetchData();
+    api
+      .get("/worker/dashboard")
+      .then((res) =>
+        setData({
+          animalsCount: 0,
+          healthAlerts: 0,
+          lowStockItems: [],
+          recentFeedings: [],
+          feedingTrend: [],
+          inventorySummary: [],
+          tasks: [],
+          ...res.data,
+        })
+      )
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
+  if (loading) {
+    return (
+      <div className="text-sm text-zinc-500">
+        Loading dashboard…
+      </div>
+    );
+  }
+
+  /* ---------------- PRIORITY LOGIC ---------------- */
+  const hasUrgentHealth = data.healthAlerts > 0;
+  const hasLowStock = data.lowStockItems.length > 0;
+
+  /* ---------------- INVENTORY SUMMARY ---------------- */
+  const inventoryBarData = [
+    { label: "Low Stock", count: data.lowStockItems.length },
+    {
+      label: "OK Stock",
+      count: Math.max(
+        data.animalsCount - data.lowStockItems.length,
+        0
+      ),
+    },
+  ];
+
   return (
-    <WorkerLayout>
-      <div className="grid grid-cols-2 gap-6">
-        {/* Health Alerts */}
-        <LargeCard title="Health Alerts">
-          <div className="text-4xl font-bold text-red-600">
-            {healthCount}
+    <>
+      {/* ---------------- KPI ---------------- */}
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        <Kpi label="Total Animals" value={data.animalsCount} />
+        <Kpi
+          label="Health Alerts"
+          value={data.healthAlerts}
+          danger={data.healthAlerts > 0}
+        />
+        <Kpi
+          label="Low Stock Items"
+          value={data.lowStockItems.length}
+          danger={data.lowStockItems.length > 0}
+        />
+        <Kpi
+          label="Today’s Priority"
+          value={
+            hasUrgentHealth
+              ? "Health"
+              : hasLowStock
+              ? "Inventory"
+              : "Normal"
+          }
+          highlight
+        />
+      </div>
+
+      {/* ---------------- TASKS ---------------- */}
+      <div className="bg-white dark:bg-zinc-800 border rounded-lg p-4 mb-6">
+        <h3 className="font-medium mb-3">Today’s Tasks</h3>
+
+        {data.tasks.length === 0 ? (
+          <div className="text-sm text-zinc-500">
+            No pending tasks 🎉
           </div>
-          <p className="text-sm text-zinc-500">
-            Animals need attention
-          </p>
-          <Link
-            to="/worker/health"
-            className="text-sm text-blue-600 mt-2 inline-block"
-          >
-            View health records →
-          </Link>
-        </LargeCard>
+        ) : (
+          <div className="space-y-3">
+            {data.tasks.map((task, idx) => (
+              <div
+                key={idx}
+                onClick={() => navigate(task.link)}
+                className="flex justify-between items-start border rounded p-3 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700 transition"
+              >
+                <div>
+                  <div className="font-medium">{task.title}</div>
+                  <div className="text-xs text-zinc-500">
+                    {task.description}
+                  </div>
+                </div>
 
-        {/* Recent Feeding */}
-        <LargeCard title="Recent Feeding">
-          <div className="space-y-2 text-sm">
-            {recentFeeding.length === 0 && (
-              <div className="text-zinc-500">No recent feeding logs</div>
-            )}
-
-            {recentFeeding.map((f) => (
-              <div key={f._id} className="flex justify-between">
-                <span>{f.animal?.name}</span>
-                <span>
-                  {f.quantity} {f.unit}
+                <span
+                  className={`text-xs font-medium px-2 py-1 rounded ${
+                    task.priority === "HIGH"
+                      ? "bg-red-100 text-red-600"
+                      : "bg-orange-100 text-orange-600"
+                  }`}
+                >
+                  {task.priority}
                 </span>
               </div>
             ))}
           </div>
-        </LargeCard>
-
-        {/* Inventory Alerts */}
-        <LargeCard title="Low Stock Alerts">
-          {lowStock.length === 0 ? (
-            <p className="text-sm text-green-600">
-              Inventory levels OK
-            </p>
-          ) : (
-            <div className="space-y-1 text-sm">
-              {lowStock.map((i) => (
-                <div key={i._id} className="flex justify-between">
-                  <span>{i.name}</span>
-                  <span className="text-red-600">
-                    {i.quantity} {i.unit}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </LargeCard>
+        )}
       </div>
-    </WorkerLayout>
+
+      {/* ---------------- CHARTS ---------------- */}
+      <div className="grid grid-cols-3 gap-6 mb-6">
+        {/* Feeding Trend */}
+        <ClickableCard
+          title="Feeding (Last 7 Days)"
+          onClick={() => navigate("/worker/feeding")}
+          footer="Click to manage feeding"
+        >
+          {data.feedingTrend.length === 0 ? (
+            <EmptyChart />
+          ) : (
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={data.feedingTrend}>
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="quantity"
+                  stroke="#22C55E"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </ClickableCard>
+
+        {/* Health Status */}
+        <ClickableCard
+          title="Health Status"
+          onClick={() => navigate("/worker/health")}
+          footer="Click to view health records"
+        >
+          <ResponsiveContainer width="100%" height={220}>
+            <PieChart>
+              <Pie
+                data={[
+                  {
+                    label: "Healthy",
+                    count: Math.max(
+                      data.animalsCount - data.healthAlerts,
+                      0
+                    ),
+                  },
+                  {
+                    label: "Attention Needed",
+                    count: data.healthAlerts,
+                  },
+                ]}
+                dataKey="count"
+                nameKey="label"
+                outerRadius={80}
+              >
+                {COLORS.map((c, i) => (
+                  <Cell key={i} fill={c} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </ClickableCard>
+
+        {/* Inventory Risk */}
+        <ClickableCard
+          title="Inventory Risk"
+          onClick={() => navigate("/worker/inventory")}
+          footer="Click to open inventory"
+        >
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={inventoryBarData}>
+              <XAxis dataKey="label" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#F97316" />
+            </BarChart>
+          </ResponsiveContainer>
+        </ClickableCard>
+      </div>
+
+      {/* ---------------- DETAILS ---------------- */}
+      <div className="grid grid-cols-2 gap-6">
+        <DetailCard title="Recent Feedings">
+          {data.recentFeedings.length === 0 ? (
+            <EmptyText text="No feedings logged yet" />
+          ) : (
+            data.recentFeedings.map((f, i) => (
+              <Row
+                key={i}
+                left={`${f.animalName} — ${f.foodReminder}`}
+                right={f.quantity}
+              />
+            ))
+          )}
+        </DetailCard>
+
+        <DetailCard title="Low Inventory">
+          {data.lowStockItems.length === 0 ? (
+            <EmptyText text="All inventory levels healthy" />
+          ) : (
+            data.lowStockItems.map((i, idx) => (
+              <Row
+                key={idx}
+                left={i.name}
+                right={`${i.quantity} ${i.unit}`}
+                danger
+              />
+            ))
+          )}
+        </DetailCard>
+      </div>
+    </>
   );
 };
 
 export default WorkerDashboard;
+
+/* ---------------- SMALL COMPONENTS ---------------- */
+
+const Kpi = ({ label, value, danger, highlight }) => (
+  <div
+    className={`bg-white dark:bg-zinc-800 border rounded-lg p-4 ${
+      danger ? "border-red-500" : ""
+    }`}
+  >
+    <div className="text-sm text-zinc-500">{label}</div>
+    <div
+      className={`text-2xl font-semibold ${
+        highlight ? "text-indigo-600" : danger ? "text-red-600" : ""
+      }`}
+    >
+      {value}
+    </div>
+  </div>
+);
+
+const ClickableCard = ({ title, children, onClick, footer }) => (
+  <div
+    onClick={onClick}
+    className="bg-white dark:bg-zinc-800 border rounded-lg p-4 cursor-pointer hover:shadow-md transition"
+  >
+    <h3 className="font-medium mb-3">{title}</h3>
+    {children}
+    <p className="text-xs text-zinc-400 mt-2">{footer}</p>
+  </div>
+);
+
+const DetailCard = ({ title, children }) => (
+  <div className="bg-white dark:bg-zinc-800 border rounded-lg p-4">
+    <h3 className="font-medium mb-3">{title}</h3>
+    {children}
+  </div>
+);
+
+const Row = ({ left, right, danger }) => (
+  <div className="flex justify-between text-sm border-t py-2">
+    <span>{left}</span>
+    <span className={danger ? "text-red-600 font-medium" : ""}>
+      {right}
+    </span>
+  </div>
+);
+
+const EmptyChart = () => (
+  <div className="h-[220px] flex items-center justify-center text-sm text-zinc-500">
+    No data available
+  </div>
+);
+
+const EmptyText = ({ text }) => (
+  <div className="text-sm text-zinc-500">{text}</div>
+);

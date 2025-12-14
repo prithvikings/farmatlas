@@ -1,37 +1,43 @@
-import { Pencil, Trash, Utensils, Clipboard } from "lucide-react";
+import { Edit, Trash2, Utensils } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const AnimalRowActions = ({ animal, onEdit, onDelete }) => {
+const AnimalRowActions = ({
+  animal,
+  canEdit,
+  canDelete,
+  canFeed,
+  onEdit,
+  onDelete,
+}) => {
   return (
-    <div className="flex justify-end gap-3">
-      
-      {/* Feeding */}
-      <Link
-        to={`/admin/animals/${animal._id}/feeding`}
-        className="text-blue-600 hover:text-blue-800"
-        title="Feeding Logs"
-      >
-        <Utensils size={16} />
-      </Link>
+    <div className="inline-flex gap-2">
+      {canFeed && (
+        <Link
+          to={`/animals/${animal._id}/feeding`}
+          className="p-2 rounded hover:bg-zinc-100 text-green-600"
+          title="Feed Animal"
+        >
+          <Utensils size={16} />
+        </Link>
+      )}
 
-      {/* Health */}
-      <Link
-        to={`/admin/animals/${animal._id}/health`}
-        className="text-green-600 hover:text-green-800"
-        title="Health Records"
-      >
-        <Clipboard size={16} />
-      </Link>
+      {canEdit && (
+        <button
+          onClick={() => onEdit(animal)}
+          className="p-2 rounded hover:bg-zinc-100 text-blue-600"
+        >
+          <Edit size={16} />
+        </button>
+      )}
 
-      {/* Edit */}
-      <button onClick={() => onEdit(animal)}>
-        <Pencil size={16} />
-      </button>
-
-      {/* Delete */}
-      <button onClick={() => onDelete(animal._id)}>
-        <Trash size={16} />
-      </button>
+      {canDelete && (
+        <button
+          onClick={() => onDelete(animal._id)}
+          className="p-2 rounded hover:bg-zinc-100 text-red-600"
+        >
+          <Trash2 size={16} />
+        </button>
+      )}
     </div>
   );
 };

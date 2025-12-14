@@ -1,20 +1,41 @@
 import { useEffect, useState } from "react";
 import api from "../lib/axios";
-import AdminLayout from "../layout/AdminLayout";
+import { Button } from "./ui/button";
+import FeedingLogModal from "./FeedingLogModal";
+import { useAuth } from "../context/AuthContext";
 
 const FeedingOverview = () => {
+  const { user } = useAuth();
   const [logs, setLogs] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const canCreate = user.role === "ADMIN" || user.role === "WORKER";
+
+  const fetchLogs = async () => {
+    const res = await api.get("/feeding");
+    setLogs(res.data);
+  };
 
   useEffect(() => {
-    api.get("/feeding").then((res) => setLogs(res.data));
+    fetchLogs();
   }, []);
 
   return (
-    <AdminLayout>
-      <h1 className="text-xl font-semibold mb-6">Feeding Activity</h1>
+    <>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-xl font-semibold">Feeding Activity</h1>
+
+        {canCreate && (
+          <Button onClick={() => setOpen(true)}>
+            + Log Feeding
+          </Button>
+        )}
+      </div>
 
       {!logs.length ? (
-        <div className="text-sm text-zinc-500">No feeding activity yet.</div>
+        <div className="text-sm text-zinc-500">
+          No feeding activity yet.
+        </div>
       ) : (
         <div className="bg-white dark:bg-zinc-800 border rounded-lg overflow-hidden">
           <table className="w-full text-sm">
@@ -49,7 +70,15 @@ const FeedingOverview = () => {
           </table>
         </div>
       )}
-    </AdminLayout>
+
+      {canCreate && (
+        <FeedingLogModal
+          open={open}
+          setOpen={setOpen}
+          onSuccess={fetchLogs}
+        />
+      )}
+    </>
   );
 };
 

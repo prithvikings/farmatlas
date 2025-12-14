@@ -73,7 +73,7 @@ router.get(
 router.get(
   "/",
   isAuth,
-  requireRole("ADMIN", "VET"),
+  requireRole("ADMIN", "VET", "WORKER"),
   getAllHealthRecordsForFarm
 );
 

@@ -1,10 +1,13 @@
 import AnimalRowActions from "./AnimalRowActions";
 
-const AnimalTable = ({ animals, onEdit, onDelete }) => {
-  if (!animals.length) {
-    return <div className="text-sm text-zinc-500">No animals found.</div>;
-  }
-
+const AnimalTable = ({
+  animals,
+  canEdit,
+  canDelete,
+  canFeed,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <div className="bg-white dark:bg-zinc-800 border rounded-lg overflow-hidden">
       <table className="w-full text-sm">
@@ -14,7 +17,9 @@ const AnimalTable = ({ animals, onEdit, onDelete }) => {
             <th className="p-3 text-left">Name</th>
             <th className="p-3 text-left">Species</th>
             <th className="p-3 text-left">Status</th>
-            <th className="p-3 text-right">Actions</th>
+            {(canEdit || canFeed) && (
+              <th className="p-3 text-right">Actions</th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -24,13 +29,19 @@ const AnimalTable = ({ animals, onEdit, onDelete }) => {
               <td className="p-3">{animal.name}</td>
               <td className="p-3">{animal.species}</td>
               <td className="p-3">{animal.status}</td>
-              <td className="p-3 text-right">
-                <AnimalRowActions
-                  animal={animal}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                />
-              </td>
+
+              {(canEdit || canFeed) && (
+                <td className="p-3 text-right">
+                  <AnimalRowActions
+                    animal={animal}
+                    canEdit={canEdit}
+                    canDelete={canDelete}
+                    canFeed={canFeed}
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                  />
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

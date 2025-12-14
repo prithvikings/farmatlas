@@ -6,5 +6,5 @@ export * from "./inventoryUsage.controllers.js";
 export * from "./financial.controllers.js";
 export * from "./health.controllers.js";
 export * from "./adminUser.controllers.js";
-
+export * from "./worker.controllers.js";
 

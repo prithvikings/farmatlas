@@ -63,7 +63,8 @@ router.delete(
 router.get(
   "/",
   isAuth,
-  requireRole("ADMIN"),
+  requireRole("ADMIN", "WORKER", "VET"),
   getAllFeedingLogsForFarm
 );
+
 export default router;
