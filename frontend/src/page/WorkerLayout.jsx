@@ -1,7 +1,7 @@
 import { FiSettings } from "react-icons/fi";
 
 
-const AdminLayout = ({ children }) => {
+const WorkerLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-zinc-900 p-8">
@@ -10,15 +10,14 @@ const AdminLayout = ({ children }) => {
         <div className="flex items-center justify-between mb-6">
           <div className="text-2xl font-inter">FarmAtlas</div>
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium">Admin</span>
+            <span className="text-sm font-medium">Worker</span>
             <FiSettings className="cursor-pointer" />
           </div>
         </div>
 
         <div className="flex gap-6">
           {/* Sidebar */}
-
-          {/* Page Content */}
+          {/* Content */}
           <main className="flex-1">{children}</main>
         </div>
       </div>
@@ -26,4 +25,4 @@ const AdminLayout = ({ children }) => {
   );
 };
 
-export default AdminLayout;
+export default WorkerLayout;

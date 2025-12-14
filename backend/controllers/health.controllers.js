@@ -166,3 +166,17 @@ export const getAllHealthRecordsForFarm = async (req, res) => {
     });
   }
 };
+
+
+export const getHealthIssueSummary = async (req, res) => {
+  const farmId = req.user.farmId;
+  const since = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+  const count = await HealthRecord.distinct("animalId", {
+    farmId,
+    type: "ILLNESS",
+    date: { $gte: since },
+  }).then(arr => arr.length);
+
+  res.json({ count });
+};

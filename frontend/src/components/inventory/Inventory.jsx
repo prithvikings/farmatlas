@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../../lib/axios";
-import AdminLayout from "../../layout/AdminLayout";
 import InventoryTable from "./InventoryTable";
 import { Button } from "../ui/button";
 import { useAuth } from "../../context/AuthContext";
 import InventoryFormModal from "./InventoryFormModal";
+import DashboardLayout from "../../layout/DashboardLayout";
 
 const Inventory = () => {
   const [items, setItems] = useState([]);
@@ -28,7 +28,7 @@ const [open, setOpen] = useState(false);
   }, []);
 
   return (
-    <AdminLayout>
+    <DashboardLayout>
       <div className="flex justify-between items-center mb-6">
   <h1 className="text-xl font-semibold">Inventory</h1>
 
@@ -50,7 +50,7 @@ const [open, setOpen] = useState(false);
   onSuccess={fetchItems}
 />
 
-    </AdminLayout>
+    </DashboardLayout>
   );
 };
 

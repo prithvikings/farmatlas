@@ -91,13 +91,14 @@ const App = () => {
       />
 
       <Route
-        path="/worker"
-        element={
-          <RoleRoute role="WORKER">
-            <WorkerDashboard />
-          </RoleRoute>
-        }
-      />
+  path="/worker"
+  element={
+    <RoleRoute role="WORKER">
+      <WorkerDashboard />
+    </RoleRoute>
+  }
+/>
+
 
       <Route
         path="/vet"
@@ -124,6 +125,43 @@ const App = () => {
     </RoleRoute>
   }
 />
+
+<Route
+  path="/worker"
+  element={
+    <RoleRoute role="WORKER">
+      <WorkerDashboard />
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/worker/health"
+  element={
+    <RoleRoute role={["WORKER", "ADMIN", "VET"]}>
+      <HealthOverview />   {/* SAME component */}
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/worker/feeding"
+  element={
+    <RoleRoute role={["WORKER", "ADMIN"]}>
+      <FeedingOverview />
+    </RoleRoute>
+  }
+/>
+
+<Route
+  path="/worker/inventory"
+  element={
+    <RoleRoute role={["WORKER", "ADMIN"]}>
+      <Inventory />
+    </RoleRoute>
+  }
+/>
+
 <Route
   path="/admin/animals/:animalId/feeding"
   element={

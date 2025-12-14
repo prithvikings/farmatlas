@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Animal from "../models/animal.models.js";
 import HealthRecord from "../models/healthRecord.models.js";
 import FinancialTransaction from "../models/financialTransaction.models.js";
+import User from "../models/user.models.js";
 
 export const getAdminDashboardStats = async (req, res) => {
   try {
@@ -30,6 +31,19 @@ export const getAdminDashboardStats = async (req, res) => {
     // ------------------------
     const start = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
     const end = new Date();
+
+    // ------------------------
+    // Workers stats
+    // ------------------------
+
+    const [totalWorkers, activeWorkers] = await Promise.all([
+      User.countDocuments({ farmId, role: { $in: ["WORKER", "VET"] } }),
+      User.countDocuments({
+        farmId,
+        role: { $in: ["WORKER", "VET"] },
+        status: "ACTIVE",
+      }),
+    ]);
 
     const agg = await FinancialTransaction.aggregate([
       {
@@ -61,6 +75,8 @@ export const getAdminDashboardStats = async (req, res) => {
       totalAnimals,
       activeAnimals,
       animalsWithHealthIssues,
+      totalWorkers,
+      activeWorkers,
       finance: {
         income,
         expense,
