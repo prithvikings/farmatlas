@@ -40,6 +40,10 @@ import AnimalHealth from "./components/animals/AnimalHealth";
 /* ---------------- WORKER ---------------- */
 import WorkerAnimals from "./page/WorkerAnimals";
 
+
+/* ---------------- VET ---------------- */
+import VetAnimals from "./page/VetAnimals";
+
 const App = () => {
   return (
     <Routes>
@@ -96,20 +100,22 @@ const App = () => {
         <Route path="inventory" element={<Inventory />} />
       </Route>
 
-      {/* ===================================================== */}
-      {/* ===================== VET =========================== */}
-      {/* ===================================================== */}
-      <Route
-        path="/vet"
-        element={
-          <RoleRoute role="VET">
-            <DashboardLayout />
-          </RoleRoute>
-        }
-      >
-        <Route index element={<VetDashboard />} />
-        <Route path="health" element={<HealthOverview />} />
-      </Route>
+      {/* ---------------- VET ROUTES ---------------- */}
+<Route
+  path="/vet"
+  element={
+    <RoleRoute role="VET">
+      <DashboardLayout />
+    </RoleRoute>
+  }
+>
+  <Route index element={<VetDashboard />} />
+  <Route path="health" element={<HealthOverview />} />
+  <Route path="animals" element={<VetAnimals />} />
+  <Route path="animals/:animalId/health" element={<AnimalHealth />} />
+</Route>
+
+
 
       {/* ===================================================== */}
       {/* ===================== SHARED ======================== */}

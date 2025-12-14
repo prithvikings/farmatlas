@@ -19,6 +19,7 @@ import {
   userRoutes,
   adminRoutes,
   workerRoutes,
+  vetRoutes,
 } from "./routes/index.js";
 
 const app = express();
@@ -49,6 +50,8 @@ app.use("/api/inventory", inventoryRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/worker", workerRoutes);
+app.use("/api/vet", vetRoutes);
+
 
 
 // ----------------------

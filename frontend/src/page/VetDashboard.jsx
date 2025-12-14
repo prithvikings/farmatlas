@@ -1,178 +1,203 @@
-// VetDashboard.jsx
-import React from "react";
-import { Link } from "react-router-dom";
-import { Heart, AlertTriangle, Calendar, Database, LogOut } from "lucide-react";
-import { FiSettings } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import api from "../lib/axios";
+import { useNavigate } from "react-router-dom";
+import {
+  AlertTriangle,
+  HeartPulse,
+  Activity,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-const healthAlerts = [
-  { id: 1, animal: "Bella", issue: "High temperature", severity: "High" },
-  { id: 2, animal: "Rocky", issue: "Low appetite", severity: "Medium" },
-  { id: 3, animal: "Daisy", issue: "Limping", severity: "Medium" },
-];
+const VetDashboard = () => {
+  const navigate = useNavigate();
 
-const upcomingCheckups = [
-  { id: 1, animal: "Molly", date: "April 25, 2024", purpose: "Vaccination" },
-  { id: 2, animal: "Leo", date: "April 26, 2024", purpose: "Routine Checkup" },
-  {
-    id: 3,
-    animal: "Shadow",
-    date: "April 28, 2024",
-    purpose: "Injury Follow-up",
-  },
-];
+  const [data, setData] = useState({
+    animalsCount: 0,
+    healthAlerts: 0,
+    recentIssues: [],
+    healthTrend: [],
+  });
 
-const medicationUsage = [
-  { id: 1, name: "Antibiotics", used: "-12 units" },
-  { id: 2, name: "Painkillers", used: "-8 units" },
-  { id: 3, name: "Dewormer", used: "-5 units" },
-];
+  const [loading, setLoading] = useState(true);
 
-const Card = ({ title, children, action }) => (
-  <div className="bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 p-6 shadow-sm">
-    <div className="flex justify-between items-start mb-4">
-      <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100">
-        {title}
-      </h3>
-      {action && (
-        <span className="text-sm text-blue-600 dark:text-blue-400 cursor-pointer">
-          {action}
-        </span>
-      )}
+  useEffect(() => {
+    api
+      .get("/vet/dashboard")
+      .then((res) =>
+        setData({
+          animalsCount: 0,
+          healthAlerts: 0,
+          recentIssues: [],
+          healthTrend: [],
+          ...res.data,
+        })
+      )
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-sm text-zinc-500">
+        Loading veterinary dashboard…
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <h1 className="text-2xl font-semibold mb-6">
+        Veterinary Dashboard
+      </h1>
+
+      {/* ---------------- KPIs ---------------- */}
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <Kpi
+          label="Animals Needing Attention"
+          value={data.healthAlerts}
+          icon={<AlertTriangle />}
+          danger={data.healthAlerts > 0}
+          onClick={() => navigate("/vet/health")}
+        />
+
+        <Kpi
+          label="Total Animals"
+          value={data.animalsCount}
+          icon={<HeartPulse />}
+        />
+
+        <Kpi
+          label="Recent Health Reports"
+          value={data.recentIssues.length}
+          icon={<Activity />}
+        />
+      </div>
+
+      {/* ---------------- CHART ---------------- */}
+      <div
+        onClick={() => navigate("/vet/health")}
+        className="bg-white dark:bg-zinc-800 border rounded-lg p-4 mb-6 cursor-pointer hover:shadow-md transition"
+      >
+        <h3 className="font-medium mb-3">
+          Health Issues Trend (Last 14 Days)
+        </h3>
+
+        {data.healthTrend.length === 0 ? (
+          <div className="h-[220px] flex items-center justify-center text-sm text-zinc-500">
+            No trend data available
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={data.healthTrend}>
+              <XAxis dataKey="date" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Line
+                type="monotone"
+                dataKey="count"
+                stroke="#EF4444"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
+
+        <p className="text-xs text-zinc-400 mt-2">
+          Click to open health records
+        </p>
+      </div>
+
+      {/* ---------------- RECENT ISSUES ---------------- */}
+      <div className="bg-white dark:bg-zinc-800 border rounded-lg p-6">
+        <h3 className="font-medium mb-4 flex items-center gap-2">
+          <AlertTriangle className="text-red-500" size={18} />
+          Recent Health Issues
+        </h3>
+
+        {data.recentIssues.length === 0 ? (
+          <div className="text-sm text-zinc-500">
+            No recent illness reports 🎉
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {data.recentIssues.map((r, i) => (
+              <div
+                key={i}
+                onClick={() =>
+                  navigate(`/vet/animals/${r.animalId}/health`)
+                }
+                className="border rounded p-3 flex justify-between items-start cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-700 transition"
+              >
+                <div>
+                  <div className="font-medium">
+                    {r.animalName} ({r.tagNumber})
+                  </div>
+                  <div className="text-sm text-zinc-600">
+                    {r.issue}
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <SeverityBadge level={r.severity} />
+                  <div className="text-xs text-zinc-500 mt-1">
+                    {new Date(r.date).toLocaleDateString()}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default VetDashboard;
+
+/* ---------------- SMALL COMPONENTS ---------------- */
+
+const Kpi = ({ label, value, icon, danger, onClick }) => (
+  <div
+    onClick={onClick}
+    className={`bg-white dark:bg-zinc-800 border rounded-lg p-4 flex justify-between items-center cursor-pointer hover:shadow-md transition ${
+      danger ? "border-red-500" : ""
+    }`}
+  >
+    <div>
+      <div className="text-sm text-zinc-500">{label}</div>
+      <div
+        className={`text-2xl font-semibold ${
+          danger ? "text-red-600" : ""
+        }`}
+      >
+        {value}
+      </div>
     </div>
-    {children}
+    <div className="text-zinc-400">{icon}</div>
   </div>
 );
 
-export default function VetDashboard() {
+const SeverityBadge = ({ level }) => {
+  const styles = {
+    HIGH: "bg-red-100 text-red-600",
+    MEDIUM: "bg-orange-100 text-orange-600",
+    LOW: "bg-green-100 text-green-600",
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-zinc-900 p-8">
-      <div className="max-w-[1200px] mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="text-2xl font-inter">FarmAtlas</div>
-
-          <div className="flex items-center space-x-4">
-            <div className="text-sm text-zinc-700 dark:text-zinc-100 font-medium">
-              Veterinarian
-            </div>
-            <button className="p-2 rounded-md hover:bg-white/40 dark:hover:bg-zinc-700">
-              <FiSettings />
-            </button>
-          </div>
-        </div>
-
-        <div className="flex gap-6">
-          {/* Sidebar */}
-          <aside className="w-64 bg-white dark:bg-zinc-800 rounded-lg border border-zinc-200 p-6 shadow-sm flex flex-col justify-between">
-            <div>
-              <div className="text-lg font-semibold mb-6">Vet Panel</div>
-
-              <nav className="space-y-2 text-zinc-700 dark:text-zinc-100">
-                <Link
-                  to="/vet"
-                  className="flex items-center gap-3 py-2 px-2 rounded hover:bg-zinc-50 dark:hover:bg-zinc-700"
-                >
-                  <Heart size={18} /> Health Dashboard
-                </Link>
-
-                <Link
-                  to="/vet/checkups"
-                  className="flex items-center gap-3 py-2 px-2 rounded hover:bg-zinc-50 dark:hover:bg-zinc-700"
-                >
-                  <Calendar size={18} /> Scheduled Checkups
-                </Link>
-
-                <Link
-                  to="/vet/records"
-                  className="flex items-center gap-3 py-2 px-2 rounded hover:bg-zinc-50 dark:hover:bg-zinc-700"
-                >
-                  <Heart size={18} /> Medical Records
-                </Link>
-
-                <Link
-                  to="/vet/inventory"
-                  className="flex items-center gap-3 py-2 px-2 rounded hover:bg-zinc-50 dark:hover:bg-zinc-700"
-                >
-                  <Database size={18} /> Medicine Inventory
-                </Link>
-              </nav>
-            </div>
-
-            <div className="mt-6 pt-4 border-t">
-              <Link
-                to="/logout"
-                className="flex items-center gap-3 text-sm text-zinc-700   dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
-              >
-                <LogOut size={16} /> Log out
-              </Link>
-            </div>
-          </aside>
-
-          {/* Main Content */}
-          <main className="flex-1 space-y-6">
-            {/* Alerts */}
-            <Card title="Health Alerts" action="View All">
-              <div className="divide-y">
-                {healthAlerts.map((a) => (
-                  <div
-                    key={a.id}
-                    className="py-3 flex justify-between items-center"
-                  >
-                    <div>
-                      <div className="font-medium">{a.animal}</div>
-                      <div className="text-sm text-zinc-600 dark:text-zinc-400">
-                        {a.issue}
-                      </div>
-                    </div>
-                    <div
-                      className={`text-sm font-semibold ${
-                        a.severity === "High"
-                          ? "text-red-600 dark:text-red-400"
-                          : "text-yellow-600 dark:text-yellow-400"
-                      }`}
-                    >
-                      {a.severity}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Checkups */}
-            <Card title="Upcoming Checkups" action="View All">
-              <div className="divide-y">
-                {upcomingCheckups.map((c) => (
-                  <div key={c.id} className="py-3 flex justify-between">
-                    <div>
-                      <div className="font-medium">{c.animal}</div>
-                      <div className="text-sm text-zinc-600 dark:text-zinc-400">
-                        {c.purpose}
-                      </div>
-                    </div>
-                    <div className="text-sm text-zinc-700 dark:text-zinc-400">
-                      {c.date}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Medication Usage */}
-            <Card title="Medication Usage">
-              <div className="divide-y">
-                {medicationUsage.map((m) => (
-                  <div key={m.id} className="py-3 flex justify-between">
-                    <span className="text-zinc-700 dark:text-zinc-400">
-                      {m.name}
-                    </span>
-                    <span className="font-semibold">{m.used}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          </main>
-        </div>
-      </div>
-    </div>
+    <span
+      className={`text-xs font-medium px-2 py-1 rounded ${
+        styles[level] || styles.LOW
+      }`}
+    >
+      {level}
+    </span>
   );
-}
+};
