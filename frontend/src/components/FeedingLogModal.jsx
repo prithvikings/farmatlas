@@ -18,7 +18,6 @@ const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
     notes: "",
   });
 
-  // ---------------- LOAD DATA ----------------
   useEffect(() => {
     if (!open) return;
 
@@ -45,11 +44,8 @@ const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
 
   if (!open) return null;
 
-  const selectedFeed = feedItems.find(
-    (i) => i._id === form.inventoryItemId
-  );
+  const selectedFeed = feedItems.find((i) => i._id === form.inventoryItemId);
 
-  // ---------------- SUBMIT ----------------
   const handleSubmit = async () => {
     setError(null);
 
@@ -92,40 +88,28 @@ const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
       setOpen(false);
       onSuccess();
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Failed to create feeding log"
-      );
+      setError(err.response?.data?.message || "Failed to create feeding log");
     }
   };
 
-  // ---------------- UI ----------------
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
-        <h2 className="text-lg font-medium mb-4">
-          Add Feeding Log
-        </h2>
+        <h2 className="text-lg font-poppins mb-4">Add Feeding Log</h2>
 
-        {error && (
-          <div className="text-sm text-red-600 mb-3">
-            {error}
-          </div>
-        )}
+        {error && <div className="text-sm text-red-600 mb-2">{error}</div>}
 
         {feedItems.length === 0 && (
-          <div className="text-sm text-red-600 mb-3">
+          <div className="text-sm text-red-600 mb-2">
             No feed available in inventory.
           </div>
         )}
 
         <div className="space-y-3">
-          {/* Animal Selector */}
           <select
-            className="w-full border rounded p-2 text-sm"
+            className="w-full border rounded px-3 py-2 bg-zinc-100 dark:bg-zinc-800 outline-none"
             value={form.animalId}
-            onChange={(e) =>
-              setForm({ ...form, animalId: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, animalId: e.target.value })}
           >
             <option value="">Select Animal</option>
             {animals.map((a) => (
@@ -135,14 +119,11 @@ const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
             ))}
           </select>
 
-          {/* Feed Selector */}
           <select
-            className="w-full border rounded p-2 text-sm"
+            className="w-full border rounded px-3 py-2 bg-zinc-100 dark:bg-zinc-800 outline-none"
             value={form.inventoryItemId}
             onChange={(e) => {
-              const feed = feedItems.find(
-                (i) => i._id === e.target.value
-              );
+              const feed = feedItems.find((i) => i._id === e.target.value);
 
               setForm({
                 ...form,
@@ -163,40 +144,36 @@ const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
           <Input
             type="datetime-local"
             value={form.dateTime}
-            onChange={(e) =>
-              setForm({ ...form, dateTime: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, dateTime: e.target.value })}
           />
 
           <Input
             type="number"
             placeholder="Quantity"
             value={form.quantity}
-            onChange={(e) =>
-              setForm({ ...form, quantity: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, quantity: e.target.value })}
           />
 
-          <Input
-            placeholder="Unit"
-            value={form.unit}
-            disabled
-          />
+          <Input placeholder="Unit" value={form.unit} disabled />
 
           <Input
             placeholder="Notes (optional)"
             value={form.notes}
-            onChange={(e) =>
-              setForm({ ...form, notes: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, notes: e.target.value })}
           />
         </div>
 
         <div className="flex justify-end gap-3 mt-6">
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#666360] via-[#161311] to-[#110c0a] font-poppins text-slate-100 dark:from-[#141211] dark:via-[#0d0a08] dark:to-[#110c0a] transition duration-300 hover:text-zinc-300 dark:hover:text-zinc-50"
+            variant="outline"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
+
           <Button
+            className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300"
             onClick={handleSubmit}
             disabled={feedItems.length === 0}
           >

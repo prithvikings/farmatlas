@@ -38,10 +38,18 @@ const Financials = () => {
   };
 
   return (
-    <AdminLayout>
+    <>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold">Financial Transactions</h1>
-        <Button onClick={() => { setEditing(null); setOpen(true); }}>
+        <h1 className="text-3xl font-medium font-poppins">
+          Financial Transactions
+        </h1>
+        <Button
+          className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300"
+          onClick={() => {
+            setEditing(null);
+            setOpen(true);
+          }}
+        >
           + Add Transaction
         </Button>
       </div>
@@ -62,7 +70,7 @@ const Financials = () => {
         transaction={editing}
         onSuccess={fetchTransactions}
       />
-    </AdminLayout>
+    </>
   );
 };
 

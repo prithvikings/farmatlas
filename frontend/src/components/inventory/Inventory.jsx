@@ -29,19 +29,22 @@ const Inventory = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold">Inventory</h1>
+        <h1 className="text-3xl font-semibold font-poppins">Inventory</h1>
 
         {user?.role === "ADMIN" && (
-          <Button onClick={() => setOpen(true)}>+ Add Item</Button>
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300 "
+            onClick={() => setOpen(true)}
+          >
+            + Add Item
+          </Button>
         )}
       </div>
 
       {loading ? (
         <div className="text-sm text-zinc-500">Loading inventory…</div>
       ) : (
-        <InventoryTable items={items}
-        canManage={user?.role === "ADMIN"}
-        />
+        <InventoryTable items={items} canManage={user?.role === "ADMIN"} />
       )}
 
       {user?.role === "ADMIN" && (

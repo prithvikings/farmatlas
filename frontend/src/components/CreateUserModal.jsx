@@ -31,9 +31,7 @@ const CreateUserModal = ({ open, setOpen }) => {
         role: "WORKER",
       });
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Failed to create user"
-      );
+      setError(err.response?.data?.message || "Failed to create user");
     } finally {
       setLoading(false);
     }
@@ -42,32 +40,26 @@ const CreateUserModal = ({ open, setOpen }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
       <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
-        <h2 className="text-lg font-medium mb-4">Create User</h2>
+        <h2 className="text-lg font-poppins mb-4">Create User</h2>
 
         <div className="space-y-3">
           <Input
             placeholder="Name"
             value={form.name}
-            onChange={(e) =>
-              setForm({ ...form, name: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
 
           <Input
             placeholder="Email"
             value={form.email}
-            onChange={(e) =>
-              setForm({ ...form, email: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
 
           <Input
             placeholder="Password"
             type="password"
             value={form.password}
-            onChange={(e) =>
-              setForm({ ...form, password: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
           />
 
           {/* Role selector */}
@@ -76,7 +68,11 @@ const CreateUserModal = ({ open, setOpen }) => {
               <Button
                 key={r}
                 variant={form.role === r ? "default" : "outline"}
-                className="flex-1"
+                className={`flex-1 font-poppins ${
+                  form.role === r
+                    ? "bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C]"
+                    : "bg-gradient-to-b from-[#666360] via-[#161311] to-[#110c0a] text-slate-100 dark:from-[#141211] dark:via-[#0d0a08] dark:to-[#110c0a] hover:text-zinc-300 dark:hover:text-zinc-50"
+                } transition duration-300`}
                 onClick={() => setForm({ ...form, role: r })}
               >
                 {r}
@@ -84,16 +80,23 @@ const CreateUserModal = ({ open, setOpen }) => {
             ))}
           </div>
 
-          {error && (
-            <div className="text-sm text-red-600">{error}</div>
-          )}
+          {error && <div className="text-sm text-red-600">{error}</div>}
         </div>
 
         <div className="flex justify-end gap-3 mt-6">
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#666360] via-[#161311] to-[#110c0a] font-poppins text-slate-100 dark:from-[#141211] dark:via-[#0d0a08] dark:to-[#110c0a] transition duration-300 hover:text-zinc-300 dark:hover:text-zinc-50"
+            variant="outline"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
-          <Button onClick={handleSubmit} disabled={loading}>
+
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             {loading ? "Creating..." : "Create"}
           </Button>
         </div>

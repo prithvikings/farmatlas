@@ -7,7 +7,6 @@ const InventoryUsageModal = ({ open, setOpen, itemId, onSuccess }) => {
   const [quantityUsed, setQuantityUsed] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState(null);
-  
 
   if (!open) return null;
 
@@ -22,9 +21,7 @@ const InventoryUsageModal = ({ open, setOpen, itemId, onSuccess }) => {
       setOpen(false);
       onSuccess();
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Failed to log usage"
-      );
+      setError(err.response?.data?.message || "Failed to log usage");
     }
   };
 
@@ -33,9 +30,7 @@ const InventoryUsageModal = ({ open, setOpen, itemId, onSuccess }) => {
       <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
         <h2 className="text-lg font-medium mb-4">Log Usage</h2>
 
-        {error && (
-          <div className="text-sm text-red-600 mb-3">{error}</div>
-        )}
+        {error && <div className="text-sm text-red-600 mb-3">{error}</div>}
 
         <div className="space-y-3">
           <Input

@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import AdminLayout from "../layout/AdminLayout";
 import CreateUserModal from "../components/CreateUserModal";
 import { Button } from "../components/ui/button";
@@ -26,10 +26,15 @@ const AdminUsers = () => {
   }, []);
 
   return (
-    <AdminLayout>
+    <>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold">Users</h1>
-        <Button onClick={() => setOpen(true)}>+ Create User</Button>
+        <h1 className="text-3xl font-medium font-poppins">Users</h1>
+        <Button
+          className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300 "
+          onClick={() => setOpen(true)}
+        >
+          + Create User
+        </Button>
       </div>
 
       {loading ? (
@@ -38,12 +43,8 @@ const AdminUsers = () => {
         <UserTable users={users} />
       )}
 
-      <CreateUserModal
-        open={open}
-        setOpen={setOpen}
-        onSuccess={fetchUsers}
-      />
-    </AdminLayout>
+      <CreateUserModal open={open} setOpen={setOpen} onSuccess={fetchUsers} />
+    </>
   );
 };
 

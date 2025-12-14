@@ -27,36 +27,28 @@ const InventoryFormModal = ({ open, setOpen, onSuccess }) => {
       setOpen(false);
       onSuccess();
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Failed to create item"
-      );
+      setError(err.response?.data?.message || "Failed to create item");
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
       <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
-        <h2 className="text-lg font-medium mb-4">Add Inventory Item</h2>
+        <h2 className="text-lg font-poppins mb-4">Add Inventory Item</h2>
 
-        {error && (
-          <div className="text-sm text-red-600 mb-3">{error}</div>
-        )}
+        {error && <div className="text-sm text-red-600 mb-2">{error}</div>}
 
         <div className="space-y-3">
           <Input
             placeholder="Item name"
             value={form.name}
-            onChange={(e) =>
-              setForm({ ...form, name: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
           />
 
           <select
-            className="w-full border rounded px-3 py-2 text-sm"
+            className="w-full border rounded px-3 py-2 bg-zinc-100 dark:bg-zinc-800 outline-none"
             value={form.category}
-            onChange={(e) =>
-              setForm({ ...form, category: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
           >
             <option value="FEED">Feed</option>
             <option value="MEDICINE">Medicine</option>
@@ -67,17 +59,13 @@ const InventoryFormModal = ({ open, setOpen, onSuccess }) => {
             type="number"
             placeholder="Quantity"
             value={form.quantity}
-            onChange={(e) =>
-              setForm({ ...form, quantity: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, quantity: e.target.value })}
           />
 
           <Input
             placeholder="Unit (kg, litre, pcs)"
             value={form.unit}
-            onChange={(e) =>
-              setForm({ ...form, unit: e.target.value })
-            }
+            onChange={(e) => setForm({ ...form, unit: e.target.value })}
           />
 
           <Input
@@ -94,10 +82,20 @@ const InventoryFormModal = ({ open, setOpen, onSuccess }) => {
         </div>
 
         <div className="flex justify-end gap-3 mt-6">
-          <Button variant="outline" onClick={() => setOpen(false)}>
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#666360] via-[#161311] to-[#110c0a] font-poppins text-slate-100 dark:from-[#141211] dark:via-[#0d0a08] dark:to-[#110c0a] transition duration-300 hover:text-zinc-300 dark:hover:text-zinc-50"
+            variant="outline"
+            onClick={() => setOpen(false)}
+          >
             Cancel
           </Button>
-          <Button onClick={handleSubmit}>Create</Button>
+
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300"
+            onClick={handleSubmit}
+          >
+            Create
+          </Button>
         </div>
       </div>
     </div>

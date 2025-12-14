@@ -51,17 +51,26 @@ const Animals = () => {
   return (
     <>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold">Animals</h1>
+        <h1 className="text-3xl font-medium font-poppins">Animals</h1>
 
         {isAdmin && (
-          <Button onClick={handleCreate}>+ Add Animal</Button>
+          <Button
+            className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 shadow-lg hover:shadow-xl dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300 "
+            onClick={handleCreate}
+          >
+            + Add Animal
+          </Button>
         )}
       </div>
 
       {loading ? (
-        <div className="text-sm text-zinc-500">Loading animals…</div>
+        <div className="text-sm text-zinc-500 font-poppins">
+          Loading animals…
+        </div>
       ) : animals.length === 0 ? (
-        <div className="text-sm text-zinc-500">No animals found.</div>
+        <div className="text-sm text-zinc-500 font-poppins">
+          No animals found.
+        </div>
       ) : (
         <AnimalTable
           animals={animals}

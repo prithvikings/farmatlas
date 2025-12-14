@@ -7,6 +7,12 @@ import { StatCard, LargeCard } from "../components/dashboard/AdminCards";
 import FinanceChart from "../components/FinanceChart";
 import HealthChart from "../components/HealthChart";
 
+import {
+  StatCardSkeleton,
+  LargeCardSkeleton,
+  ChartSkeleton,
+} from "../components/dashboard/AdminSkeletons";
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
@@ -37,7 +43,25 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <AdminLayout>
-        <div className="text-sm text-zinc-500">Loading dashboard...</div>
+        {/* KPI Skeletons */}
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <StatCardSkeleton key={i} />
+          ))}
+        </div>
+
+        {/* Summary Skeletons */}
+        <div className="grid grid-cols-3 gap-6 mb-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <LargeCardSkeleton key={i} />
+          ))}
+        </div>
+
+        {/* Chart Skeletons */}
+        <div className="grid grid-cols-2 gap-6">
+          <ChartSkeleton />
+          <ChartSkeleton />
+        </div>
       </AdminLayout>
     );
   }
@@ -62,10 +86,7 @@ const AdminDashboard = () => {
           label="Animals with Health Issues"
           value={stats.animalsWithHealthIssues}
         />
-        <StatCard
-          label="Net This Month"
-          value={`₹${stats.finance.net}`}
-        />
+        <StatCard label="Net This Month" value={`₹${stats.finance.net}`} />
       </div>
 
       {/* ================= SUMMARY CARDS ================= */}
@@ -74,19 +95,19 @@ const AdminDashboard = () => {
         <LargeCard title="Financial Overview">
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span>Income</span>
-              <span className="font-medium text-green-600">
+              <span className="font-poppins">Income</span>
+              <span className="font-medium text-green-600 selection:bg-[#EA580C] selection:text-zinc-100 font-inter">
                 ₹{stats.finance.income}
               </span>
             </div>
             <div className="flex justify-between">
-              <span>Expense</span>
-              <span className="font-medium text-red-600">
+              <span className="font-poppins">Expense</span>
+              <span className="font-medium text-red-500 font-inter">
                 ₹{stats.finance.expense}
               </span>
             </div>
 
-            <p className="text-xs text-zinc-500 pt-2">
+            <p className="text-xs text-zinc-500 pt-2 font-medium font-poppins">
               {new Date(stats.finance.start).toLocaleDateString()} –{" "}
               {new Date(stats.finance.end).toLocaleDateString()}
             </p>
@@ -97,18 +118,18 @@ const AdminDashboard = () => {
         <LargeCard title="Health Overview">
           <div className="space-y-2 text-sm">
             <div className="flex justify-between items-center">
-              <span>Animals with Issues</span>
-              <span className="font-semibold text-red-600">
+              <span className="font-poppins">Animals with Issues</span>
+              <span className="font-semibold text-red-500 font-poppins">
                 {stats.animalsWithHealthIssues}
               </span>
             </div>
 
             {stats.animalsWithHealthIssues > 0 ? (
-              <p className="text-xs text-red-500">
+              <p className="text-xs text-red-500 font-poppins tracking-wide">
                 Immediate attention required
               </p>
             ) : (
-              <p className="text-xs text-green-600">
+              <p className="text-xs text-green-600 font-poppins">
                 All animals healthy
               </p>
             )}
@@ -119,20 +140,18 @@ const AdminDashboard = () => {
         <LargeCard title="Workforce Overview">
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <span>Total Workers</span>
-              <span className="font-medium">
-                {stats.totalWorkers}
-              </span>
+              <span className="font-poppins">Total Workers</span>
+              <span className="font-medium">{stats.totalWorkers}</span>
             </div>
 
             <div className="flex justify-between">
-              <span>Active Workers</span>
+              <span className="font-poppins">Active Workers</span>
               <span className="font-medium text-green-600">
                 {stats.activeWorkers}
               </span>
             </div>
 
-            <p className="text-xs text-zinc-500 pt-2">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 pt-2 font-poppins">
               Includes workers & vets
             </p>
           </div>
@@ -148,7 +167,7 @@ const AdminDashboard = () => {
         >
           <LargeCard title="Income vs Expense (Last 6 Months)">
             <FinanceChart data={monthlyFinance} />
-            <p className="text-xs text-zinc-500 mt-2">
+            <p className="text-xs text-zinc-500 mt-2 font-poppins">
               Click to view full financials →
             </p>
           </LargeCard>
@@ -164,7 +183,7 @@ const AdminDashboard = () => {
               total={stats.totalAnimals}
               issues={stats.animalsWithHealthIssues}
             />
-            <p className="text-xs text-zinc-500 mt-2">
+            <p className="text-xs text-zinc-500 mt-2 font-poppins">
               Click to view animals →
             </p>
           </LargeCard>
