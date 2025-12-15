@@ -4,6 +4,8 @@ import CreateUserModal from "../components/CreateUserModal";
 import { Button } from "../components/ui/button";
 import api from "../lib/axios";
 import UserTable from "../components/UserTable";
+import UserTableSkeleton from "../components/ui/UserTableSkeleton";
+
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -15,7 +17,7 @@ const AdminUsers = () => {
       const res = await api.get("/users");
       setUsers(res.data);
     } catch (err) {
-      console.error("Failed to fetch users");
+      console.error("Failed to fetch users",err);
     } finally {
       setLoading(false);
     }
@@ -38,10 +40,11 @@ const AdminUsers = () => {
       </div>
 
       {loading ? (
-        <div className="text-sm text-zinc-500">Loading users…</div>
-      ) : (
-        <UserTable users={users} />
-      )}
+  <UserTableSkeleton />
+) : (
+  <UserTable users={users} />
+)}
+
 
       <CreateUserModal open={open} setOpen={setOpen} onSuccess={fetchUsers} />
     </>

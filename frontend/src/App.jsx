@@ -36,6 +36,7 @@ import FeedingOverview from "./components/FeedingOverview";
 import FeedingLogs from "./components/FeedingLogs";
 import HealthOverview from "./components/HealthOverview";
 import AnimalHealth from "./components/animals/AnimalHealth";
+import Profile from "./page/Profile";
 
 /* ---------------- WORKER ---------------- */
 import WorkerAnimals from "./page/WorkerAnimals";
@@ -80,6 +81,8 @@ const App = () => {
         <Route path="inventory/:itemId/usage" element={<InventoryUsage />} />
         <Route path="financials" element={<FinancialOverview />} />
         <Route path="financials/transactions" element={<Financials />} />
+      <Route path="profile" element={<Profile />} />
+
       </Route>
 
       {/* ===================================================== */}
@@ -98,6 +101,8 @@ const App = () => {
         <Route path="animals" element={<WorkerAnimals />} />
         <Route path="feeding" element={<FeedingOverview />} />
         <Route path="inventory" element={<Inventory />} />
+      <Route path="profile" element={<Profile />} />
+
       </Route>
 
       {/* ---------------- VET ROUTES ---------------- */}
@@ -113,6 +118,8 @@ const App = () => {
   <Route path="health" element={<HealthOverview />} />
   <Route path="animals" element={<VetAnimals />} />
   <Route path="animals/:animalId/health" element={<AnimalHealth />} />
+  <Route path="profile" element={<Profile />} />
+
 </Route>
 
 
@@ -141,6 +148,7 @@ const App = () => {
       >
         <Route index element={<AnimalHealth />} />
       </Route>
+
 
       {/* ===================================================== */}
       {/* ===================== FALLBACK ====================== */}

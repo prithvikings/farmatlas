@@ -10,6 +10,7 @@ import {
   Box,
   LogOut,
   User2,
+  Wallet,
 } from "lucide-react";
 
 const AdminSidebar = () => {
@@ -76,7 +77,7 @@ const AdminSidebar = () => {
           to="/admin/financials"
           className="flex items-center gap-3 hover:bg-gray-100 dark:hover:bg-zinc-900 p-2 rounded px-4 py-2 transition duration-300 ease-in-out"
         >
-          <DollarSign size={18} /> Financials Overview
+          <Wallet size={18} /> Financials Overview
         </Link>
 
         <Link

@@ -4,6 +4,8 @@ import AnimalTable from "./animals/AnimalTable";
 import AnimalFormModal from "./animals/AnimalFormModal";
 import { Button } from "./ui/button";
 import { useAuth } from "../context/AuthContext";
+import AnimalTableSkeleton from "./animals/AnimalTableSkeleton";
+
 
 const Animals = () => {
   const { user } = useAuth();
@@ -64,23 +66,22 @@ const Animals = () => {
       </div>
 
       {loading ? (
-        <div className="text-sm text-zinc-500 font-poppins">
-          Loading animals…
-        </div>
-      ) : animals.length === 0 ? (
-        <div className="text-sm text-zinc-500 font-poppins">
-          No animals found.
-        </div>
-      ) : (
-        <AnimalTable
-          animals={animals}
-          canEdit={isAdmin}
-          canDelete={isAdmin}
-          canFeed={user.role === "ADMIN" || user.role === "WORKER"}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      )}
+  <AnimalTableSkeleton />
+) : animals.length === 0 ? (
+  <div className="text-sm text-zinc-500 font-poppins">
+    No animals found.
+  </div>
+) : (
+  <AnimalTable
+    animals={animals}
+    canEdit={isAdmin}
+    canDelete={isAdmin}
+    canFeed={user.role === "ADMIN" || user.role === "WORKER"}
+    onEdit={handleEdit}
+    onDelete={handleDelete}
+  />
+)}
+
 
       {isAdmin && (
         <AnimalFormModal

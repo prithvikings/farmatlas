@@ -8,4 +8,5 @@ export * from "./health.controllers.js";
 export * from "./adminUser.controllers.js";
 export * from "./worker.controllers.js";
 export * from "./vet.controllers.js";
+export * from "./profile.controllers.js";
 

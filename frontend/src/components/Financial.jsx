@@ -4,6 +4,8 @@ import AdminLayout from "../layout/AdminLayout";
 import { Button } from "./ui/button";
 import FinancialTransactionModal from "./FinancialTransactionModal";
 import FinancialTable from "./FinancialTable";
+import FinancialTableSkeleton from "../components/ui/FinancialTableSkeleton";
+
 
 const Financials = () => {
   const [items, setItems] = useState([]);
@@ -55,14 +57,15 @@ const Financials = () => {
       </div>
 
       {loading ? (
-        <div className="text-sm text-zinc-500">Loading…</div>
-      ) : (
-        <FinancialTable
-          items={items}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      )}
+  <FinancialTableSkeleton />
+) : (
+  <FinancialTable
+    items={items}
+    onEdit={handleEdit}
+    onDelete={handleDelete}
+  />
+)}
+
 
       <FinancialTransactionModal
         open={open}

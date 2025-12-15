@@ -24,12 +24,11 @@ const userSchema = new mongoose.Schema({
   },
 
   role: {
-  type: String,
-  enum: ["ADMIN", "WORKER", "VET"],
-  default: "WORKER",
-  required: true
-},
-
+    type: String,
+    enum: ["ADMIN", "WORKER", "VET"],
+    default: "WORKER",
+    required: true,
+  },
 
   farmId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -37,7 +36,24 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
+  profile: {
+    phone: String,
+    address: String,
+    city: String,
+    state: String,
+    country: String,
+
+    experienceYears: Number,        // Vet / Worker
+    specialization: String,         // Vet
+    assignedSection: String,         // Worker
+    emergencyContact: String,
+
+    bio: String,
+    avatar: String,                 // URL
+  },
+
 }, { timestamps: true });
+
 
 const User = mongoose.model("User", userSchema);
 export default User;

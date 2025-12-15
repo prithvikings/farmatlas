@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import AdminLayout from "../layout/AdminLayout";
+import FinancialOverviewSkeleton from "../components/ui/FinancialOverviewSkeleton";
+
 
 const FinancialOverview = () => {
   const [summary, setSummary] = useState(null);
@@ -27,13 +29,13 @@ const FinancialOverview = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return (
-      <AdminLayout>
-        <div className="text-sm text-zinc-500">Loading financial overview…</div>
-      </AdminLayout>
-    );
-  }
+ if (loading) {
+  return (
+    <AdminLayout>
+      <FinancialOverviewSkeleton />
+    </AdminLayout>
+  );
+}
 
   return (
     <>
