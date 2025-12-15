@@ -36,13 +36,14 @@ const AnimalHealth = () => {
   }, [animalId]);
 
   return (
-    <AdminLayout>
+    <>
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-semibold">Health Records</h1>
+        <h1 className="text-3xl font-poppins">Health Records</h1>
 
         {canCreate && (
           <Button
+          className="cursor-pointer bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] font-poppins text-slate-100 dark:from-[#e77f34] dark:via-[#ec7d2d] dark:to-[#EA580C] transition duration-300 hover:text-zinc-200 dark:hover:text-zinc-50"
             onClick={() => {
               setEditing(null);
               setOpen(true);
@@ -71,20 +72,20 @@ const AnimalHealth = () => {
           {records.map((r) => (
             <div
               key={r._id}
-              className="bg-white dark:bg-zinc-800 border rounded-lg p-4"
+              className="bg-white dark:bg-zinc-800 border rounded-lg p-4 shadow-sm"
             >
               {/* Top Row */}
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="font-medium">{r.type}</div>
-                  <div className="text-sm text-zinc-500">
+                  <div className="font-poppins">{r.type}</div>
+                  <div className="text-sm text-zinc-500 font-rubik">
                     {new Date(r.date).toLocaleDateString()}
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                   {r.createdBy && (
-                    <div className="text-sm text-zinc-500">
+                    <div className="text-sm text-zinc-600 dark:text-zinc-300 font-poppins">
                       By {r.createdBy.name} ({r.createdBy.role})
                     </div>
                   )}
@@ -95,11 +96,12 @@ const AnimalHealth = () => {
                         setEditing(r);
                         setOpen(true);
                       }}
-                      className="text-zinc-600 hover:text-zinc-900"
+                      className="p-2 cursor-pointer transition duration-100 rounded hover:bg-zinc-100  text-blue-600 dark:hover:bg-zinc-700 dark:text-yellow-500"
                       title="Edit record"
                     >
                       <Pencil size={16} />
                     </button>
+
                   )}
 
                   {canDelete && (
@@ -119,11 +121,11 @@ const AnimalHealth = () => {
               </div>
 
               {/* Notes */}
-              <div className="mt-2 text-sm">{r.notes}</div>
+              <div className="mt-2 text-sm font-poppins">{r.notes}</div>
 
               {/* Medication */}
               {r.medication && (
-                <div className="mt-2 text-sm text-zinc-600">
+                <div className="mt-2 text-sm text-zinc-600 font-poppins">
                   💊 {r.medication}
                   {r.dosage && ` — ${r.dosage}`}
                 </div>
@@ -131,7 +133,7 @@ const AnimalHealth = () => {
 
               {/* Next Due */}
               {r.nextDueDate && (
-                <div className="mt-1 text-xs text-red-600">
+                <div className="mt-2 text-sm text-red-600 font-poppins ">
                   Next due:{" "}
                   {new Date(r.nextDueDate).toLocaleDateString()}
                 </div>
@@ -154,7 +156,7 @@ const AnimalHealth = () => {
           }}
         />
       )}
-    </AdminLayout>
+    </>
   );
 };
 

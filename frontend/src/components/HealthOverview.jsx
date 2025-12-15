@@ -4,6 +4,8 @@ import { Button } from "./ui/button";
 import { useAuth } from "../context/AuthContext";
 import HealthFormModal from "./animals/HealthFormModal";
 import { Pencil } from "lucide-react";
+import DataTableSkeleton from "./skelton/DataTableSkeleton";
+
 
 const HealthOverview = () => {
   const { user } = useAuth();
@@ -32,12 +34,16 @@ const HealthOverview = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-medium font-poppins">Health Records</h1>
-      </div>
+    <div className="flex justify-between items-center mb-6">
+      {loading ? (
+    <div className="h-8 w-56 rounded shimmer shimmer-delay-8 bg-zinc-300 dark:bg-zinc-700" />
+  ) : (
+    <h1 className="text-3xl font-medium font-poppins">Health Records</h1>
+  )}
+</div>
 
       {loading ? (
-        <div className="text-sm text-zinc-500">Loading health records…</div>
+        <DataTableSkeleton columns={canEdit ? 6 : 5} rows={6} />
       ) : records.length === 0 ? (
         <div className="text-sm text-zinc-500">No health records found.</div>
       ) : (
