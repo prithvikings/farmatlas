@@ -44,29 +44,29 @@ const VetDashboard = () => {
     <VetLayout>
       {loading ? (
         <>
-    {/* KPIs */}
-    <div className="grid grid-cols-3 gap-4 mb-6">
-      <KpiSkeleton delay="shimmer-delay-1" />
-      <KpiSkeleton delay="shimmer-delay-2" />
-      <KpiSkeleton delay="shimmer-delay-3" />
-    </div>
+          {/* KPIs */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <KpiSkeleton delay="shimmer-delay-1" />
+            <KpiSkeleton delay="shimmer-delay-2" />
+            <KpiSkeleton delay="shimmer-delay-3" />
+          </div>
 
-    {/* Chart */}
-    <div className="mb-6">
-      <ChartSkeleton delay="shimmer-delay-2" />
-    </div>
+          {/* Chart */}
+          <div className="mb-6">
+            <ChartSkeleton delay="shimmer-delay-2" />
+          </div>
 
-    {/* Recent Issues */}
-    <div className="space-y-3">
-      <IssueSkeleton delay="shimmer-delay-1" />
-      <IssueSkeleton delay="shimmer-delay-2" />
-      <IssueSkeleton delay="shimmer-delay-3" />
-    </div>
-  </>
+          {/* Recent Issues */}
+          <div className="space-y-3">
+            <IssueSkeleton delay="shimmer-delay-1" />
+            <IssueSkeleton delay="shimmer-delay-2" />
+            <IssueSkeleton delay="shimmer-delay-3" />
+          </div>
+        </>
       ) : (
         <>
           {/* ---------------- KPIs ---------------- */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <Kpi
               label="Animals Needing Attention"
               value={data.healthAlerts}
@@ -92,9 +92,10 @@ const VetDashboard = () => {
           <div
             onClick={() => navigate("/vet/health")}
             className="bg-white dark:bg-zinc-800 rounded-lg border
-              border-zinc-200 dark:border-zinc-700 p-6 mb-6
-              cursor-pointer transition
-              shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+  border-zinc-200 dark:border-zinc-700
+  p-4 sm:p-6 mb-6
+  cursor-pointer transition
+  shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
           >
             <h3 className="text-lg font-medium mb-4">
               Health Issues Trend (Last 14 Days)
@@ -144,20 +145,24 @@ const VetDashboard = () => {
                     onClick={() =>
                       navigate(`/vet/animals/${r.animalId}/health`)
                     }
-                    className="border rounded-lg p-4 flex justify-between cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                    className="
+    border rounded-lg p-4 cursor-pointer
+    hover:bg-zinc-50 dark:hover:bg-zinc-900
+    transition
+    flex flex-col sm:flex-row sm:items-center sm:justify-between
+    gap-3
+  "
                   >
                     <div>
                       <div className="font-medium">
                         {r.animalName} ({r.tagNumber})
                       </div>
-                      <div className="text-sm text-zinc-500">
-                        {r.issue}
-                      </div>
+                      <div className="text-sm text-zinc-500">{r.issue}</div>
                     </div>
 
-                    <div className="text-right">
+                    <div className="flex sm:flex-col items-start sm:items-end gap-1">
                       <SeverityBadge level={r.severity} />
-                      <div className="text-xs text-zinc-500 mt-1">
+                      <div className="text-xs text-zinc-500">
                         {new Date(r.date).toLocaleDateString()}
                       </div>
                     </div>
@@ -173,8 +178,6 @@ const VetDashboard = () => {
 };
 
 export default VetDashboard;
-
-
 
 /* ---------------- SMALL COMPONENTS ---------------- */
 
@@ -194,18 +197,14 @@ const Kpi = ({ label, value, icon, danger, onClick }) => (
       </div>
       <div
         className={`text-2xl font-semibold mt-1 font-inter ${
-          danger
-            ? "text-red-600"
-            : "text-zinc-900 dark:text-zinc-100"
+          danger ? "text-red-600" : "text-zinc-900 dark:text-zinc-100"
         }`}
       >
         {value}
       </div>
     </div>
 
-    <div className={danger ? "text-red-500" : "text-[#F97316]"}>
-      {icon}
-    </div>
+    <div className={danger ? "text-red-500" : "text-[#F97316]"}>{icon}</div>
   </div>
 );
 
@@ -227,7 +226,6 @@ const SeverityBadge = ({ level }) => {
   );
 };
 
-
 // ---------------- Schimmer skelton ---------------- //
 
 const KpiSkeleton = ({ delay = "" }) => (
@@ -238,7 +236,6 @@ const KpiSkeleton = ({ delay = "" }) => (
     <div className="h-6 w-16 rounded bg-zinc-300 dark:bg-zinc-700" />
   </div>
 );
-
 
 const ChartSkeleton = ({ delay = "" }) => (
   <div
@@ -257,8 +254,5 @@ const IssueSkeleton = ({ delay = "" }) => (
     <div className="h-3 w-60 rounded bg-zinc-300 dark:bg-zinc-700" />
   </div>
 );
-
-
-
 
 export { KpiSkeleton, ChartSkeleton, IssueSkeleton };

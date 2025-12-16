@@ -61,10 +61,7 @@ const WorkerDashboard = () => {
     { label: "Low Stock", count: data.lowStockItems.length },
     {
       label: "OK Stock",
-      count: Math.max(
-        data.animalsCount - data.lowStockItems.length,
-        0
-      ),
+      count: Math.max(data.animalsCount - data.lowStockItems.length, 0),
     },
   ];
 
@@ -73,7 +70,7 @@ const WorkerDashboard = () => {
     return (
       <WorkerLayout>
         {/* KPI Skeletons */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <KpiSkeleton delay="delay-100" />
           <KpiSkeleton delay="delay-200" />
           <KpiSkeleton delay="delay-300" />
@@ -81,7 +78,8 @@ const WorkerDashboard = () => {
         </div>
 
         {/* TASKS Skeleton (Using ListSkeleton) */}
-        <div className="bg-white dark:bg-zinc-800 rounded-lg border
+        <div
+          className="bg-white dark:bg-zinc-800 rounded-lg border
         border-zinc-200 dark:border-zinc-700 p-6 mb-6
         transition duration-300 ease-in-out
         shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
@@ -89,20 +87,23 @@ const WorkerDashboard = () => {
           <div className="h-4 w-40 mb-4 rounded bg-zinc-300 dark:bg-zinc-700 shimmer delay-500" />
           <div className="space-y-3">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-4 rounded bg-zinc-300 dark:bg-zinc-700 shimmer delay-600" />
+              <div
+                key={i}
+                className="h-4 rounded bg-zinc-300 dark:bg-zinc-700 shimmer delay-600"
+              />
             ))}
           </div>
         </div>
 
         {/* CHARTS Skeletons */}
-        <div className="grid grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <CardSkeleton delay="delay-700" />
           <CardSkeleton delay="delay-800" />
           <CardSkeleton delay="delay-900" />
         </div>
 
         {/* DETAILS Skeletons (Using ListSkeleton) */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ListSkeleton rows={3} delay="delay-1000" />
           <ListSkeleton rows={3} delay="delay-1100" />
         </div>
@@ -111,11 +112,10 @@ const WorkerDashboard = () => {
   }
   // --- END: SKELETON INTEGRATION LOGIC ---
 
-
   return (
     <WorkerLayout>
       {/* ---------------- KPI ---------------- */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <Kpi label="Total Animals" value={data.animalsCount} />
         <Kpi
           label="Health Alerts"
@@ -130,32 +130,25 @@ const WorkerDashboard = () => {
         <Kpi
           label="Today’s Priority"
           value={
-            hasUrgentHealth
-              ? "Health"
-              : hasLowStock
-              ? "Inventory"
-              : "Normal"
+            hasUrgentHealth ? "Health" : hasLowStock ? "Inventory" : "Normal"
           }
           highlight
         />
       </div>
 
       {/* ---------------- TASKS ---------------- */}
-      <div className="bg-white dark:bg-zinc-800 rounded-lg border
+      <div
+        className="bg-white dark:bg-zinc-800 rounded-lg border
       border-zinc-200 dark:border-zinc-700 p-6 mb-6
       transition duration-300 ease-in-out
       shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
->
+      >
         <h3 className="text-lg font-medium text-zinc-900 dark:text-zinc-100 font-poppins mb-4">
           Today’s Tasks
         </h3>
 
-
-
         {data.tasks.length === 0 ? (
-          <div className="text-sm text-zinc-500">
-            No pending tasks 🎉
-          </div>
+          <div className="text-sm text-zinc-500">No pending tasks 🎉</div>
         ) : (
           <div className="space-y-3">
             {data.tasks.map((task, idx) => (
@@ -164,8 +157,7 @@ const WorkerDashboard = () => {
                 onClick={() => navigate(task.link)}
                 className="flex justify-between gap-4 rounded-lg border p-4 cursor-pointer
                 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition"
->
-
+              >
                 <div>
                   <div className="font-medium">{task.title}</div>
                   <div className="text-xs text-zinc-500">
@@ -179,7 +171,7 @@ const WorkerDashboard = () => {
                       ? "bg-red-100 text-red-600"
                       : "bg-orange-100 text-orange-600"
                   }`}
->
+                >
                   {task.priority}
                 </span>
               </div>
@@ -189,7 +181,7 @@ const WorkerDashboard = () => {
       </div>
 
       {/* ---------------- CHARTS ---------------- */}
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Feeding Trend */}
         <ClickableCard
           title="Feeding (Last 7 Days)"
@@ -227,10 +219,7 @@ const WorkerDashboard = () => {
                 data={[
                   {
                     label: "Healthy",
-                    count: Math.max(
-                      data.animalsCount - data.healthAlerts,
-                      0
-                    ),
+                    count: Math.max(data.animalsCount - data.healthAlerts, 0),
                   },
                   {
                     label: "Attention Needed",
@@ -268,7 +257,7 @@ const WorkerDashboard = () => {
       </div>
 
       {/* ---------------- DETAILS ---------------- */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <DetailCard title="Recent Feedings">
           {data.recentFeedings.length === 0 ? (
             <EmptyText text="No feedings logged yet" />
@@ -331,7 +320,6 @@ const Kpi = ({ label, value, danger, highlight }) => (
   </div>
 );
 
-
 const ClickableCard = ({ title, children, onClick, footer }) => (
   <div
     onClick={onClick}
@@ -349,12 +337,9 @@ const ClickableCard = ({ title, children, onClick, footer }) => (
 
     {children}
 
-    <p className="text-xs text-zinc-500 mt-3 font-poppins">
-      {footer} →
-    </p>
+    <p className="text-xs text-zinc-500 mt-3 font-poppins">{footer} →</p>
   </div>
 );
-
 
 const DetailCard = ({ title, children }) => (
   <div
@@ -369,7 +354,6 @@ const DetailCard = ({ title, children }) => (
     {children}
   </div>
 );
-
 
 const Row = ({ left, right, danger }) => (
   <div className="flex justify-between text-sm py-2 border-t border-zinc-200 dark:border-zinc-800">
@@ -386,7 +370,6 @@ const Row = ({ left, right, danger }) => (
   </div>
 );
 
-
 const EmptyChart = () => (
   <div className="h-[220px] flex items-center justify-center text-sm text-zinc-500">
     No data available
@@ -397,25 +380,30 @@ const EmptyText = ({ text }) => (
   <div className="text-sm text-zinc-500">{text}</div>
 );
 
-
 /* ---------------- SKELETONS ---------------- */
 
 const KpiSkeleton = ({ delay }) => (
-  <div className={`bg-white dark:bg-zinc-800 rounded-lg border p-4 shimmer ${delay}`}>
+  <div
+    className={`bg-white dark:bg-zinc-800 rounded-lg border p-4 shimmer ${delay}`}
+  >
     <div className="h-3 w-32 mb-3 rounded bg-zinc-300 dark:bg-zinc-700" />
     <div className="h-6 w-16 rounded bg-zinc-300 dark:bg-zinc-700" />
   </div>
 );
 
 const CardSkeleton = ({ height = 220, delay }) => (
-  <div className={`bg-white dark:bg-zinc-800 rounded-lg border p-6 shimmer ${delay}`}>
+  <div
+    className={`bg-white dark:bg-zinc-800 rounded-lg border p-6 shimmer ${delay}`}
+  >
     <div className="h-4 w-40 mb-4 rounded bg-zinc-300 dark:bg-zinc-700" />
     <div className={`h-[${height}px] rounded bg-zinc-300 dark:bg-zinc-700`} />
   </div>
 );
 
 const ListSkeleton = ({ rows = 3, delay }) => (
-  <div className={`bg-white dark:bg-zinc-800 rounded-lg border p-6 shimmer ${delay}`}>
+  <div
+    className={`bg-white dark:bg-zinc-800 rounded-lg border p-6 shimmer ${delay}`}
+  >
     <div className="h-4 w-40 mb-4 rounded bg-zinc-300 dark:bg-zinc-700" />
     <div className="space-y-3">
       {Array.from({ length: rows }).map((_, i) => (

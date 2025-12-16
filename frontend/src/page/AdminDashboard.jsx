@@ -44,21 +44,21 @@ const AdminDashboard = () => {
     return (
       <AdminLayout>
         {/* KPI Skeletons */}
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {Array.from({ length: 4 }).map((_, i) => (
             <StatCardSkeleton key={i} />
           ))}
         </div>
 
         {/* Summary Skeletons */}
-        <div className="grid grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           {Array.from({ length: 3 }).map((_, i) => (
             <LargeCardSkeleton key={i} />
           ))}
         </div>
 
         {/* Chart Skeletons */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           <ChartSkeleton />
           <ChartSkeleton />
         </div>
@@ -79,7 +79,7 @@ const AdminDashboard = () => {
   return (
     <AdminLayout>
       {/* ================= KPI CARDS ================= */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <StatCard label="Total Animals" value={stats.totalAnimals} />
         <StatCard label="Active Animals" value={stats.activeAnimals} />
         <StatCard
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* ================= SUMMARY CARDS ================= */}
-      <div className="grid grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
         {/* FINANCE */}
         <LargeCard title="Financial Overview">
           <div className="space-y-2 text-sm">
@@ -159,7 +159,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* ================= CHARTS ================= */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* FINANCE CHART */}
         <div
           onClick={() => navigate("/admin/financials")}

@@ -94,7 +94,7 @@ const FeedingLogModal = ({ open, setOpen, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
+      <div className="bg-white dark:bg-zinc-800 p-4 sm:p-6 rounded-lg w-full max-w-md mx-4">
         <h2 className="text-lg font-poppins mb-4">Add Feeding Log</h2>
 
         {error && <div className="text-sm text-red-600 mb-2">{error}</div>}

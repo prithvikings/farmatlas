@@ -40,7 +40,7 @@ import Profile from "./page/Profile";
 
 /* ---------------- WORKER ---------------- */
 import WorkerAnimals from "./page/WorkerAnimals";
-
+import WorkerLayout from "./page/WorkerLayout";
 
 /* ---------------- VET ---------------- */
 import VetAnimals from "./page/VetAnimals";
@@ -55,11 +55,46 @@ const App = () => {
       <Route path="/support" element={<Support />} />
       <Route path="/support/:supportname" element={<SupportBlog />} />
 
-      <Route path="/signin" element={<PublicRoute><Signin /></PublicRoute>} />
-      <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
-      <Route path="/forgot-password" element={<PublicRoute><ForgotEmail /></PublicRoute>} />
-      <Route path="/send-otp" element={<PublicRoute><SendOtp /></PublicRoute>} />
-      <Route path="/reset-password" element={<PublicRoute><ResetPassword /></PublicRoute>} />
+      <Route
+        path="/signin"
+        element={
+          <PublicRoute>
+            <Signin />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <PublicRoute>
+            <Signup />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <PublicRoute>
+            <ForgotEmail />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/send-otp"
+        element={
+          <PublicRoute>
+            <SendOtp />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/reset-password"
+        element={
+          <PublicRoute>
+            <ResetPassword />
+          </PublicRoute>
+        }
+      />
 
       {/* ===================================================== */}
       {/* ===================== ADMIN ========================= */}
@@ -81,8 +116,7 @@ const App = () => {
         <Route path="inventory/:itemId/usage" element={<InventoryUsage />} />
         <Route path="financials" element={<FinancialOverview />} />
         <Route path="financials/transactions" element={<Financials />} />
-      <Route path="profile" element={<Profile />} />
-
+        <Route path="profile" element={<Profile />} />
       </Route>
 
       {/* ===================================================== */}
@@ -101,28 +135,24 @@ const App = () => {
         <Route path="animals" element={<WorkerAnimals />} />
         <Route path="feeding" element={<FeedingOverview />} />
         <Route path="inventory" element={<Inventory />} />
-      <Route path="profile" element={<Profile />} />
-
+        <Route path="profile" element={<Profile />} />
       </Route>
 
       {/* ---------------- VET ROUTES ---------------- */}
-<Route
-  path="/vet"
-  element={
-    <RoleRoute role="VET">
-      <DashboardLayout />
-    </RoleRoute>
-  }
->
-  <Route index element={<VetDashboard />} />
-  <Route path="health" element={<HealthOverview />} />
-  <Route path="animals" element={<VetAnimals />} />
-  <Route path="animals/:animalId/health" element={<AnimalHealth />} />
-  <Route path="profile" element={<Profile />} />
-
-</Route>
-
-
+      <Route
+        path="/vet"
+        element={
+          <RoleRoute role="VET">
+            <DashboardLayout />
+          </RoleRoute>
+        }
+      >
+        <Route index element={<VetDashboard />} />
+        <Route path="health" element={<HealthOverview />} />
+        <Route path="animals" element={<VetAnimals />} />
+        <Route path="animals/:animalId/health" element={<AnimalHealth />} />
+        <Route path="profile" element={<Profile />} />
+      </Route>
 
       {/* ===================================================== */}
       {/* ===================== SHARED ======================== */}
@@ -148,7 +178,6 @@ const App = () => {
       >
         <Route index element={<AnimalHealth />} />
       </Route>
-
 
       {/* ===================================================== */}
       {/* ===================== FALLBACK ====================== */}

@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import api from "../lib/axios";
 import AdminLayout from "../layout/AdminLayout";
 import FinancialOverviewSkeleton from "../components/ui/FinancialOverviewSkeleton";
-
+import { useOutletContext } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import MonthlyFinanceCard from "./MonthlyFinanceCard";
 
 const FinancialOverview = () => {
   const [summary, setSummary] = useState(null);
   const [monthly, setMonthly] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { sidebarOpen, toggleSidebar } = useOutletContext() || {};
 
   const fetchData = async () => {
     try {
@@ -29,37 +32,60 @@ const FinancialOverview = () => {
     fetchData();
   }, []);
 
- if (loading) {
-  return (
-    <AdminLayout>
-      <FinancialOverviewSkeleton />
-    </AdminLayout>
-  );
-}
+  if (loading) {
+    return (
+      <AdminLayout>
+        <FinancialOverviewSkeleton />
+      </AdminLayout>
+    );
+  }
 
   return (
     <>
       {/* HEADER */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-medium font-poppins text-zinc-900 dark:text-zinc-100">
-          Financial Overview
-        </h1>
+      <div className="flex flex-col gap-4 mb-6">
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-medium font-poppins text-zinc-900 dark:text-zinc-100">
+              Financial Overview
+            </h1>
 
-        <p className="text-md text-zinc-600 dark:text-zinc-400 font-poppins">
-          Summary of income and expenses
-        </p>
+            <p className="text-md text-zinc-600 dark:text-zinc-400 font-poppins">
+              Summary of income and expenses
+            </p>
 
-        {summary && (
-          <p className="text-xs text-zinc-500 mt-1 font-rubik">
-            {new Date(summary.start).toLocaleDateString()} –{" "}
-            {new Date(summary.end).toLocaleDateString()}
-          </p>
-        )}
+            {summary && (
+              <p className="text-xs text-zinc-500 mt-1 font-rubik">
+                {new Date(summary.start).toLocaleDateString()} –{" "}
+                {new Date(summary.end).toLocaleDateString()}
+              </p>
+            )}
+          </div>
+
+          {toggleSidebar && (
+            <button
+              onClick={toggleSidebar}
+              className="
+          lg:hidden p-2 rounded-md border
+          bg-white dark:bg-zinc-800
+          hover:bg-zinc-200 dark:hover:bg-zinc-700
+          transition-transform duration-200
+        "
+              aria-label="Toggle sidebar"
+            >
+              {sidebarOpen ? (
+                <X size={22} className="rotate-90 transition-transform" />
+              ) : (
+                <Menu size={22} />
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* KPI CARDS */}
       {summary && (
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           <StatCard
             label="Total Income"
             value={`₹${summary.totalIncome}`}
@@ -79,49 +105,56 @@ const FinancialOverview = () => {
       )}
 
       {/* MONTHLY TABLE (simple + clear for now) */}
-      <div className="bg-white dark:bg-zinc-800 border rounded-lg overflow-hidden">
-        <div className="p-4 border-b font-medium">Last 6 Months</div>
+      <>
+        <div className="grid grid-cols-1 gap-4 sm:hidden">
+          {monthly.map((m, idx) => (
+            <MonthlyFinanceCard key={idx} month={m} />
+          ))}
+        </div>
+        <div className="hidden sm:block bg-white dark:bg-zinc-800 border rounded-lg overflow-hidden">
+          <div className="p-4 border-b font-medium">Last 6 Months</div>
 
-        <table className="w-full text-sm">
-          <thead className="bg-zinc-100 dark:bg-zinc-700 font-lato">
-            <tr>
-              <th className="p-3 text-left text-zinc-800 dark:text-zinc-300">
-                Month
-              </th>
-              <th className="p-3 text-left text-zinc-800 dark:text-zinc-300">
-                Income
-              </th>
-              <th className="p-3 text-left text-zinc-800 dark:text-zinc-300">
-                Expense
-              </th>
-              <th className="p-3 text-right text-zinc-800 dark:text-zinc-300">
-                Net
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {monthly.map((m, idx) => (
-              <tr
-                key={idx}
-                className="border-t font-poppins font-medium odd:bg-zinc-50 dark:odd:bg-zinc-800 even:bg-zinc-00 dark:even:bg-zinc-900"
-              >
-                <td className="p-3 text-zinc-900 dark:text-zinc-200">
-                  {m.month}/{m.year}
-                </td>
-                <td className="p-3 text-green-600">₹{m.income}</td>
-                <td className="p-3 text-red-600">₹{m.expense}</td>
-                <td
-                  className={`p-3 text-right font-medium ${
-                    m.net >= 0 ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  ₹{m.net}
-                </td>
+          <table className="w-full text-sm">
+            <thead className="bg-zinc-100 dark:bg-zinc-700 font-lato">
+              <tr>
+                <th className="p-3 text-left text-zinc-800 dark:text-zinc-300">
+                  Month
+                </th>
+                <th className="p-3 text-left text-zinc-800 dark:text-zinc-300">
+                  Income
+                </th>
+                <th className="p-3 text-left text-zinc-800 dark:text-zinc-300">
+                  Expense
+                </th>
+                <th className="p-3 text-right text-zinc-800 dark:text-zinc-300">
+                  Net
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {monthly.map((m, idx) => (
+                <tr
+                  key={idx}
+                  className="border-t font-poppins font-medium odd:bg-zinc-50 dark:odd:bg-zinc-800 even:bg-zinc-00 dark:even:bg-zinc-900"
+                >
+                  <td className="p-3 text-zinc-900 dark:text-zinc-200">
+                    {m.month}/{m.year}
+                  </td>
+                  <td className="p-3 text-green-600">₹{m.income}</td>
+                  <td className="p-3 text-red-600">₹{m.expense}</td>
+                  <td
+                    className={`p-3 text-right font-medium ${
+                      m.net >= 0 ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    ₹{m.net}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
     </>
   );
 };

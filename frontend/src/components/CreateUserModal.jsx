@@ -39,7 +39,7 @@ const CreateUserModal = ({ open, setOpen }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center">
-      <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-96">
+      <div className="bg-white dark:bg-zinc-800 p-4 sm:p-6 rounded-lg w-full max-w-md mx-4">
         <h2 className="text-lg font-poppins mb-4">Create User</h2>
 
         <div className="space-y-3">

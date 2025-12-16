@@ -66,7 +66,7 @@ const AnimalFormModal = ({ open, setOpen, animal, onSuccess }) => {
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-zinc-800 p-6 rounded-lg w-[420px]">
+      <div className="bg-white dark:bg-zinc-800 p-4 sm:p-6 rounded-lg w-full max-w-[420px] mx-4">
         <h2 className="text-lg font-poppins mb-4">
           {animal ? "Edit Animal" : "Add Animal"}
         </h2>
