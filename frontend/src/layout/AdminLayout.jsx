@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ProfileBadge from "../components/ui/ProfileBadge";
 import { useOutletContext } from "react-router-dom";
 import { Menu } from "lucide-react";
+import { Togglebtn } from "../components/togglebtn";
 
 const AdminLayout = ({ children }) => {
   const { openSidebar } = useOutletContext() || {};
@@ -41,17 +42,22 @@ const AdminLayout = ({ children }) => {
             </div>
           </div>
 
-          <Link
-            to="profile"
-            className="flex items-center gap-3 bg-zinc-100 dark:bg-zinc-800
+          <div className="flex items-center gap-3">
+            <Link
+              to="profile"
+              className="flex items-center gap-3 bg-zinc-100 dark:bg-zinc-800
               p-2 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700 transition"
-          >
-            <User2Icon />
-            <div className="hidden sm:flex flex-col gap-1">
-              <span className="text-sm font-medium">{user?.name || role}</span>
-              <ProfileBadge percent={user.profileCompletion ?? 0} />
-            </div>
-          </Link>
+            >
+              <User2Icon />
+              <div className="hidden sm:flex flex-col gap-1">
+                <span className="text-sm font-medium">
+                  {user?.name || role}
+                </span>
+                <ProfileBadge percent={user.profileCompletion ?? 0} />
+              </div>
+            </Link>
+            <Togglebtn />
+          </div>
         </div>
 
         <main>{children}</main>
