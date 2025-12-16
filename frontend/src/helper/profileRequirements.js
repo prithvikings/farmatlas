@@ -1,4 +1,3 @@
-// shared/profileCompletion.js (logic only, no DB)
 export const profileRequirements = {
   BASE: ["name"],
 

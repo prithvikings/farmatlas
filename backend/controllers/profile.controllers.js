@@ -17,7 +17,6 @@ export const getMyProfile = async (req, res) => {
   });
 };
 
-
 export const updateMyProfile = async (req, res) => {
   const allowedUpdates = [
     "name",
@@ -53,8 +52,13 @@ export const updateMyProfile = async (req, res) => {
     { new: true, runValidators: true }
   ).select("-password");
 
+  const completion = getProfileCompletion(user);
+
   res.json({
     message: "Profile updated successfully",
-    user,
+    user: {
+      ...user.toObject(),
+      profileCompletion: completion,
+    },
   });
 };
