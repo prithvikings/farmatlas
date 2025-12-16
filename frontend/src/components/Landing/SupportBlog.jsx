@@ -12,7 +12,8 @@ import { MinimalFooter } from "../minimal-footer";
 const supportCategories = [
   {
     title: "Account & Team Access",
-    description: "Setup, login, password resets, and managing team user access.",
+    description:
+      "Setup, login, password resets, and managing team user access.",
     content: `
 ## Setting Up Your Farm Team Roles 🧑‍🌾
 
@@ -35,10 +36,12 @@ FarmAtlas utilizes **Role-Based Access Control (RBAC)** to ensure that team memb
 ### Troubleshooting Access Issues
 
 If a Worker cannot log feed: ensure their status is "Active" and their role is set correctly to "Worker." If a Vet cannot edit a record, confirm their account is activated and they are using the correct login credentials.
-`,  },
+`,
+  },
   {
     title: "Animal Lifecycle Tracking",
-    description: "Creating profiles, status updates, and logging animal location.",
+    description:
+      "Creating profiles, status updates, and logging animal location.",
     content: `
 ## Managing Animal Profiles from Birth to Sale 
 
@@ -67,7 +70,8 @@ Encourage Workers to log location changes during routine checks. This ensures th
   },
   {
     title: "Health & Vetting Records",
-    description: "Logging treatments, vaccinations, and medical history per animal.",
+    description:
+      "Logging treatments, vaccinations, and medical history per animal.",
     content: `
 ## Maintaining a Clean Medical Timeline 
 
@@ -94,7 +98,8 @@ Workers can generally only view a summary of the health record to understand bas
   },
   {
     title: "Inventory & Feed Logs",
-    description: "Tracking feed, medicine stock, usage history, and low-stock alerts.",
+    description:
+      "Tracking feed, medicine stock, usage history, and low-stock alerts.",
     content: `
 ## Keeping Stock Updated and Avoiding Shortages 
 
@@ -120,7 +125,8 @@ If the **Low Stock alert** on the Admin Dashboard is incorrect, check two things
   },
   {
     title: "Finance & Profitability",
-    description: "Income/expense logging, financial reports, and Admin-only controls.",
+    description:
+      "Income/expense logging, financial reports, and Admin-only controls.",
     content: `
 ## Understanding Your True Net Farm Profit 
 
@@ -148,7 +154,8 @@ Since only the Admin can access **Financials**, there is zero risk of Workers or
   },
   {
     title: "Pricing & Billing",
-    description: "Invoices, subscription management, and upgrading your farm's plan.",
+    description:
+      "Invoices, subscription management, and upgrading your farm's plan.",
     content: `
 ## Managing Your FarmAtlas Subscription 
 
@@ -171,7 +178,8 @@ If your animal count grows beyond your current plan tier, the **Billing** sectio
   },
   {
     title: "Data Import & Export",
-    description: "Assistance with uploading existing records, CSV files, and exporting data for compliance.",
+    description:
+      "Assistance with uploading existing records, CSV files, and exporting data for compliance.",
     content: `
 ## Moving Data In and Out of FarmAtlas 
 
@@ -198,7 +206,8 @@ If an import fails, the system will usually flag the row number where the error 
   },
   {
     title: "Farm Customization & Setup",
-    description: "Configuring initial farm details, setting thresholds, and managing preferences.",
+    description:
+      "Configuring initial farm details, setting thresholds, and managing preferences.",
     content: `
 ## Personalizing FarmAtlas to Fit Your Operation 
 
@@ -222,7 +231,8 @@ Decide which events trigger alerts (e.g., a **'Sick'** status update, inventory 
   },
   {
     title: "System Integrations",
-    description: "Connecting FarmAtlas with external accounting software or third-party tools.",
+    description:
+      "Connecting FarmAtlas with external accounting software or third-party tools.",
     content: `
 ## Connecting FarmAtlas to Your Existing Tools 
 
@@ -244,34 +254,54 @@ While we provide the tools for integration, support for specific issues arising 
 ];
 // -----------------------------------------------------------------------
 // Define custom components for ReactMarkdown to apply styling
+/* ---------------- MARKDOWN STYLES ---------------- */
 const customComponents = {
-    // Styling for top-level headers in the article
-    h2: ({node, ...props}) => <h2 className="text-3xl font-alegreya text-zinc-8 00 dark:text-white mt-8 mb-4 border-b pb-2 border-zinc-200 dark:border-zinc-700" {...props} />,
-    // Styling for sub-headers (section titles)
-    h3: ({node, ...props}) => <h3 className="text-2xl text-zinc-800 font-roboto dark:text-white mt-6 mb-3" {...props} />,
-    // Styling for paragraphs
-    p: ({node, ...props}) => <p className="mb-4 text-zinc-800 dark:text-zinc-300 font-inter" {...props} />,
-    // Styling for unordered lists (bullet points)
-    ul: ({node, ...props}) => <ul className="list-disc font-poppins pl-6 mb-4 space-y-2 text-zinc-700 dark:text-zinc-400" {...props} />,
-    // Styling for ordered lists (numbered lists)
-    ol: ({node, ...props}) => <ol className="list-decimal font-poppins pl-6 mb-4 space-y-2 text-zinc-700 dark:text-zinc-400" {...props} />,
-    // Styling for list items
-    li: ({node, ...props}) => <li className="pl-2 font-poppins" {...props} />,
-    // Styling for bold text
-    strong: ({node, ...props}) => <strong className="font-poppins text-zinc-700 dark:text-white" {...props} />,
+  h2: ({ ...props }) => (
+    <h2
+      className="text-xl sm:text-2xl md:text-3xl font-alegreya text-zinc-800 dark:text-white mt-8 mb-4 border-b pb-2 border-zinc-200 dark:border-zinc-700"
+      {...props}
+    />
+  ),
+  h3: ({ ...props }) => (
+    <h3
+      className="text-lg sm:text-xl md:text-2xl font-roboto text-zinc-800 dark:text-white mt-6 mb-3"
+      {...props}
+    />
+  ),
+  p: ({ ...props }) => (
+    <p
+      className="mb-4 text-sm sm:text-base md:text-lg font-inter text-zinc-800 dark:text-zinc-300 leading-relaxed"
+      {...props}
+    />
+  ),
+  ul: ({ ...props }) => (
+    <ul
+      className="list-disc pl-6 mb-4 space-y-2 text-sm sm:text-base font-poppins text-zinc-700 dark:text-zinc-400"
+      {...props}
+    />
+  ),
+  ol: ({ ...props }) => (
+    <ol
+      className="list-decimal pl-6 mb-4 space-y-2 text-sm sm:text-base font-poppins text-zinc-700 dark:text-zinc-400"
+      {...props}
+    />
+  ),
+  li: ({ ...props }) => <li className="pl-2" {...props} />,
+  strong: ({ ...props }) => (
+    <strong className="font-poppins text-zinc-800 dark:text-white" {...props} />
+  ),
 };
 
 const SupportBlog = () => {
   const { supportname } = useParams();
   const navigate = useNavigate();
 
-  const normalizeSlug = (title) => {
-    return title
+  const normalizeSlug = (title) =>
+    title
       .toLowerCase()
       .replace(/ & /g, "-")
       .replace(/ /g, "-")
       .replace(/[^\w-]+/g, "");
-  };
 
   const articleData = supportCategories.find(
     (item) => normalizeSlug(item.title) === supportname
@@ -279,14 +309,16 @@ const SupportBlog = () => {
 
   if (!articleData) {
     return (
-      <div className="min-h-screen pt-24 text-center">
-        <h1 className="text-3xl font-bold">404 - Article Not Found</h1>
-        <p className="mt-4">
+      <div className="min-h-screen pt-24 text-center px-4">
+        <h1 className="text-2xl sm:text-3xl font-bold">
+          404 – Article Not Found
+        </h1>
+        <p className="mt-4 text-sm sm:text-base">
           The support topic you are looking for does not exist.
         </p>
         <button
           onClick={() => navigate("/support")}
-          className="mt-6 text-green-600 hover:text-green-800 flex items-center justify-center mx-auto"
+          className="mt-6 flex items-center justify-center mx-auto text-green-600 hover:text-green-800"
         >
           <ChevronLeft className="size-4 mr-2" /> Back to Support Home
         </button>
@@ -296,32 +328,42 @@ const SupportBlog = () => {
 
   return (
     <div className="w-full min-h-screen bg-zinc-50 dark:bg-zinc-900">
-      <div className="mx-auto max-w-6xl">
+      {/* NAVBAR */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <Navbar />
-        <div className="pt-12 pb-32 px-6">
-          <button
-            onClick={() => navigate("/support")}
-            className="cursor-pointer text-md text-green-600 hover:text-green-800 flex items-center mb-8   font-poppins transition duration-300 "
-          >
-            <ChevronLeft className="size-4 mr-2" /> Back to Support Topics
-          </button>
+      </div>
 
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-rubik text-zinc-900 dark:text-white tracking-tight">
-              {articleData.title}
-            </h1>
-            <p className="mt-4 text-xl font-inter text-zinc-600 dark:text-zinc-400 border-b pb-6 border-zinc-300 dark:border-zinc-700">
-              {articleData.description}
-            </p>
+      {/* CONTENT */}
+      <div className="pt-10 sm:pt-12 pb-20 sm:pb-32 px-4 sm:px-6">
+        <button
+          onClick={() => navigate("/support")}
+          className="flex items-center text-sm sm:text-base text-orange-600 hover:text-orange-700 mb-6 font-poppins transition duration-300 ease-in-out cursor-pointer"
+        >
+          <ChevronLeft className="size-4 mr-1" /> Get Back
+        </button>
 
-            <div className="mt-8 text-lg text-zinc-800 dark:text-zinc-300 leading-relaxed">
-              {/* RENDER MARKDOWN HERE */}
-              <ReactMarkdown components={customComponents} children={articleData.content} />
-            </div>
+        <div className="max-w-3xl mx-auto">
+          {/* TITLE */}
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-rubik tracking-tight text-zinc-900 dark:text-white">
+            {articleData.title}
+          </h1>
+
+          {/* DESCRIPTION */}
+          <p className="mt-3 sm:mt-4 text-sm sm:text-base md:text-lg font-inter text-zinc-600 dark:text-zinc-400 border-b pb-4 sm:pb-6 border-zinc-300 dark:border-zinc-700">
+            {articleData.description}
+          </p>
+
+          {/* MARKDOWN CONTENT */}
+          <div className="mt-6 sm:mt-8">
+            <ReactMarkdown components={customComponents}>
+              {articleData.content}
+            </ReactMarkdown>
           </div>
         </div>
-        <MinimalFooter />
       </div>
+
+      {/* FOOTER */}
+      <MinimalFooter />
     </div>
   );
 };

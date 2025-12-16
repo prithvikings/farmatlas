@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "motion/react";
-
 import { TextLoop } from "../ui/text-loop";
 
 export function TextLoopCustomVariantsTransition() {
@@ -90,36 +89,67 @@ const Hero = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-center flex-col mt-18">
+      {/* HERO CONTENT */}
+      <div className="flex flex-col items-center justify-center mt-14 sm:mt-20 px-4">
         <motion.h1
           initial={{ opacity: 0, filter: "blur(2px)" }}
           animate={{ opacity: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.3, ease: "easeIn", delay: 0.2 }}
-          className="font-poppins text-4xl max-w-4xl text-center font-medium leading-tight text-zinc-900 dark:text-zinc-200 selection:bg-[#EA580C] selection:text-zinc-100"
+          className="
+            font-poppins font-medium text-center text-zinc-900 dark:text-zinc-200
+            text-2xl sm:text-3xl lg:text-4xl
+            leading-snug sm:leading-tight
+            max-w-xs sm:max-w-2xl lg:max-w-4xl
+            selection:bg-[#EA580C] selection:text-zinc-100
+          "
         >
-          Manage Animals. Stop Errors. <br /> Keep Control..
+          Manage Animals. Stop Errors. <br className="hidden sm:block" /> Keep
+          Control..
         </motion.h1>
-        <p className="max-w-sm text-center font-inter mt-8 text-zinc-700 dark:text-zinc-400 selection:bg-[#EA580C] selection:text-zinc-100">
+
+        <p
+          className="
+            mt-6 sm:mt-8
+            max-w-xs sm:max-w-md
+            text-center font-inter
+            text-sm sm:text-base
+            text-zinc-700 dark:text-zinc-400
+            selection:bg-[#EA580C] selection:text-zinc-100
+          "
+        >
           Track health, feed, and finances across your farm with specific{" "}
           <TextLoopCustomVariantsTransition />
         </p>
+
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeIn", delay: 0.4 }}
-          className="rounded-full bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] selection:bg-[#EA580C] selection:text-zinc-100  px-4 py-2 text-white mt-8  cursor-pointer transition duration-300 shadow-xl"
+          className="
+            mt-6 sm:mt-8
+            rounded-full
+            bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34]
+            px-5 sm:px-6 py-2.5
+            text-sm sm:text-base
+            text-white shadow-xl
+            transition duration-300
+          "
         >
           Get Started
         </motion.button>
       </div>
-      <div className="w-full mt-16 px-4 flex flex-col items-center justify-center">
-        <h1 className="font-poppins text-sm font-medium text-neutral-900 dark:text-neutral-400 selection:bg-[#EA580C] selection:text-zinc-100 tracking-tight">
+
+      {/* TRUSTED BY */}
+      <div className="w-full mt-14 sm:mt-20 px-4 flex flex-col items-center">
+        <h1 className="font-poppins text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-400 tracking-tight">
           Trusted By
         </h1>
 
         <div
-          className="w-full overflow-hidden mt-6 relative
-    [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+          className="
+            w-full overflow-hidden mt-4 sm:mt-6 relative
+            [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]
+          "
         >
           <div className="flex w-max animate-infinite-logo">
             {imageInfiniteScrollData
@@ -129,7 +159,15 @@ const Hero = () => {
                   key={id + "-img-" + index}
                   src={src}
                   alt={alt}
-                  className="size-20 mx-8 object-contain opacity-80 hover:opacity-100 transition grayscale hover:grayscale-0 dark:grayscale-0 dark:hover:grayscale-100"
+                  className="
+  size-12 sm:size-16 lg:size-20
+  mx-4 sm:mx-6 lg:mx-8
+  object-contain
+  opacity-80 hover:opacity-100
+  transition
+  grayscale hover:grayscale-0
+  dark:grayscale-0 dark:hover:grayscale-100
+"
                 />
               ))}
           </div>

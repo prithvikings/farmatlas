@@ -21,7 +21,7 @@ const Landing = () => {
       name: "Starter",
       highlight: false,
       badge: null,
-      icon: <CheckIcon />, // replace with any icon you prefer
+      icon: <CheckIcon />,
       price: { monthly: 9, yearly: 90 },
       description: "Perfect for small farms getting started.",
       features: [
@@ -42,7 +42,6 @@ const Landing = () => {
         },
       ],
     },
-
     {
       name: "Pro",
       highlight: true,
@@ -76,17 +75,13 @@ const Landing = () => {
   ];
 
   return (
-    <div>
-      {/* Section 1 */}
-      <div
-        className="w-full min-h-screen relative 
-        bg-gradient-to-b from-zinc-100 to-white dark:from-zinc-900 dark:to-black"
-      >
+    <div className="w-full bg-gradient-to-b from-zinc-100 to-white dark:from-zinc-900 dark:to-black">
+      {/* Chat Button */}
+      <ChatWidget />
 
-        {/* Chat Button */}
-  <ChatWidget />
-
-        <div className="mx-auto max-w-6xl">
+      {/* HERO SECTION */}
+      <div className="min-h-screen">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Navbar
             featuresRef={featuresRef}
             pricingRef={pricingRef}
@@ -94,64 +89,70 @@ const Landing = () => {
           />
           <Hero />
         </div>
-        <div className="mx-auto max-w-4xl mt-16 pt-18">
-          <Bentogrid />
-        </div>
-        <div ref={featuresRef} className="mx-auto max-w-4xl pt-16">
-          {/* Features Component */}
-          <Features />
-        </div>
-        <div ref={pricingRef} className="mx-auto max-w-4xl pt-16">
-          {/* Pricing Component */}
-          <PricingSection tiers={tiers} />
-        </div>
-        <div className="mx-auto max-w-4xl">
-          <Whatwedo />
-        </div>
-        <div className="mx-auto max-w-6xl">
-          <HowitWork />
-        </div>
-        <div className="mx-auto max-w-4xl pt-16 pb-16">
-          {/* Faqs Component */}
-          <h1
-            ref={faqsRef}
-            className="text-xl font-poppins font-medium mb-6 selection:bg-[#EA580C] selection:text-zinc-100"
-          >
-            Frequently Asked Questions
-          </h1>
-          <AccordionComp />
-        </div>
-
-        <div>
-          {/* Footer Component */}
-          <MinimalFooter />
-        </div>
       </div>
+
+      {/* BENTO */}
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        <Bentogrid />
+      </div>
+
+      {/* FEATURES */}
+      <div
+        ref={featuresRef}
+        className="mx-auto max-w-4xl mt-12 sm:mt-16 px-4 sm:px-6"
+      >
+        <Features />
+      </div>
+
+      {/* PRICING */}
+      <div
+        ref={pricingRef}
+        className="mx-auto max-w-4xl mt-12 sm:mt-16 px-4 sm:px-6"
+      >
+        <PricingSection tiers={tiers} />
+      </div>
+
+      {/* WHAT WE DO */}
+      <div className="mx-auto max-w-4xl mt-12 sm:mt-16 px-4 sm:px-6">
+        <Whatwedo />
+      </div>
+
+      {/* HOW IT WORKS */}
+      <div className="mx-auto max-w-6xl mt-12 sm:mt-16 px-4 sm:px-6">
+        <HowitWork />
+      </div>
+
+      {/* FAQ */}
+      <div className="mx-auto max-w-4xl mt-12 sm:mt-16 pb-12 sm:pb-16 px-4 sm:px-6">
+        <h1
+          ref={faqsRef}
+          className="text-lg sm:text-xl font-poppins font-medium mb-4 sm:mb-6 selection:bg-[#EA580C] selection:text-zinc-100"
+        >
+          Frequently Asked Questions
+        </h1>
+        <AccordionComp />
+      </div>
+
+      {/* FOOTER */}
+      <MinimalFooter />
     </div>
   );
 };
 
 export default Landing;
 
-
 // //<div className="relative w-full min-h-screen bg-white dark:bg-zinc-950 selection:bg-orange-500/30">
-  
+
 //   {/* 1. Technical Grid Pattern (The "Premium" Texture) */}
 //   <div className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-  
+
 //   {/* 2. Ambient Top Glow (Adds depth behind the header) */}
 //   <div className="absolute left-0 right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-orange-500/20 opacity-50 blur-[80px] m-auto pointer-events-none"></div>
 //   {/* 3. Subtle Bottom Glow (Enhances footer area) */}
 //   <div className="absolute left-0 right-0 bottom-[-10%] h-[400px] w-[400px] rounded-full bg-orange-500/10 opacity-50 blur-[80px] m-auto pointer-events-none"></div>
 
-
-
-
-
-
-
 // <div className="relative w-full min-h-screen bg-zinc-50 dark:bg-zinc-950 selection:bg-orange-500/30 overflow-hidden">
-  
+
 //   {/* 1. The "Stage Light" (Top Center Glow) */}
 //   {/* This creates that premium 'sunrise' effect behind your nav/hero */}
 //   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] opacity-30 dark:opacity-20 pointer-events-none">
@@ -161,9 +162,9 @@ export default Landing;
 //   {/* 2. The Technical Grid (Masked) */}
 //   {/* We use [mask-image] to fade the grid out at the edges, so it looks like it's emerging from the center */}
 //   <div className="absolute inset-0 h-full w-full pointer-events-none">
-//       <div className="absolute h-full w-full 
-//         bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] 
-//         bg-[size:24px_24px] 
+//       <div className="absolute h-full w-full
+//         bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)]
+//         bg-[size:24px_24px]
 //         [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]">
 //       </div>
 //   </div>

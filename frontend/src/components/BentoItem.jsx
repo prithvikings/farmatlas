@@ -28,7 +28,7 @@ export function BentoItem() {
       title: "Secure Financial Oversight",
       description:
         "Track income, expenses, and net profitability (Admin-only access). Know your farm's true financial health without sharing sensitive data.",
-      className: "col-span-2 selection:bg-[#EA580C] selection:text-zinc-100",
+      className: "lg:col-span-2 selection:bg-[#EA580C] selection:text-zinc-100",
     },
     {
       id: 5,
@@ -40,27 +40,41 @@ export function BentoItem() {
   ];
 
   return (
-    <div className="grid grid-cols-2 p-10 md:grid-cols-3 gap-4">
-      <AnimatedBackground
-        className="rounded-lg bg-zinc-200 dark:bg-zinc-900"
-        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-        enableHover
+    <div className="flex flex-col items-center">
+      <h1 className="font-roboto text-3xl selection:bg-[#EA580C] selection:text-zinc-100">
+        All Your Farm Data. Managed by Role.
+      </h1>
+      <div
+        className="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        md:grid-cols-3
+        gap-4
+        p-4 sm:p-6 md:p-10
+      "
       >
-        {ITEMS.map((item) => (
-          <div
-            key={item.id}
-            className={`bento-item bg-zinc-300 dark:bg-zinc-800 px-4 py-6 rounded-lg ${item.className}`}
-            data-id={`card-${item.id}`}
-          >
-            <h3 className="font-poppins text-lg font-medium text-zinc-800 dark:text-zinc-50">
-              {item.title}
-            </h3>
-            <p className="font-inter text-sm mt-4 text-zinc-700 dark:text-zinc-300">
-              {item.description}
-            </p>
-          </div>
-        ))}
-      </AnimatedBackground>
+        <AnimatedBackground
+          className="rounded-lg bg-zinc-200 dark:bg-zinc-900"
+          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+          enableHover
+        >
+          {ITEMS.map((item) => (
+            <div
+              key={item.id}
+              className={`bento-item bg-zinc-300 dark:bg-zinc-800 px-4 py-6 rounded-lg ${item.className}`}
+              data-id={`card-${item.id}`}
+            >
+              <h3 className="font-poppins text-lg font-medium text-zinc-800 dark:text-zinc-50">
+                {item.title}
+              </h3>
+              <p className="font-inter text-sm mt-4 text-zinc-700 dark:text-zinc-300">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </AnimatedBackground>
+      </div>
     </div>
   );
 }
