@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { TextLoop } from "../ui/text-loop";
+import { useNavigate } from "react-router-dom";
 
 export function TextLoopCustomVariantsTransition() {
   return (
@@ -44,6 +45,7 @@ export function TextLoopCustomVariantsTransition() {
 }
 
 const Hero = () => {
+  const navigate = useNavigate();
   const imageInfiniteScrollData = [
     {
       id: 1,
@@ -122,6 +124,7 @@ const Hero = () => {
         </p>
 
         <motion.button
+          onClick={() => navigate("/signin")}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeIn", delay: 0.4 }}
@@ -133,9 +136,11 @@ const Hero = () => {
             text-sm sm:text-base
             text-white shadow-xl
             transition duration-300
+            cursor-pointer font-poppins
+            font-medium
           "
         >
-          Get Started
+          Explore More
         </motion.button>
       </div>
 

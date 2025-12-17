@@ -77,10 +77,6 @@ const Signup = () => {
           </p>
         </div>
 
-        {/* Google Signup (disabled for now) */}
-        <Button variant="outline" className="w-full py-2 gap-4" disabled>
-          <FcGoogle size={20} /> Sign Up with Google
-        </Button>
 
         <div className="w-full h-px bg-zinc-300 dark:bg-zinc-600" />
 

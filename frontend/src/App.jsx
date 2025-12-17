@@ -10,6 +10,7 @@ import Signup from "./page/Signup";
 import ForgotEmail from "./page/ForgotEmail";
 import SendOtp from "./page/SendOtp";
 import ResetPassword from "./page/Resetpassword";
+import Checkout from "./components/payment/Checkout";
 
 /* ---------------- DASHBOARDS ---------------- */
 import AdminDashboard from "./page/AdminDashboard";
@@ -54,7 +55,7 @@ const App = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/support" element={<Support />} />
       <Route path="/support/:supportname" element={<SupportBlog />} />
-
+      <Route path="/checkout" element={<Checkout />} />
       <Route
         path="/signin"
         element={

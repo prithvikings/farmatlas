@@ -110,7 +110,7 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
 
             <Link
               to="/signin"
-              className="rounded-full bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] px-6 py-2 text-white shadow-xl"
+              className="rounded-full bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] px-4 py-1.5 text-white shadow-xl hover:scale-105 active:scale-95 font-poppins transition duration-300"
             >
               Get Start
             </Link>
@@ -181,3 +181,14 @@ const Navbar = ({ featuresRef, pricingRef, faqsRef }) => {
 };
 
 export default Navbar;
+
+{
+  /* <div className="flex items-center gap-2">
+            <div className="h-6 w-6 bg-zinc-200 dark:bg-zinc-800 rounded-sm grid place-items-center">
+              <div className="h-3 w-3 border-2 border-orange-500 rounded-full" />
+            </div>
+            <span className="text-zinc-700 dark:text-zinc-300 font-poppins font-medium tracking-tight text-xl">
+              FarmAtlas
+            </span>
+          </div> */
+}

@@ -1,7 +1,6 @@
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import api from "../lib/axios";
@@ -73,13 +72,6 @@ const Signin = () => {
           </p>
         </div>
 
-        <Button
-          variant="outline"
-          className="w-full py-2 font-inter gap-4"
-          disabled
-        >
-          <FcGoogle size={20} /> Sign in with Google
-        </Button>
 
         <div className="w-full h-px bg-zinc-300" />
 
