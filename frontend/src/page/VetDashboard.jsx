@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import VetLayout from "./VetLayout";
+import ChatWidget from "../components/ui/ChatWidget";
 
 const VetDashboard = () => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ const VetDashboard = () => {
 
   return (
     <VetLayout>
+      <ChatWidget />
       {loading ? (
         <>
           {/* KPIs */}

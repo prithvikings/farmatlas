@@ -214,13 +214,13 @@ export const resetPassword = async (req, res) => {
 
 export const googleAuth = async (req, res) => {
   try {
-    const { fullName, email, mobile, role } = req.body;
+    const { name, email, farmName, role } = req.body;
     let user = await User.findOne({ email });
     if (!user) {
       user = await User.create({
-        fullName,
+        name,
         email,
-        mobile,
+        farmName,
         role,
       });
     }
@@ -238,3 +238,5 @@ export const googleAuth = async (req, res) => {
     return res.status(500).json(`googleAuth error ${error}`);
   }
 };
+
+

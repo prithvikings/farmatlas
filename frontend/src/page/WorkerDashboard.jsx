@@ -15,6 +15,7 @@ import {
   Bar,
 } from "recharts";
 import WorkerLayout from "./WorkerLayout";
+import ChatWidget from "../components/ui/ChatWidget";
 
 const COLORS = ["#22C55E", "#F97316", "#EF4444"];
 
@@ -114,6 +115,7 @@ const WorkerDashboard = () => {
 
   return (
     <WorkerLayout>
+      <ChatWidget />
       {/* ---------------- KPI ---------------- */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <Kpi label="Total Animals" value={data.animalsCount} />

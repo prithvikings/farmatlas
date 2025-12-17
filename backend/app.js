@@ -20,7 +20,8 @@ import {
   adminRoutes,
   workerRoutes,
   vetRoutes,
-  profile
+  profile,
+  chatRoutes,
 } from "./routes/index.js";
 
 const app = express();
@@ -53,6 +54,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/worker", workerRoutes);
 app.use("/api/vet", vetRoutes);
 app.use("/api/profile", profile);
+app.use("/api/chat", chatRoutes);
 
 
 

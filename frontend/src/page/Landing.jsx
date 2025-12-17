@@ -9,7 +9,6 @@ import Whatwedo from "../components/Landing/Whatwedo";
 import { MinimalFooter } from "../components/minimal-footer";
 import HowitWork from "../components/Landing/HowitWork";
 import { useRef } from "react";
-import ChatWidget from "../components/ui/ChatWidget";
 
 const Landing = () => {
   const featuresRef = useRef(null);
@@ -76,9 +75,6 @@ const Landing = () => {
 
   return (
     <div className="w-full bg-gradient-to-b from-zinc-100 to-white dark:from-zinc-900 dark:to-black">
-      {/* Chat Button */}
-      <ChatWidget />
-
       {/* HERO SECTION */}
       <div className="min-h-screen">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">

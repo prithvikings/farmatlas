@@ -6,6 +6,7 @@ import { StatCard, LargeCard } from "../components/dashboard/AdminCards";
 
 import FinanceChart from "../components/FinanceChart";
 import HealthChart from "../components/HealthChart";
+import ChatWidget from "../components/ui/ChatWidget";
 
 import {
   StatCardSkeleton,
@@ -43,6 +44,8 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <AdminLayout>
+        <ChatWidget />
+
         {/* KPI Skeletons */}
         <div className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {Array.from({ length: 4 }).map((_, i) => (

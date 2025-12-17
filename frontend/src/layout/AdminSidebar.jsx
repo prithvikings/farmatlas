@@ -12,6 +12,7 @@ import {
   User2,
   Wallet,
 } from "lucide-react";
+import ChatWidget from "../components/ui/ChatWidget";
 
 const AdminSidebar = () => {
   // ✅ hooks at top level
@@ -30,6 +31,7 @@ const AdminSidebar = () => {
   };
   return (
     <aside className="w-68 bg-white dark:bg-zinc-800 selection:bg-[#EA580C] selection:text-zinc-100 rounded-lg border shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] p-4 lg:p-6">
+      <ChatWidget />
       <nav className="space-y-6">
         <Link
           to="/admin"
