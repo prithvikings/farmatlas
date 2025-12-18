@@ -10,6 +10,8 @@ import { MinimalFooter } from "../components/minimal-footer";
 import HowitWork from "../components/Landing/HowitWork";
 import ProductShowcase from "../components/ProductShowcase";
 import { useRef } from "react";
+import RoleShowcase from "../components/RoleShowcase";
+import { CallToAction } from "../components/CallToAction";
 
 const Landing = () => {
   const featuresRef = useRef(null);
@@ -77,6 +79,7 @@ const Landing = () => {
   return (
     <div className="w-full bg-gradient-to-b from-zinc-100 to-white dark:from-zinc-900 dark:to-black">
       {/* HERO SECTION */}
+
       <div className="min-h-screen">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Navbar
@@ -93,7 +96,7 @@ const Landing = () => {
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <Bentogrid />
       </div>
-
+      <RoleShowcase />
       {/* FEATURES */}
       <div
         ref={featuresRef}
@@ -130,6 +133,7 @@ const Landing = () => {
         </h1>
         <AccordionComp />
       </div>
+      <CallToAction />
 
       {/* FOOTER */}
       <MinimalFooter />

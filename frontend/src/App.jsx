@@ -1,6 +1,5 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import React, { Suspense, lazy } from "react";
 /* ---------------- PUBLIC ---------------- */
 import Landing from "./page/Landing";
 import Support from "./page/Support";

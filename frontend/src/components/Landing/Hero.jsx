@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "motion/react";
 import { TextLoop } from "../ui/text-loop";
 import { useNavigate } from "react-router-dom";
+import { GetStartedButton } from "../ui/GetStartedButton";
 
 export function TextLoopCustomVariantsTransition() {
   return (
@@ -49,43 +50,58 @@ const Hero = () => {
   const imageInfiniteScrollData = [
     {
       id: 1,
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/PepsiCo_logo.svg/2500px-PepsiCo_logo.svg.png",
-      alt: "PepsiCo Logo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png",
+      alt: "React Logo",
     },
     {
       id: 3,
-      src: "https://1000logos.net/wp-content/uploads/2017/03/Nestle-Logo.png",
-      alt: "Nestle Logo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/2560px-Node.js_logo.svg.png",
+      alt: "Nodejs Logo",
     },
     {
       id: 5,
-      src: "https://upload.wikimedia.org/wikipedia/commons/f/ff/ITC_Limited_Logo.svg",
-      alt: "ITC Limited Logo",
+      src: "https://images.seeklogo.com/logo-png/44/2/mongodb-logo-png_seeklogo-444844.png",
+      alt: "MongoDB Logo",
     },
     {
       id: 6,
-      src: "https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Britannia_Industries_logo.svg/1200px-Britannia_Industries_logo.svg.png",
-      alt: "Britannia Industries Logo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/1280px-Amazon_Web_Services_Logo.svg.png",
+      alt: "AWS Logo",
     },
     {
       id: 7,
-      src: "https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Dabur_Logo.svg/1200px-Dabur_Logo.svg.png",
-      alt: "Dabur Logo",
+      src: "https://tailwindcss.com/_next/static/media/tailwindcss-mark.d52e9897.svg",
+      alt: "Tailwind CSS Logo",
     },
     {
       id: 8,
-      src: "https://upload.wikimedia.org/wikipedia/en/thumb/9/90/Marico_Logo.svg/1200px-Marico_Logo.svg.png",
-      alt: "Marico Logo",
+      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Redis_logo.svg/2560px-Redis_logo.svg.png",
+      alt: "Redis Logo",
     },
     {
       id: 9,
-      src: "https://upload.wikimedia.org/wikipedia/en/2/22/Varun_Beverages.svg",
-      alt: "Varun Beverages Logo",
+      src: "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/4/jwt-icon-138bxvrhijus263d2f2wur.png/jwt-icon-aqjx58uyj3lrxtborzgyg.png?_a=DATAg1AAZAA0",
+      alt: "JWT Logo",
     },
     {
       id: 10,
-      src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Procter_%26_Gamble_logo.svg/1200px-Procter_%26_Gamble_logo.svg.png",
-      alt: "Procter & Gamble Logo",
+      src: "https://cdn.worldvectorlogo.com/logos/framer-motion.svg",
+      alt: "Motion Logo",
+    },
+    {
+      id: 11,
+      src: "https://assets.streamlinehq.com/image/private/w_300,h_300,ar_1/f_auto/v1/icons/5/zod-jxeoj68ny4h94671educq4.png/zod-xe0a17we1j8ox6lns9ruf.png?_a=DATAg1AAZAA0",
+      alt: "Zod Logo",
+    },
+    {
+      id: 12,
+      src: "https://avatars.githubusercontent.com/u/16486629?s=200&v=4",
+      alt: "Nodemailer Logo",
+    },
+    {
+      id: 13,
+      src: "https://images.seeklogo.com/logo-png/48/2/docker-logo-png_seeklogo-481255.png",
+      alt: "Docker Logo",
     },
   ];
 
@@ -122,35 +138,18 @@ const Hero = () => {
             selection:bg-[#EA580C] selection:text-zinc-100
           "
         >
-          Track health, feed, and finances across your farm with specific{" "}
-          <TextLoopCustomVariantsTransition />
+          Track health, feed,{" "}
+          <span className="hidden md:inline">inventory, </span>and finances
+          across your farm with specific <TextLoopCustomVariantsTransition />
         </p>
 
-        <motion.button
-          onClick={() => navigate("/signin")}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: "easeIn", delay: 0.4 }}
-          className="
-            mt-6 sm:mt-8
-            rounded-full
-            bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34]
-            px-5 sm:px-6 py-2.5
-            text-sm sm:text-base
-            text-white shadow-xl
-            transition duration-300
-            cursor-pointer font-poppins
-            font-medium
-          "
-        >
-          Explore More
-        </motion.button>
+        <GetStartedButton />
       </div>
 
-      {/* TRUSTED BY */}
+      {/* Powered by Modern Tech */}
       <div className="w-full mt-14 sm:mt-20 px-4 flex flex-col items-center">
         <h1 className="font-poppins text-xs sm:text-sm font-medium text-neutral-900 dark:text-neutral-400 tracking-tight">
-          Trusted By
+          Powered by Modern Tech
         </h1>
 
         <div

@@ -106,9 +106,9 @@ const ProductShowcase = () => {
           {/* Browser Header */}
           <div className="h-9 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center px-4 justify-between">
             <div className="flex space-x-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500 "></div>
             </div>
             <div className="hidden sm:block text-[10px] text-zinc-400 font-medium bg-zinc-50 dark:bg-zinc-800 px-3 py-1 rounded-md border border-zinc-100 dark:border-zinc-700/50">
               app.farmatlas.com/dashboard
