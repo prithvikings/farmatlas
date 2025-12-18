@@ -1,5 +1,5 @@
 import { AnimatedBackground } from "./ui/animated-background";
-
+import { motion } from "motion/react";
 export function BentoItem() {
   const ITEMS = [
     {
@@ -41,8 +41,11 @@ export function BentoItem() {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="font-roboto text-3xl selection:bg-[#EA580C] selection:text-zinc-100">
-        All Your Farm Data. Managed by Role.
+      <h1 className=" text-zinc-700 dark:text-zinc-500 font-roboto text-3xl selection:bg-[#EA580C] selection:text-zinc-100">
+        All Your Farm Data.{" "}
+        <span className="dark:text-zinc-200 text-zinc-900">
+          Managed by Role.
+        </span>
       </h1>
       <div
         className="

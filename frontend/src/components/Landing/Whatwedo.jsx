@@ -22,9 +22,13 @@ export default function Whatwedo() {
               text-balance
               font-poppins
               selection:bg-[#EA580C] selection:text-zinc-100
+              text-zinc-700 dark:text-zinc-500
             "
           >
-            Farm Management. Simplified.
+            Farm Management.{" "}
+            <span className="dark:text-zinc-200 text-zinc-900">
+              Simplified.
+            </span>
           </h1>
 
           <p

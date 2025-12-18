@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 /* ---------------- CUSTOM ANIMATION STYLES (UNCHANGED) ---------------- */
 const customStyles = `
   @keyframes drawLine { to { stroke-dashoffset: 0; } }
@@ -483,6 +483,7 @@ const LivestockAnimation = ({ step }) => {
 
 /* ---------------- HOW IT WORKS SECTION ---------------- */
 const HowitWork = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center px-4 sm:px-6">
       {/* Badge */}
@@ -536,7 +537,7 @@ const HowitWork = () => {
           </h2>
           <p className="mt-3 text-sm sm:text-base md:text-lg max-w-md">
             Create your farm workspace, add users like workers and
-            veterinarians, and define roles.
+            veterinarians, and define roles to manage your farm.
           </p>
         </div>
         <div className="flex justify-center p-4 sm:p-6 md:p-8">
@@ -562,7 +563,8 @@ const HowitWork = () => {
             2. Add your animals
           </h2>
           <p className="mt-3 text-sm sm:text-base md:text-lg max-w-md">
-            Register each animal with tags, species, breed, age, and status.
+            Register each animal with tags, species, breed, age, and status to
+            keep track of their health and well-being.
           </p>
         </div>
       </div>
@@ -582,7 +584,8 @@ const HowitWork = () => {
             3. Track health and feeding
           </h2>
           <p className="mt-3 text-sm sm:text-base md:text-lg max-w-md">
-            Log vaccinations, treatments, illnesses, and daily feeding.
+            Log vaccinations, treatments, illnesses, and daily feeding to
+            monitor your animals' health and well-being.
           </p>
         </div>
         <div className="flex justify-center p-4 sm:p-6 md:p-8">
@@ -608,7 +611,8 @@ const HowitWork = () => {
             4. Manage inventory and costs
           </h2>
           <p className="mt-3 text-sm sm:text-base md:text-lg max-w-md">
-            Monitor feed, medicines, and supplies with real-time stock levels.
+            Monitor feed, medicines, and supplies with real-time stock levels
+            and cost tracking.
           </p>
         </div>
       </div>
@@ -621,7 +625,10 @@ const HowitWork = () => {
         <p className="mt-3 text-sm sm:text-base md:text-lg">
           Make better decisions, reduce guesswork, and keep livestock healthy.
         </p>
-        <button className="mt-5 px-6 py-2 rounded-full bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] text-white shadow-lg">
+        <button
+          onClick={() => navigate("/signin")}
+          className="mt-5 px-6 py-2 rounded-full bg-gradient-to-b from-[#EA580C] via-[#ec7d2d] to-[#e77f34] text-white shadow-lg active:scale-95 font-poppins transition duration-300 cursor-pointer"
+        >
           Start managing livestock
         </button>
       </div>

@@ -48,8 +48,12 @@ function PricingSection({ tiers, className }) {
     >
       <div className="w-full max-w-5xl mx-auto">
         <div className="flex flex-col items-center gap-4 mb-12">
-          <h2 className="text-3xl  text-zinc-900 dark:text-zinc-50 font-poppins">
-            Simple, transparent pricing
+          <h2 className="text-3xl  text-zinc-700 dark:text-zinc-500 font-poppins font-medium">
+            Simple,{" "}
+            <span className="dark:text-zinc-200 text-zinc-900 ">
+              transparent{" "}
+            </span>
+            pricing
           </h2>
           <div className="inline-flex items-center p-1.5 dark:bg-zinc-800/50 rounded-full border border-zinc-200 dark:border-zinc-700 shadow-sm">
             {["Monthly", "Yearly"].map((period) => (

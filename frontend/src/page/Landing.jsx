@@ -8,6 +8,7 @@ import { PricingSection } from "../components/pricing-section";
 import Whatwedo from "../components/Landing/Whatwedo";
 import { MinimalFooter } from "../components/minimal-footer";
 import HowitWork from "../components/Landing/HowitWork";
+import ProductShowcase from "../components/ProductShowcase";
 import { useRef } from "react";
 
 const Landing = () => {
@@ -85,6 +86,7 @@ const Landing = () => {
           />
           <Hero />
         </div>
+        <ProductShowcase />
       </div>
 
       {/* BENTO */}

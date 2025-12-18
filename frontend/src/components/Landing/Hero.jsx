@@ -98,15 +98,18 @@ const Hero = () => {
           animate={{ opacity: 1, filter: "blur(0px)" }}
           transition={{ duration: 0.3, ease: "easeIn", delay: 0.2 }}
           className="
-            font-poppins font-medium text-center text-zinc-900 dark:text-zinc-200
+            font-poppins font-medium text-center   text-zinc-700 dark:text-zinc-500
             text-2xl sm:text-3xl lg:text-4xl
             leading-snug sm:leading-tight
             max-w-xs sm:max-w-2xl lg:max-w-4xl
             selection:bg-[#EA580C] selection:text-zinc-100
           "
         >
-          Manage Animals. Stop Errors. <br className="hidden sm:block" /> Keep
-          Control..
+          <span className="dark:text-zinc-200 text-zinc-900">
+            Manage Animals.
+          </span>{" "}
+          Stop Errors. <br className="hidden sm:block" /> Keep{" "}
+          <span className="dark:text-zinc-200 text-zinc-900">Control..</span>
         </motion.h1>
 
         <p

@@ -38,11 +38,8 @@ const Signin = () => {
       else if (user.role === "WORKER") navigate("/worker");
       else if (user.role === "VET") navigate("/vet");
       else navigate("/");
-
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Invalid email or password"
-      );
+      setError(err.response?.data?.message || "Invalid email or password");
     } finally {
       setLoading(false);
     }
@@ -71,7 +68,6 @@ const Signin = () => {
             </Link>
           </p>
         </div>
-
 
         <div className="w-full h-px bg-zinc-300" />
 
@@ -115,10 +111,7 @@ const Signin = () => {
             {loading ? "Signing In..." : "Sign In"}
           </Button>
 
-          <Link
-            to="/forgot-password"
-            className="text-sm flex justify-center"
-          >
+          <Link to="/forgot-password" className="text-sm flex justify-center">
             Forgot password?
           </Link>
         </div>
