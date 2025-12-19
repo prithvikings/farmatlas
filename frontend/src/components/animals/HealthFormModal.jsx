@@ -5,7 +5,7 @@ import { Input } from "../ui/input";
 
 const DEFAULT_FORM = {
   date: new Date().toISOString().slice(0, 10),
-  type: "Routine Checkup",
+  type: "ROUTINE_CHECKUP",
   notes: "",
   medication: "",
   dosage: "",
@@ -81,11 +81,11 @@ const HealthFormModal = ({ open, setOpen, animalId, record, onSuccess }) => {
             value={form.type}
             onChange={(e) => setForm({ ...form, type: e.target.value })}
           >
-            <option>Routine Checkup</option>
-            <option>Vaccination</option>
-            <option>Surgery</option>
-            <option>Illness Treatment</option>
-            <option>Other</option>
+            <option value="ROUTINE_CHECKUP">Routine Checkup</option>
+            <option value="VACCINATION">Vaccination</option>
+            <option value="ILLNESS">Illness</option>
+            <option value="INJURY">Injury</option>
+            <option value="OTHER">Other</option>
           </select>
 
           <Input

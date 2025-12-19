@@ -10,7 +10,6 @@ const startServer = async () => {
   try {
     await Promise.all([
       connectDB(),
-      connectRedis()
     ]);
 
     console.log("✅ Database and Redis connected successfully");

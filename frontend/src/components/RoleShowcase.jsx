@@ -121,6 +121,7 @@ const RoleShowcase = () => {
         />
       </div>
 
+      {/* Bottom Hatch Bar */}
       <div className="absolute bottom-0 left-0 right-0 h-8 border-b border-zinc-200 dark:border-zinc-800 flex bg-zinc-50 dark:bg-zinc-950">
         <div
           className="w-full h-full block dark:hidden opacity-10"
@@ -139,6 +140,7 @@ const RoleShowcase = () => {
           }}
         />
       </div>
+
       {/* Preloader */}
       <div className="hidden">
         {roles.map((role) => (
@@ -274,6 +276,8 @@ const RoleShowcase = () => {
                       transition: { duration: 0.15 },
                     }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    width={800}
+                    height={600}
                     className="w-full h-full object-contain drop-shadow-xl transform perspective-1000 hover:scale-105 transition-transform duration-500"
                   />
                 </div>

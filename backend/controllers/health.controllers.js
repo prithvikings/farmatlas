@@ -40,9 +40,12 @@ export const addHealthRecord = async (req, res) => {
 
     return res.status(201).json({ message: "Health record created.", record });
   } catch (error) {
-    console.error("addHealthRecord error:", error);
-    return res.status(500).json({ message: "Error creating health record.", error: error.message });
+  if (error.name === "ValidationError") {
+    return res.status(400).json({ message: error.message });
   }
+  return res.status(500).json({ message: "Server error" });
+}
+
 };
 
 /**

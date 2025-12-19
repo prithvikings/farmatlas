@@ -26,10 +26,15 @@ const healthRecordSchema = new mongoose.Schema(
     },
     type: {
   type: String,
-  enum: ["ILLNESS", "VACCINATION", "CHECKUP", "INJURY"],
+  enum: [
+    "ROUTINE_CHECKUP",
+    "VACCINATION",
+    "ILLNESS",
+    "INJURY",
+    "OTHER",
+  ],
   required: true,
-}
-,
+},
     notes: {
       type: String,
       required: true,

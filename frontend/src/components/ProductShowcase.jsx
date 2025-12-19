@@ -121,6 +121,8 @@ const ProductShowcase = () => {
             <img
               src={activeTab === "light" ? lightDashboard : darkDashboard}
               alt="FarmAtlas Dashboard"
+              width={800} // Add the actual pixel width of your source image
+              height={600}
               className="w-full h-auto rounded-lg shadow-sm border border-zinc-200/50 dark:border-zinc-800/50"
             />
           </div>

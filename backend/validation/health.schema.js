@@ -3,13 +3,13 @@ import { z } from "zod";
 export const createHealthRecordSchema = z.object({
   body: z.object({
     animalId: z.string(),
-    date: z.string().min(1, "Date is required"),
+    date: z.string().min(1),
     type: z.enum([
-      "Routine Checkup",
-      "Vaccination",
-      "Surgery",
-      "Illness Treatment",
-      "Other",
+      "ROUTINE_CHECKUP",
+      "VACCINATION",
+      "ILLNESS",
+      "INJURY",
+      "OTHER",
     ]),
     notes: z.string().min(3),
     medication: z.string().optional(),

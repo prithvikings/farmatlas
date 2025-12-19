@@ -163,6 +163,8 @@ const Hero = () => {
               .concat(imageInfiniteScrollData)
               .map(({ id, src, alt }, index) => (
                 <img
+                  width={800} // Add the actual pixel width of your source image
+                  height={600}
                   key={id + "-img-" + index}
                   src={src}
                   alt={alt}
