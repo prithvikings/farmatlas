@@ -1,4 +1,4 @@
-// models/inventoryItem.model.js
+// models/inventoryItem.models.js
 
 import mongoose from "mongoose";
 
