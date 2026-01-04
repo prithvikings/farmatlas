@@ -6,11 +6,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 
   const fetchMe = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/auth/me",
+        `${VITE_BACKEND_URL}/auth/me`,
         { withCredentials: true }
       );
       setUser(res.data.user);

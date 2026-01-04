@@ -163,8 +163,8 @@ export default function ChatWidget() {
         formattedHistory.shift(); // Remove the orphan bot message
       }
       // --- FIX ENDS HERE ---
-
-      const response = await fetch("http://localhost:5000/api/chat", {
+      const backendUrl= import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
+      const response = await fetch(`${backendUrl}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
